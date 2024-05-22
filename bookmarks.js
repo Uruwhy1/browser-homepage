@@ -62,6 +62,7 @@ const bookmarks = [
         divide: true,
       },
       { name: "LastFM Profile", url: "https://www.last.fm/user/Uruwhy" },
+      { name: "Goodreads", url: "https://www.goodreads.com/" },
     ],
     color: "#ff4747",
   },
@@ -72,8 +73,8 @@ const bookmarks = [
       {
         name: "Outlook",
         url: "https://outlook.live.com/mail/0/",
-        divide: true,
       },
+      { name: "Temp Mail", url: "https://temp-mail.org/en/", divide: true },
       { name: "Whatsapp", url: "https://web.whatsapp.com" },
       { name: "Discord", url: "https://discord.com/channels/@me" },
     ],
@@ -126,7 +127,7 @@ function setupBookmarks() {
     bookmarkContainer.appendChild(html);
 
     if (b.color) {
-      html.style.setProperty('--accent-container', b.color);
+      html.style.setProperty("--accent-container", b.color);
     }
   });
 }
