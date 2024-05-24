@@ -1,19 +1,20 @@
 const bookmarks = [
-  {
-    title: "League",
-    links: [
-      { name: "BR account", url: "https://www.op.gg/summoners/br/xd1234-BR1" },
-      {
-        name: "LAS account",
-        url: "https://www.op.gg/summoners/las/Fernando%20AIonso-ALO",
-        divide: true,
-      },
-      { name: "Elmiillor", url: "https://kick.com/elmiillor" },
-      { name: "Caedrel", url: "https://www.twitch.tv/caedrel", divide: true },
-      { name: "LPU", url: "https://www.twitch.tv/audvtv" },
-    ],
-    color: "#b847ff",
-  },
+  // {
+  //   title: "League & Games",
+  //   links: [
+  //     { name: "BR account", url: "https://www.op.gg/summoners/br/xd1234-BR1" },
+  //     {
+  //       name: "LAS account",
+  //       url: "https://www.op.gg/summoners/las/Fernando%20AIonso-ALO",
+  //       divide: true,
+  //     },
+  //     { name: "Elmiillor", url: "https://kick.com/elmiillor" },
+  //     { name: "Caedrel", url: "https://www.twitch.tv/caedrel", divide: true },
+  //     { name: "Haxball", url: "https://www.haxball.com" },
+  //     { name: "Minesweeper", url: "https://buscaminas-pro.com/" },
+  //   ],
+  //   color: "#b847ff",
+  // },
   {
     title: "Social & Media",
     links: [
@@ -25,9 +26,29 @@ const bookmarks = [
     ],
   },
   {
+    title: "Hobbies",
+    links: [
+      { name: "Minesweeper", url: "https://buscaminas-pro.com/" },
+      {
+        name: "Piano Course",
+        url: "https://www.udemy.com/course/curso-de-piano-completo-para-adultos-principiante-intermedio-avanzado/learn/lecture/23169430#announcements/9902440/",
+        divide: true,
+      },
+      { name: "LastFM Profile", url: "https://www.last.fm/user/Uruwhy" },
+      { name: "Goodreads", url: "https://www.goodreads.com/", divide: true },
+      { name: "Google Photos", url: "https://photos.google.com" },
+      { name: "Google Podcasts", url: "https://podcasts.google.com/" },
+    ],
+    color: "#ff4747",
+  },
+  {
     title: "Programming",
     links: [
       { name: "Github", url: "https://github.com" },
+      {
+        name: "Udemy Course",
+        url: "https://www.udemy.com/course/js-algorithms-and-data-structures-masterclass/learn/lecture/11198358#questions",
+      },
       {
         name: "The Odin Project",
         url: "https://www.theodinproject.com",
@@ -49,22 +70,6 @@ const bookmarks = [
       },
     ],
     color: "#ffed47",
-  },
-  {
-    title: "Games & Random",
-    links: [
-      { name: "Haxball", url: "https://www.haxball.com" },
-      { name: "Minesweeper", url: "https://buscaminas-pro.com/", divide: true },
-      { name: "Google Photos", url: "https://photos.google.com" },
-      {
-        name: "Google Podcasts",
-        url: "https://podcasts.google.com/",
-        divide: true,
-      },
-      { name: "LastFM Profile", url: "https://www.last.fm/user/Uruwhy" },
-      { name: "Goodreads", url: "https://www.goodreads.com/" },
-    ],
-    color: "#ff4747",
   },
   {
     title: "Mail & Messages",

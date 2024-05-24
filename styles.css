@@ -11,6 +11,7 @@
   --scrollbarColor: #3f3f3f;
   --fontFamily: "Roboto Mono", monospace;
 
+  --hover-color: rgb(25, 228, 255);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -118,7 +119,8 @@ body {
     width: calc(50% - 40px);
     max-width: 50%;
   }
-  .message-container, #clock  {
+  .message-container,
+  #clock {
     display: none;
   }
 }
@@ -126,7 +128,10 @@ body {
 .bookmark-set {
   padding: 1em;
   background-color: var(--containerBg);
-  background: linear-gradient(var(--containerBg) 18em, var(--accent-container) 18.01em);
+  background: linear-gradient(
+    var(--containerBg) 18em,
+    var(--accent-container) 18.01em
+  );
   border-radius: 3px;
   font-family: var(--fontFamily);
   font-size: 1rem;
@@ -173,8 +178,8 @@ body {
   text-decoration: none;
   color: var(--secondaryFg);
   display: block;
-  margin: 0.7em 0em;
+  margin: 0.75em 0em;
 }
 .bookmark:hover {
-  color: rgb(25, 228, 255);
+  color: var(--hover-color);
 }
