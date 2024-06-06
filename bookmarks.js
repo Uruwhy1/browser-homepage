@@ -46,8 +46,8 @@ const bookmarks = [
     links: [
       { name: "Github", url: "https://github.com" },
       {
-        name: "Udemy Course",
-        url: "https://www.udemy.com/course/js-algorithms-and-data-structures-masterclass/learn/lecture/11198358#questions",
+        name: "Coursera Course",
+        url: "https://www.coursera.org/learn/algorithms-divide-conquer/home/week/2",
       },
       {
         name: "The Odin Project",
@@ -61,7 +61,7 @@ const bookmarks = [
       {
         name: "ChatGPT",
         url: "https://chatgpt.com/?oai-dm=1",
-        divide: true,
+        divide:  true,
       },
       { name: "Feather", url: "https://feathericons.com" },
       {
