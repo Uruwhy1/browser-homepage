@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
 :root {
-  --bg-image: url("./day-background.jpg");
+  --bg-image: url("./assets/day-background.jpg");
   --fg: #ffffff;
   --secondaryFg: #d4d4d4;
   --containerBg: #272727;
@@ -16,7 +16,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-image: url("./night-background.jpg");
+    --bg-image: url("./assets/night-background.jpg");
   }
 }
 
