@@ -64,6 +64,7 @@ const bookmarks = [
         divide:  true,
       },
       { name: "Feather", url: "https://feathericons.com" },
+      { name: "Icons", url: "https://icon-icons.com/" },
       {
         name: "Webfonts",
         url: "https://gwfh.mranftl.com/fonts/roboto?subsets=latin",
