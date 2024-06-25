@@ -1,20 +1,26 @@
 const bookmarks = [
-  // {
-  //   title: "League & Games",
-  //   links: [
-  //     { name: "BR account", url: "https://www.op.gg/summoners/br/xd1234-BR1" },
-  //     {
-  //       name: "LAS account",
-  //       url: "https://www.op.gg/summoners/las/Fernando%20AIonso-ALO",
-  //       divide: true,
-  //     },
-  //     { name: "Elmiillor", url: "https://kick.com/elmiillor" },
-  //     { name: "Caedrel", url: "https://www.twitch.tv/caedrel", divide: true },
-  //     { name: "Haxball", url: "https://www.haxball.com" },
-  //     { name: "Minesweeper", url: "https://buscaminas-pro.com/" },
-  //   ],
-  //   color: "#b847ff",
-  // },
+  {
+    title: "League & Games",
+    links: [
+      {
+        name: "BR account",
+        url: "https://www.op.gg/summoners/br/xd1234-BR1",
+        id: "br",
+      },
+      {
+        name: "LAS account",
+        url: "https://www.op.gg/summoners/las/Fernando%20AIonso-ALO",
+        id: "las",
+        divide: true,
+      },
+      { name: "Elmiillor", url: "https://kick.com/elmiillor", id: "elm" },
+      { name: "LPU", url: "https://www.twitch.tv/audvtv", id: "lpu" },
+
+      { name: "Haxball", url: "https://www.haxball.com/play", id: "hax" },
+    ],
+    color: "#b847ff",
+    hide: true,
+  },
   {
     title: "Social & Media",
     links: [
@@ -22,7 +28,11 @@ const bookmarks = [
       { name: "Reddit", url: "https://reddit.com", id: "redd", divide: true },
       { name: "Youtube", url: "https://youtube.com", id: "yt" },
       { name: "Twitch", url: "https://twitch.tv", id: "tw", divide: true },
-      { name: "Star+", url: "https://www.starplus.com/es-419/home", id: "star" },
+      {
+        name: "Disney+",
+        url: "https://www.starplus.com/es-419/home",
+        id: "star",
+      },
     ],
   },
   {
@@ -126,6 +136,9 @@ function setupBookmarks() {
 
     if (b.color) {
       title.style.color = b.color;
+    }
+    if (b.hide) {
+      html.style.display = "none";
     }
 
     const innerBookmarks = document.createElement("div");

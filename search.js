@@ -2,9 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("searchInput");
   searchInput.value = "";
 
-
   document.addEventListener("keypress", function (event) {
-    if (searchInput.value == "") {
+    if (document.activeElement !== searchInput) {
       searchInput.value += event.key;
       searchInput.focus();
     }
