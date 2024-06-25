@@ -4,32 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
     <title>Homepage</title>
     <link rel="stylesheet" href="styles.css" />
     <link href="./assets/favicon.png" rel="shortcut icon" type="image/x-icon" />
+    <script src="bookmarks.js" defer></script>
+    <script src="search.js" defer></script>
+
   </head>
 
   <body>
-    <div id="search">
-      <input
-        id="search-field"
-        type="text"
-        name="search-field"
-        onkeypress="return search(event)"
-      />
-    </div>
     <div class="container">
       <div id="clock"></div>
       <div class="message-container">
         <div class="row">
-          <div class="inline">Welcome, Facundo</div>
+          <input id="searchInput" placeholder="open bookmark..." class="inline"></input>
         </div>
       </div>
       <div id="bookmark-container"></div>
     </div>
 
-    <script src="bookmarks.js"></script>
     <script defer>
       const searchUrl = "https://google.com/search?q=";
       // Search on enter key event
@@ -66,21 +59,6 @@
           document.getElementById("clock").innerHTML = getTime();
         }, 100);
       };
-
-      document.addEventListener("keyup", (event) => {
-        if (event.keyCode == 32) {
-          // Spacebar code to open search
-          document.getElementById("search").style.display = "flex";
-          document.getElementById("search-field").focus();
-        } else if (event.keyCode == 27) {
-          // Esc to close search
-          document.getElementById("search-field").value = "";
-          document.getElementById("search-field").blur();
-          document.getElementById("search").style.display = "none";
-        }
-      });
-
-      
     </script>
   </body>
 </html>
