@@ -30,8 +30,8 @@ const bookmarks = [
       { name: "Twitch", url: "https://twitch.tv", id: "tw", divide: true },
       {
         name: "Disney+",
-        url: "https://www.starplus.com/es-419/home",
-        id: "star",
+        url: "https://www.disneyplus.com/home",
+        id: "+",
       },
     ],
   },
