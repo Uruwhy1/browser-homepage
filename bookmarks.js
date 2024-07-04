@@ -5,18 +5,25 @@ const bookmarks = [
       {
         name: "BR account",
         url: "https://www.op.gg/summoners/br/xd1234-BR1",
-        id: "br",
+        keywords: ["br"],
       },
       {
         name: "LAS account",
         url: "https://www.op.gg/summoners/las/Fernando%20AIonso-ALO",
-        id: "las",
+        keywords: ["las"],
         divide: true,
       },
-      { name: "Elmiillor", url: "https://kick.com/elmiillor", id: "elm" },
-      { name: "LPU", url: "https://www.twitch.tv/audvtv", id: "lpu" },
-
-      { name: "Haxball", url: "https://www.haxball.com/play", id: "hax" },
+      {
+        name: "Elmiillor",
+        url: "https://kick.com/elmiillor",
+        keywords: ["elm"],
+      },
+      { name: "LPU", url: "https://www.twitch.tv/audvtv", keywords: ["lpu"] },
+      {
+        name: "Haxball",
+        url: "https://www.haxball.com/play",
+        keywords: ["hax"],
+      },
     ],
     color: "#b847ff",
     hide: true,
@@ -24,43 +31,61 @@ const bookmarks = [
   {
     title: "Social & Media",
     links: [
-      { name: "Twitter", url: "https://twitter.com", id: "tw" },
-      { name: "Reddit", url: "https://reddit.com", id: "redd", divide: true },
-      { name: "Youtube", url: "https://youtube.com", id: "yt" },
-      { name: "Twitch", url: "https://twitch.tv", id: "tw", divide: true },
+      { name: "Twitter", url: "https://twitter.com", keywords: ["x"] },
+      {
+        name: "Reddit",
+        url: "https://reddit.com",
+        keywords: ["redd"],
+        divide: true,
+      },
+      { name: "Youtube", url: "https://youtube.com", keywords: ["yt"] },
+      {
+        name: "Twitch",
+        url: "https://twitch.tv",
+        keywords: ["tw"],
+        divide: true,
+      },
       {
         name: "Disney+",
         url: "https://www.disneyplus.com/home",
-        id: "+",
+        keywords: ["disney", "+"],
       },
     ],
   },
   {
     title: "Hobbies",
     links: [
-      { name: "Minesweeper", url: "https://buscaminas-pro.com/", id: "mine" },
+      {
+        name: "Minesweeper",
+        url: "https://buscaminas-pro.com/",
+        keywords: ["mine"],
+      },
       {
         name: "Piano Course",
-        id: "piano",
+        keywords: ["piano"],
         url: "https://www.udemy.com/course/curso-de-piano-completo-para-adultos-principiante-intermedio-avanzado/learn/lecture/23169430#announcements/9902440/",
         divide: true,
       },
       {
         name: "LastFM Profile",
         url: "https://www.last.fm/user/Uruwhy",
-        id: "fm",
+        keywords: ["fm"],
       },
       {
         name: "Goodreads",
         url: "https://www.goodreads.com/",
-        id: "book",
+        keywords: ["book"],
         divide: true,
       },
-      { name: "Google Photos", url: "https://photos.google.com", id: "pic" },
+      {
+        name: "Google Photos",
+        url: "https://photos.google.com",
+        keywords: ["pic"],
+      },
       {
         name: "Google Podcasts",
         url: "https://podcasts.google.com/",
-        id: "podcast",
+        keywords: ["podcast"],
       },
     ],
     color: "#ff4747",
@@ -68,35 +93,35 @@ const bookmarks = [
   {
     title: "Programming",
     links: [
-      { name: "Github", url: "https://github.com", id: "git" },
+      { name: "Github", url: "https://github.com", keywords: ["git"] },
       {
         name: "Coursera Course",
         url: "https://www.coursera.org/learn/algorithms-divide-conquer/home/week/2",
-        id: "course",
+        keywords: ["course"],
       },
       {
         name: "The Odin Project",
         url: "https://www.theodinproject.com",
         divide: true,
-        id: "top",
+        keywords: ["top"],
       },
       {
         name: "Notion",
         url: "https://www.notion.so/facundotunas/Programming-23e30a812c6446d48b88a88aa579949b?pvs=4",
-        id: "notion",
+        keywords: ["notion"],
       },
       {
         name: "ChatGPT",
         url: "https://chatgpt.com/?oai-dm=1",
         divide: true,
-        id: "gpt",
+        keywords: ["gpt"],
       },
-      { name: "Feather", url: "https://feathericons.com", id: "svg" },
-      { name: "Icons", url: "https://icon-icons.com/", id: "icon" },
+      { name: "Feather", url: "https://feathericons.com", keywords: ["svg"] },
+      { name: "Icons", url: "https://icon-icons.com/", keywords: ["icon"] },
       {
         name: "Webfonts",
         url: "https://gwfh.mranftl.com/fonts/roboto?subsets=latin",
-        id: "font",
+        keywords: ["font"],
       },
     ],
     color: "#ffed47",
@@ -104,20 +129,24 @@ const bookmarks = [
   {
     title: "Mail & Messages",
     links: [
-      { name: "Gmail", url: "https://mail.google.com", id: "g" },
+      { name: "Gmail", url: "https://mail.google.com", keywords: ["g"] },
       {
         name: "Outlook",
         url: "https://outlook.live.com/mail/0/",
-        id: "o",
+        keywords: ["o"],
       },
       {
         name: "Temp Mail",
         url: "https://temp-mail.org/en/",
-        id: "temp",
+        keywords: ["temp"],
         divide: true,
       },
-      { name: "Whatsapp", url: "https://web.whatsapp.com", id: "wp" },
-      { name: "Discord", url: "https://discord.com/channels/@me", id: "ds" },
+      { name: "Whatsapp", url: "https://web.whatsapp.com", keywords: ["wp"] },
+      {
+        name: "Discord",
+        url: "https://discord.com/channels/@me",
+        keywords: ["ds"],
+      },
     ],
     color: "#4dff47",
   },
@@ -158,8 +187,8 @@ function setupBookmarks() {
         }
         link.style.paddingBottom = "0.7em";
       }
-      if (l.id) {
-        link.setAttribute("id", l.id);
+      if (l.keywords) {
+        link.setAttribute("data-keywords", l.keywords.join(" "));
       }
 
       // Append each link to the innerBookmarks container

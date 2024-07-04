@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault(); // Prevent form submission or other default actions
       const searchValue = searchInput.value.toLowerCase();
 
+
       const links = document.querySelectorAll(".bookmark");
       for (let link of links) {
         if (link.textContent.toLowerCase() === searchValue) {
@@ -20,7 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
           window.location.href = link.href;
           return;
         }
-        if (link.id.toLowerCase() === searchValue) {
+
+        const keywords = link.getAttribute('data-keywords');
+        const keywordArray = keywords.toLowerCase().split(" ");
+        if (keywordArray.includes(searchValue)) {
           searchInput.style.animation = "right 0.3s 1 forwards";
 
           window.location.href = link.href;
