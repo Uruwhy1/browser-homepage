@@ -3,15 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Homepage</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/styles.css" />
     <link href="./assets/favicon.png" rel="shortcut icon" type="image/x-icon" />
-    <script src="bookmarks.js" defer></script>
-    <script src="search.js" defer></script>
-
+    <script src="./scripts/bookmarks.js" defer></script>
+    <script src="./scripts/search.js" defer></script>
+    <script src="./scripts/time.js"></script>
   </head>
-
   <body>
     <div class="container">
       <div id="clock"></div>
@@ -22,43 +21,5 @@
       </div>
       <div id="bookmark-container"></div>
     </div>
-
-    <script defer>
-      const searchUrl = "https://google.com/search?q=";
-      // Search on enter key event
-      function search(e) {
-        if (e.keyCode == 13) {
-          var val = document.getElementById("search-field").value;
-          window.open(searchUrl + val);
-        }
-      }
-
-      // Get current time and format
-      function getTime() {
-        let date = new Date(),
-          min = date.getMinutes(),
-          sec = date.getSeconds(),
-          hour = date.getHours();
-
-        return (
-          "" +
-          (hour < 10 ? "0" + hour : hour) +
-          ":" +
-          (min < 10 ? "0" + min : min) +
-          ":" +
-          (sec < 10 ? "0" + sec : sec)
-        );
-      }
-
-      window.onload = () => {
-        setupBookmarks();
-        // Set up the clock
-        document.getElementById("clock").innerHTML = getTime();
-        // Set clock interval to tick clock
-        setInterval(() => {
-          document.getElementById("clock").innerHTML = getTime();
-        }, 100);
-      };
-    </script>
   </body>
 </html>

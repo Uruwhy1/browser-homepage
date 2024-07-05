@@ -85,7 +85,7 @@ const bookmarks = [
       {
         name: "Google Podcasts",
         url: "https://podcasts.google.com/",
-        keywords: ["podcast"],
+        keywords: ["podcast", "rome", "stoic"],
       },
     ],
     color: "#ff4747",
@@ -94,11 +94,6 @@ const bookmarks = [
     title: "Programming",
     links: [
       { name: "Github", url: "https://github.com", keywords: ["git"] },
-      {
-        name: "Coursera Course",
-        url: "https://www.coursera.org/learn/algorithms-divide-conquer/home/week/2",
-        keywords: ["course"],
-      },
       {
         name: "The Odin Project",
         url: "https://www.theodinproject.com",

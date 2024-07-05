@@ -1,26 +1,25 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
-@import url("https://fonts.googleapis.com/css?family=Roboto");
-
+/* Root Variables */
 :root {
-  --bg-image: url("./assets/day-background.jpg");
+  --bg-image: url("../assets/day-background.jpg");
   --fg: #ffffff;
   --secondaryFg: #d4d4d4;
   --containerBg: #272727;
   --accent-container: #ffffff;
   --scrollbarColor: #3f3f3f;
-  --fontFamily: "Roboto Mono", monospace;
-
   --green: rgb(115, 238, 131);
-
   --hover-color: rgb(25, 228, 255);
+
+  --normal-font: "Roboto";
+  --mono-font: "Roboto Mono";
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-image: url("./assets/night-background.jpg");
+    --bg-image: url("../assets/night-background.jpg");
   }
 }
 
+/* Animations */
 @keyframes wrong {
   0% {
     color: inherit;
@@ -48,11 +47,13 @@
   }
 }
 
+/* General Styles */
 body {
   background: var(--bg-image);
-  margin: 0px;
+  margin: 0;
 }
 
+/* Container */
 .container {
   width: 100%;
   height: 100vh;
@@ -62,47 +63,46 @@ body {
   flex-direction: column;
 }
 
+/* Clock */
 #clock {
-  font-family: sans-serif;
+  font-family: var(--mono-font);
   font-size: 4.5rem;
-  font-weight: 600;
-  font-family: var(--fontFamily);
+  font-weight: 500;
   color: var(--fg);
   margin-bottom: 0.25em;
-
   background-color: var(--containerBg);
   border-radius: 3px;
   padding: 0.2em;
 }
 
+/* Message Container */
 .message-container {
   width: 30%;
+  min-width: 350px;
   background-color: var(--containerBg);
   padding: 1em;
   border-radius: 3px;
-  font-family: var(--fontFamily);
+  font-family: var(--mono-font);
   color: var(--fg);
   font-size: 1.4rem;
   font-weight: 600;
   text-align: center;
 }
+
 #searchInput {
   width: 100%;
   height: 100%;
-
   font-size: 2em;
-  font-family: "Roboto";
-  font-weight: inherit;
-  color: inherit;
-
+  font-family: var(--normal-font);
   background-color: transparent;
   text-align: center;
-
   border: none;
   nav-index: 12;
+
+  color: inherit;
 }
+
 #searchInput:focus {
-  border: none;
   outline: none;
 }
 
@@ -110,67 +110,38 @@ body {
   display: inline-block;
 }
 
+/* Bookmark Container */
 #bookmark-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 95%;
-  margin: 1em 0em;
+  margin: 1em 0;
 }
 
-@media only screen and (max-width: 1300px) {
-  body {
-    height: 100%;
-    display: grid;
-    place-content: center;
-  }
-  #clock {
-    margin-top: 1em;
-  }
-  .container > #bookmark-container {
-    width: 70%;
-    height: 95%;
-    flex-wrap: wrap;
-    gap: 20px 40px;
-    margin: 0;
-
-    align-content: center;
-  }
-  #bookmark-container > .bookmark-set {
-    width: calc(50% - 40px);
-    max-width: 50%;
-  }
-  .message-container,
-  #clock {
-    display: none;
-  }
-}
-
+/* Bookmark Set */
 .bookmark-set {
   padding: 1em;
-  background-color: var(--containerBg);
   background: linear-gradient(
     var(--containerBg) 18em,
     var(--accent-container) 18.01em
   );
   border-radius: 3px;
-  font-family: var(--fontFamily);
+  font-family: var(--mono-font);
   font-size: 1rem;
   width: 25%;
   height: 19em;
   max-width: 260px;
-  margin: 0em 0.5em;
-  padding-bottom: 0;
+  margin: 0 0.5em;
   box-sizing: border-box;
 }
 
+/* Bookmark Inner Container */
 .bookmark-inner-container {
   overflow-y: scroll;
   height: 15em;
-  vertical-align: top;
   padding-right: 6px;
   box-sizing: border-box;
-
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbarColor) #ffffff00;
 }
@@ -178,29 +149,101 @@ body {
 .bookmark-inner-container::-webkit-scrollbar {
   width: 6px;
 }
+
 .bookmark-inner-container::-webkit-scrollbar-track {
   background: #ffffff00;
 }
+
 .bookmark-inner-container::-webkit-scrollbar-thumb {
   background-color: var(--scrollbarColor);
   border-radius: 6px;
   border: 3px solid #ffffff00;
 }
 
+/* Bookmark Title */
 .bookmark-title {
   font-size: 1.4rem;
   font-weight: 600;
   color: var(--fg);
-  margin: 0em 0em 0.35em 0em;
-
+  margin: 0 0 0.35em;
   font-family: Roboto;
 }
+
+/* Bookmark Link */
 .bookmark {
   text-decoration: none;
   color: var(--secondaryFg);
   display: block;
-  margin: 0.75em 0em;
+  margin: 0.75em 0;
 }
+
 .bookmark:hover {
   color: var(--hover-color);
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 1300px) {
+  body {
+    height: 100%;
+    display: grid;
+    place-content: center;
+  }
+
+  #clock {
+    display: none;
+  }
+
+  .message-container {
+    margin-top: 3.5em;
+  }
+
+  #bookmark-container {
+    width: 70%;
+    height: 95%;
+    flex-wrap: wrap;
+    gap: 20px 40px;
+    margin: 0;
+    align-content: center;
+  }
+
+  #bookmark-container > .bookmark-set {
+    width: calc(50% - 40px);
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #bookmark-container {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .bookmark-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (max-width: 530px) {
+  .container {
+    height: 100%;
+  }
+
+  #bookmark-container {
+    flex-direction: column;
+    margin: 2rem 0 1rem;
+  }
+
+  #bookmark-container > .bookmark-set {
+    width: 100%;
+  }
+
+  #clock {
+    display: flex;
+    margin-top: 1rem;
+  }
+
+  .message-container {
+    margin-top: 1rem;
+    min-width: 85%;
+  }
 }
