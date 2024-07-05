@@ -12,6 +12,20 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault(); // Prevent form submission or other default actions
       const searchValue = searchInput.value.toLowerCase();
 
+      if (event.ctrlKey) {
+        const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(
+          searchValue
+        )}`;
+        window.location.href = googleSearchUrl;
+        return;
+      }
+      if (event.shiftKey) {
+        const searchUrl = `https://www.${encodeURIComponent(
+          searchValue
+        )}`;
+        window.location.href = searchUrl;
+        return;
+      }
 
       const links = document.querySelectorAll(".bookmark");
       for (let link of links) {
@@ -22,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        const keywords = link.getAttribute('data-keywords');
+        const keywords = link.getAttribute("data-keywords");
         const keywordArray = keywords.toLowerCase().split(" ");
         if (keywordArray.includes(searchValue)) {
           searchInput.style.animation = "right 0.3s 1 forwards";
