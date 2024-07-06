@@ -3,6 +3,9 @@
   --bg-image: url("../assets/day-background.jpg");
   --fg: #ffffff;
   --secondaryFg: #d4d4d4;
+
+  --bookmark-color: #d4d4d4;
+
   --containerBg: #272727;
   --accent-container: #ffffff;
   --scrollbarColor: #3f3f3f;
@@ -172,9 +175,13 @@ body {
 /* Bookmark Link */
 .bookmark {
   text-decoration: none;
-  color: var(--secondaryFg);
+  color: var(--bookmark-color);
   display: block;
   margin: 0.75em 0;
+}
+
+.on {
+  color: #fff;
 }
 
 .bookmark:hover {
