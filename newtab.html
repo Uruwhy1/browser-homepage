@@ -5,16 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homepage</title>
     <link rel="stylesheet" href="./styles/fonts.css">
-    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/styles.css"/>
+    <link rel="stylesheet" href="./styles/timer.css">
     <link href="./assets/favicon.png" rel="shortcut icon" type="image/x-icon" />
     <script src="./scripts/bookmarks.js" defer></script>
+    <script src="./scripts/time.js" defer></script>
+    <script src="./scripts/timer.js" defer></script>
     <script src="./scripts/search.js" defer></script>
-    <script src="./scripts/time.js"></script>
+
+
   </head>
   <body>
     <div class="container">
-      <div id="clock"></div>
-      <div class="message-container">
+      <div id="clock" class="container-card">
+      </div>
+      <div class="timer-modal-container">
+        <form action="" class="timer-modal container-card">
+          <h1>Add Timer</h1>
+          <input type="text" placeholder="(in minutes)" name="" id="">
+          <button type="submit" class>Start</button>
+        </form>
+      </div>
+      <div class="message-container container-card">
         <div class="row">
           <input id="searchInput" placeholder="open bookmark..." class="inline"></input>
         </div>

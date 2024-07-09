@@ -1,0 +1,74 @@
+/* Timer Styles */
+#timer {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+
+  width: fit-content;
+  height: fit-content;
+
+  font-family: var(--normal-font);
+  font-size: 2rem;
+}
+
+#timer p {
+  margin: 0;
+  padding: 0.5em;
+}
+
+.timer-modal-container {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  backdrop-filter: blur(3px) brightness(40%);
+}
+.timer-modal {
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+
+  font-family: var(--normal-font);
+
+  width: 20%;
+  padding: 1em;
+}
+.timer-modal h1 {
+  margin: 0;
+}
+.timer-modal input {
+  width: 50%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.5rem;
+
+  text-align: center;
+  font-family: inherit;
+}
+.timer-modal input:focus {
+  outline: none;
+}
+
+.timer-modal button {
+  padding: 0.5em 2em;
+  background-color: rgb(71, 71, 71);
+
+  border-radius: 3px;
+  border: 0px;
+
+  font-size: 1em;
+  font-family: inherit;
+  color: var(--fg);
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+.timer-modal button:hover {
+  transform: scale(1.1);
+}
