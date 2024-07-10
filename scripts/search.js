@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const links = document.querySelectorAll(".bookmark");
+    if (event.altKey) {
+      return;
+    }
 
     // Prevent default actions and handle special keys
     const isSpecialKey =
