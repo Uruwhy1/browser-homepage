@@ -2,10 +2,16 @@
 let timerInterval;
 
 // Function to start the countdown
-function startCountdown(minutes) {
+function startCountdown(hours, minutes, seconds) {
   // Validate input
-  if (isNaN(minutes) || minutes <= 0) {
-    alert("Please enter a valid number of minutes.");
+  hours = parseInt(hours, 10) || 0;
+  minutes = parseInt(minutes, 10) || 0;
+  seconds = parseInt(seconds, 10) || 0;
+
+  if (hours < 0 || minutes < 0 || seconds < 0) {
+    alert(
+      "Please enter valid positive numbers for hours, minutes, and seconds."
+    );
     return;
   }
 
@@ -14,9 +20,12 @@ function startCountdown(minutes) {
     clearInterval(timerInterval);
   }
 
+  // Convert hours to minutes
+  hours = hours * 60;
+
   // Set the date we're counting down to
-  const currentDate = new Date();
-  const countDownDate = addMinutes(currentDate, minutes);
+  const countDownDate =
+    new Date().getTime() + hours * 60000 + minutes * 60000 + seconds * 1000;
 
   // Update the countdown every 1 second
   timerInterval = setInterval(() => {
@@ -24,18 +33,23 @@ function startCountdown(minutes) {
     const now = new Date().getTime();
 
     // Find the distance between now and the count down date
-    const distance = countDownDate.getTime() - now;
+    const distance = countDownDate - now;
+    if (distance > 24 * 60 * 60000) {
+      clearInterval(timerInterval);
+      alert("Please do not go over a day.");
+      return;
+    }
 
-    // Time calculations for days, hours, minutes and seconds
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    // Time calculations for hours, minutes, and seconds
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     // Display the result in the element with id="timer"
     let displayText = "";
 
-    if (days > 0) displayText += `${days}d `;
     if (hours > 0) displayText += `${hours}h `;
     if (minutes > 0) displayText += `${minutes}m `;
 
@@ -60,28 +74,27 @@ function startCountdown(minutes) {
   }, 1000);
 }
 
-// Function to add minutes to a date
-function addMinutes(date, minutes) {
-  return new Date(date.getTime() + minutes * 60000);
-}
-
 // DOM elements
 const timerContainer = document.querySelector(".timer-modal-container");
 const timerForm = document.querySelector(".timer-modal");
-const minutesInput = document.querySelector(".timer-modal input");
+const hoursInput = document.querySelector(".timer-modal .hours");
+const minutesInput = document.querySelector(".timer-modal .minutes");
+const secondsInput = document.querySelector(".timer-modal .seconds");
 const clock = document.querySelector("#clock");
 
 // Event listeners
 timerForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  startCountdown(minutesInput.value);
+  startCountdown(hoursInput.value, minutesInput.value, secondsInput.value);
+  hoursInput.value = "";
   minutesInput.value = "";
+  secondsInput.value = "";
   timerContainer.style.display = "none";
 });
 
 clock.addEventListener("click", () => {
   timerContainer.style.display = "flex";
-  minutesInput.focus();
+  hoursInput.focus();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -90,4 +103,26 @@ document.addEventListener("DOMContentLoaded", () => {
       timerContainer.style.display = "none";
     }
   });
+
+  hoursInput.value = "";
+  minutesInput.value = "";
+  secondsInput.value = "";
 });
+
+// Function to move focus to the next input
+function moveToNextInput(currentInput, nextInput) {
+  currentInput.addEventListener("input", () => {
+    if (!nextInput) {
+      if (currentInput.value.length >= 2) {
+        currentInput.blur();
+      }
+    } else if (currentInput.value.length >= 2) {
+      nextInput.focus();
+    }
+  });
+}
+
+// Apply moveToNextInput to each input pair
+moveToNextInput(hoursInput, minutesInput);
+moveToNextInput(minutesInput, secondsInput);
+moveToNextInput(secondsInput);

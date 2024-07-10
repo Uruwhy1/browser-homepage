@@ -29,30 +29,55 @@
 }
 .timer-modal {
   display: flex;
-  gap: 15px;
   flex-direction: column;
+  gap: 15px;
   align-items: center;
 
   font-family: var(--normal-font);
 
   width: 20%;
-  padding: 1em;
+  padding: 2.5em 1em;
 }
-.timer-modal h1 {
-  margin: 0;
-}
-.timer-modal input {
-  width: 50%;
-  font-size: 1.5rem;
-  font-weight: 700;
-  padding: 0.5rem;
 
+.inputs-container {
+  width: fit-content;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+
+  border-bottom: 1px solid;
+}
+.inputs-container p {
+  color: gray;
+  font-size: 2.5em;
+
+  margin: 0;
+  margin-top: 3px;
+  margin-left: -3px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.timer-modal input {
+  width: 50px;
   text-align: center;
-  font-family: inherit;
+  background-color: transparent;
+  border: 0;
+
+  font-size: 2.5em;
+  color: var(--fg);
 }
 .timer-modal input:focus {
   outline: none;
 }
+
+
 
 .timer-modal button {
   padding: 0.5em 2em;
@@ -69,6 +94,8 @@
   cursor: pointer;
   transition: 0.3s;
 }
+
+
 .timer-modal button:hover {
   transform: scale(1.1);
 }

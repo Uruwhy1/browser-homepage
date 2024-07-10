@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const root = document.documentElement;
   let numberFind = 0;
   let keywordFound = false;
-  const timerInput = document.querySelector(".timer-modal input");
+  const timerModal = document.querySelector(".timer-modal-container");
 
   searchInput.value = "";
 
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to reset bookmark styles
   const resetBookmarkStyles = (links) => {
     numberFind = 0;
+    keywordFound = false;
 
     root.style.setProperty("--bookmark-color", "");
     links.forEach((link) => {
@@ -24,7 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   document.addEventListener("keydown", function (event) {
-    if (document.activeElement === timerInput) {
+
+    if (timerModal.style.display == "flex") {
+      console.log(timerModal.style.display)
       return;
     }
 
@@ -40,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!isSpecialKey && !isAlphanumeric) {
       return;
     }
+    keywordFound = false;
     event.preventDefault();
 
     // Handle Enter key
@@ -57,25 +61,35 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      let found = false;
       links.forEach((link) => {
         if (
           link.textContent.toLowerCase() === searchInput.value ||
           (link.classList.contains("on") && numberFind === 1)
         ) {
-          searchInput.style.animation = "right 0.3s 1 forwards";
+          found = true;
+          searchInput.style.animation = "right 0.1s 1 forwards";
           redirectToUrl(link.href);
+
+          return;
         }
         const keywords = link.getAttribute("data-keywords");
         if (
           keywords &&
           keywords.toLowerCase().split(" ").includes(searchInput.value)
         ) {
-          searchInput.style.animation = "right 0.3s 1 forwards";
+          found = true;
+          searchInput.style.animation = "right 0.1s 1 forwards";
           redirectToUrl(link.href);
+
+          return;
         }
       });
 
-      searchInput.style.animation = "wrong 1s 1";
+      // if bookmark not found, wrong animation
+      if (!found) {
+        searchInput.style.animation = "wrong 1s 1";
+      }
       setTimeout(() => (searchInput.style.animation = ""), 1000);
       return;
     }
@@ -98,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Handle Backspace key
     if (event.key === "Backspace") {
       searchInput.value = searchInput.value.slice(0, -1);
-      keywordFound = false;
       numberFind = 0;
     } else if (!event.ctrlKey) {
       searchInput.value += event.key;
