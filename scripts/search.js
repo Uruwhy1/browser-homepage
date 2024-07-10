@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!keywordFound && numberFind !== 1 && document.querySelector(".on")) {
       document.querySelector(".on").style.color = "";
-    } else if (numberFind == 1) {
+    } else if (numberFind == 1 && !keywordFound) {
       document.querySelector(".on").style.color = "var(--hover-color)";
     }
   });
