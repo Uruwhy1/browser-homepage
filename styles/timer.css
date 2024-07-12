@@ -30,7 +30,7 @@
 .timer-modal {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 25px;
   align-items: center;
 
   font-family: var(--normal-font);
@@ -39,45 +39,43 @@
   padding: 2.5em 1em;
 }
 
-.inputs-container {
-  width: fit-content;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-
-  border-bottom: 1px solid;
-}
-.inputs-container p {
-  color: gray;
-  font-size: 2.5em;
-
-  margin: 0;
-  margin-top: 3px;
-  margin-left: -3px;
-}
-
 .input-container {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
-.timer-modal input {
-  width: 50px;
+.input-container div {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 50px;
+
+  max-width: 50%;
   text-align: center;
-  background-color: transparent;
-  border: 0;
 
   font-size: 2.5em;
   color: var(--fg);
+
+  border-bottom: 1px solid;
+}
+.input-container div p {
+  padding: 0;
+  margin: 0;
+}
+
+.timer-modal input {
+  border: 0;
+
+  position: absolute;
+  background-color: transparent;
+  color: transparent;
 }
 .timer-modal input:focus {
   outline: none;
 }
-
-
 
 .timer-modal button {
   padding: 0.5em 2em;
@@ -94,7 +92,6 @@
   cursor: pointer;
   transition: 0.3s;
 }
-
 
 .timer-modal button:hover {
   transform: scale(1.1);

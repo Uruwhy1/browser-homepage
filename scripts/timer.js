@@ -1,12 +1,12 @@
-// Variable to hold the reference to the interval
 let timerInterval;
 
-// Function to start the countdown
 function startCountdown(hours, minutes, seconds) {
-  // Validate input
+  // validate input
   hours = parseInt(hours, 10) || 0;
   minutes = parseInt(minutes, 10) || 0;
   seconds = parseInt(seconds, 10) || 0;
+
+  seconds = seconds + 1;
 
   if (hours < 0 || minutes < 0 || seconds < 0) {
     alert(
@@ -15,43 +15,34 @@ function startCountdown(hours, minutes, seconds) {
     return;
   }
 
-  // Clear any existing interval
-  if (timerInterval) {
+  if (timerInterval !== undefined) {
     clearInterval(timerInterval);
   }
 
-  // Convert hours to minutes
-  hours = hours * 60;
-
-  // Set the date we're counting down to
   const countDownDate =
-    new Date().getTime() + hours * 60000 + minutes * 60000 + seconds * 1000;
+    new Date().getTime() + (hours * 3600 + minutes * 60 + seconds) * 1000;
 
-  // Update the countdown every 1 second
-  timerInterval = setInterval(() => {
-    // Get the current time
+  // Function to update the display
+  function updateTimer() {
     const now = new Date().getTime();
-
-    // Find the distance between now and the count down date
     const distance = countDownDate - now;
+
     if (distance > 24 * 60 * 60000) {
       clearInterval(timerInterval);
       alert("Please do not go over a day.");
       return;
     }
 
-    // Time calculations for hours, minutes, and seconds
     const hours = Math.floor(
       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Display the result in the element with id="timer"
     let displayText = "";
-
     if (hours > 0) displayText += `${hours}h `;
     if (minutes > 0) displayText += `${minutes}m `;
+    displayText += `${seconds}s`;
 
     const timerElement = document.querySelector("#timer p");
     if (!timerElement) {
@@ -64,38 +55,35 @@ function startCountdown(hours, minutes, seconds) {
       document.body.appendChild(newTimerElement);
     }
 
-    document.querySelector("#timer p").innerHTML = displayText + `${seconds}s`;
+    document.querySelector("#timer p").innerHTML = displayText;
 
-    // If the countdown is finished, write some text
     if (distance < 0) {
       clearInterval(timerInterval);
-      document.querySelector("#timer p").innerHTML = "0s";
+      timerElement.remove();
     }
-  }, 1000);
+  }
+
+  // Update the countdown immediately
+  updateTimer();
+
+  /* Update again (countdown starts one second bigger, 
+  but it immediately goes below that) */
+  setTimeout(() => {
+    updateTimer();
+  }, 0);
+
+  timerInterval = setInterval(updateTimer, 1000);
 }
 
 // DOM elements
 const timerContainer = document.querySelector(".timer-modal-container");
 const timerForm = document.querySelector(".timer-modal");
-const hoursInput = document.querySelector(".timer-modal .hours");
-const minutesInput = document.querySelector(".timer-modal .minutes");
-const secondsInput = document.querySelector(".timer-modal .seconds");
+const timeInput = document.getElementById("timeInput");
 const clock = document.querySelector("#clock");
 
-// Event listeners
-timerForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  startCountdown(hoursInput.value, minutesInput.value, secondsInput.value);
-  hoursInput.value = "";
-  minutesInput.value = "";
-  secondsInput.value = "";
-  timerContainer.style.display = "none";
-});
-
-clock.addEventListener("click", () => {
-  timerContainer.style.display = "flex";
-  hoursInput.focus();
-});
+const hoursElement = document.querySelector(".hours");
+const minutesElement = document.querySelector(".minutes");
+const secondsElement = document.querySelector(".seconds");
 
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keyup", (e) => {
@@ -104,25 +92,80 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  hoursInput.value = "";
-  minutesInput.value = "";
-  secondsInput.value = "";
-});
-
-// Function to move focus to the next input
-function moveToNextInput(currentInput, nextInput) {
-  currentInput.addEventListener("input", () => {
-    if (!nextInput) {
-      if (currentInput.value.length >= 2) {
-        currentInput.blur();
-      }
-    } else if (currentInput.value.length >= 2) {
-      nextInput.focus();
+  // Event listeners
+  timeInput.addEventListener("keyup", updateDisplay);
+  timeInput.addEventListener("keydown", (e) => {
+    if (
+      timeInput.value.length == 6 &&
+      e.key !== "Backspace" &&
+      e.key !== "Enter"
+    ) {
+      e.preventDefault();
     }
   });
-}
 
-// Apply moveToNextInput to each input pair
-moveToNextInput(hoursInput, minutesInput);
-moveToNextInput(minutesInput, secondsInput);
-moveToNextInput(secondsInput);
+  timerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const timeParts = timeInput.value.replace(/\D/g, "");
+    let hours = "",
+      minutes = "",
+      seconds = "";
+
+    if (timeParts.length <= 2) {
+      seconds = timeParts.padStart(2, "0");
+    } else if (timeParts.length <= 4) {
+      seconds = timeParts.slice(-2).padStart(2, "0");
+      minutes = timeParts.slice(0, -2).padStart(2, "0");
+    } else {
+      seconds = timeParts.slice(-2).padStart(2, "0");
+      minutes = timeParts.slice(-4, -2).padStart(2, "0");
+      hours = timeParts.slice(0, -4).padStart(2, "0");
+    }
+
+    startCountdown(hours, minutes, seconds);
+    timeInput.value = "";
+    timerContainer.style.display = "none";
+  });
+
+  clock.addEventListener("click", () => {
+    // reset elements on click
+    hoursElement.innerHTML = "";
+    minutesElement.innerHTML = "";
+    secondsElement.innerHTML = "00s";
+
+    timerContainer.style.display = "flex";
+    timeInput.focus();
+  });
+});
+
+// Function to update the time display
+function updateDisplay() {
+  const input = timeInput.value.replace(/\D/g, ""); // Remove non-numeric characters
+  const length = input.length;
+
+  if (length > 6) {
+    return;
+  }
+
+  let hours;
+  let minutes;
+  let seconds;
+
+  if (length <= 2) {
+    seconds = input.padStart(2, "0");
+    minutesElement.textContent = "";
+    hoursElement.textContent = "";
+  } else if (length <= 4) {
+    seconds = input.slice(-2).padStart(2, "0");
+    minutes = input.slice(0, -2).padStart(2, "0");
+    hoursElement.textContent = "";
+  } else {
+    seconds = input.slice(-2).padStart(2, "0");
+    minutes = input.slice(-4, -2).padStart(2, "0");
+    hours = input.slice(0, -4).padStart(2, "0");
+  }
+
+  if (hours) hoursElement.textContent = `${hours}h`;
+  if (minutes) minutesElement.textContent = `${minutes}m`;
+  if (seconds) secondsElement.textContent = `${seconds}s`;
+}

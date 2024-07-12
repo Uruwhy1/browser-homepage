@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("keydown", function (event) {
 
     if (timerModal.style.display == "flex") {
-      console.log(timerModal.style.display)
       return;
     }
 
