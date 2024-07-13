@@ -1,91 +1,31 @@
+// Global timerInterval variable
 let timerInterval;
 
-function startCountdown(hours, minutes, seconds) {
-  // validate input
-  hours = parseInt(hours, 10) || 0;
-  minutes = parseInt(minutes, 10) || 0;
-  seconds = parseInt(seconds, 10) || 0;
-
-  seconds = seconds + 1;
-
-  if (hours < 0 || minutes < 0 || seconds < 0) {
-    alert(
-      "Please enter valid positive numbers for hours, minutes, and seconds."
-    );
-    return;
-  }
-
-  if (timerInterval !== undefined) {
-    clearInterval(timerInterval);
-  }
-
-  const countDownDate =
-    new Date().getTime() + (hours * 3600 + minutes * 60 + seconds) * 1000;
-
-  // Function to update the display
-  function updateTimer() {
-    const now = new Date().getTime();
-    const distance = countDownDate - now;
-
-    if (distance > 24 * 60 * 60000) {
-      clearInterval(timerInterval);
-      alert("Please do not go over a day.");
-      return;
-    }
-
-    const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    let displayText = "";
-    if (hours > 0) displayText += `${hours}h `;
-    if (minutes > 0) displayText += `${minutes}m `;
-    displayText += `${seconds}s`;
-
-    const timerElement = document.querySelector("#timer p");
-    if (!timerElement) {
-      const newTimerElement = document.createElement("div");
-      newTimerElement.id = "timer";
-      newTimerElement.classList.add("container-card");
-
-      const timerText = document.createElement("p");
-      newTimerElement.appendChild(timerText);
-      document.body.appendChild(newTimerElement);
-    }
-
-    document.querySelector("#timer p").innerHTML = displayText;
-
-    if (distance < 0) {
-      clearInterval(timerInterval);
-      timerElement.remove();
-    }
-  }
-
-  // Update the countdown immediately
-  updateTimer();
-
-  /* Update again (countdown starts one second bigger, 
-  but it immediately goes below that) */
-  setTimeout(() => {
-    updateTimer();
-  }, 0);
-
-  timerInterval = setInterval(updateTimer, 1000);
-}
-
-// DOM elements
-const timerContainer = document.querySelector(".timer-modal-container");
-const timerForm = document.querySelector(".timer-modal");
-const timeInput = document.getElementById("timeInput");
-const clock = document.querySelector("#clock");
-
-const hoursElement = document.querySelector(".hours");
-const minutesElement = document.querySelector(".minutes");
-const secondsElement = document.querySelector(".seconds");
-
 document.addEventListener("DOMContentLoaded", () => {
+  // Check if there's a timer in localStorage and start it
+  const storedTimer = localStorage.getItem("timer");
+  if (storedTimer) {
+    const remainingTime = parseInt(storedTimer, 10) - new Date().getTime();
+    if (remainingTime > 0) {
+      startCountdown(
+        Math.floor(remainingTime / 3600000),
+        Math.floor((remainingTime % 3600000) / 60000),
+        Math.floor((remainingTime % 60000) / 1000)
+      );
+    } else {
+      localStorage.removeItem("timer");
+    }
+  }
+
+  // DOM elements
+  const timerContainer = document.querySelector(".timer-modal-container");
+  const timerForm = document.querySelector(".timer-modal");
+  const timeInput = document.getElementById("timeInput");
+  const clock = document.querySelector("#clock");
+  const hoursElement = document.querySelector(".hours");
+  const minutesElement = document.querySelector(".minutes");
+  const secondsElement = document.querySelector(".seconds");
+
   document.addEventListener("keyup", (e) => {
     if (e.key === "Escape" && timerContainer.style.display === "flex") {
       timerContainer.style.display = "none";
@@ -128,44 +68,113 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   clock.addEventListener("click", () => {
-    // reset elements on click
-    hoursElement.innerHTML = "";
-    minutesElement.innerHTML = "";
-    secondsElement.innerHTML = "00s";
-
     timerContainer.style.display = "flex";
     timeInput.focus();
-  });
-});
 
-// Function to update the time display
-function updateDisplay() {
-  const input = timeInput.value.replace(/\D/g, ""); // Remove non-numeric characters
-  const length = input.length;
-
-  if (length > 6) {
-    return;
-  }
-
-  let hours;
-  let minutes;
-  let seconds;
-
-  if (length <= 2) {
-    seconds = input.padStart(2, "0");
+    timeInput.value = "";
+    hoursElement.textContent = "";
     minutesElement.textContent = "";
-    hoursElement.textContent = "";
-  } else if (length <= 4) {
-    seconds = input.slice(-2).padStart(2, "0");
-    minutes = input.slice(0, -2).padStart(2, "0");
-    hoursElement.textContent = "";
-  } else {
-    seconds = input.slice(-2).padStart(2, "0");
-    minutes = input.slice(-4, -2).padStart(2, "0");
-    hours = input.slice(0, -4).padStart(2, "0");
+    secondsElement.textContent = "00s";
+  });
+
+  function startCountdown(hours, minutes, seconds) {
+    // Validate input
+    hours = parseInt(hours, 10) || 0;
+    minutes = parseInt(minutes, 10) || 0;
+    seconds = parseInt(seconds, 10) || 0;
+
+    // If there's an existing interval, clear it
+    if (timerInterval !== undefined) {
+      clearInterval(timerInterval);
+    }
+
+    // Calculate the countdown date
+    seconds = seconds + 1;
+    const countDownDate =
+      new Date().getTime() + (hours * 3600 + minutes * 60 + seconds) * 1000;
+
+    // Store the countdown date in localStorage
+    localStorage.setItem("timer", countDownDate);
+
+    // Function to update the display
+    function updateTimer() {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
+
+      // If the countdown is over, clear the interval and remove the timer from localStorage
+      if (distance < 0) {
+        clearInterval(timerInterval);
+        localStorage.removeItem("timer");
+        document.querySelector("#timer").remove();
+        return;
+      }
+
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      let displayText = "";
+      if (hours > 0) displayText += `${hours}h `;
+      if (minutes > 0) displayText += `${minutes}m `;
+      displayText += `${seconds}s`;
+
+      const timerElement = document.querySelector("#timer p");
+      if (!timerElement) {
+        const newTimerElement = document.createElement("div");
+        newTimerElement.id = "timer";
+        newTimerElement.classList.add("container-card");
+
+        const timerText = document.createElement("p");
+        newTimerElement.appendChild(timerText);
+        document.body.appendChild(newTimerElement);
+      }
+
+      document.querySelector("#timer p").innerHTML = displayText;
+    }
+
+    // Update the countdown immediately
+    updateTimer();
+
+    /* Update again (countdown starts one second bigger, 
+  but it immediately goes below that) */
+    setTimeout(() => {
+      updateTimer();
+    }, 10);
+
+    timerInterval = setInterval(updateTimer, 1000);
   }
 
-  if (hours) hoursElement.textContent = `${hours}h`;
-  if (minutes) minutesElement.textContent = `${minutes}m`;
-  if (seconds) secondsElement.textContent = `${seconds}s`;
-}
+  // Function to update the time display
+  function updateDisplay() {
+    const input = timeInput.value.replace(/\D/g, ""); // Remove non-numeric characters
+    const length = input.length;
+
+    if (length > 6) {
+      return;
+    }
+
+    let hours;
+    let minutes;
+    let seconds;
+
+    if (length <= 2) {
+      seconds = input.padStart(2, "0");
+      minutesElement.textContent = "";
+      hoursElement.textContent = "";
+    } else if (length <= 4) {
+      seconds = input.slice(-2).padStart(2, "0");
+      minutes = input.slice(0, -2).padStart(2, "0");
+      hoursElement.textContent = "";
+    } else {
+      seconds = input.slice(-2).padStart(2, "0");
+      minutes = input.slice(-4, -2).padStart(2, "0");
+      hours = input.slice(0, -4).padStart(2, "0");
+    }
+
+    if (hours) hoursElement.textContent = `${hours}h`;
+    if (minutes) minutesElement.textContent = `${minutes}m`;
+    if (seconds) secondsElement.textContent = `${seconds}s`;
+  }
+});

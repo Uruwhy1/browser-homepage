@@ -25,6 +25,8 @@
   width: 100vw;
   height: 100vh;
 
+  z-index: 99;
+
   backdrop-filter: blur(3px) brightness(40%);
 }
 .timer-modal {
