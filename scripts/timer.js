@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keyup", (e) => {
     if (e.key === "Escape" && timerContainer.style.display === "flex") {
-      timerContainer.style.display = "none";
+      fadeOutModal(timerContainer);
     }
   });
 
@@ -63,12 +63,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     startCountdown(hours, minutes, seconds);
-    timeInput.value = "";
-    timerContainer.style.display = "none";
+
+    fadeOutModal(timerContainer);
   });
 
   clock.addEventListener("click", () => {
-    timerContainer.style.display = "flex";
+    fadeInModal(timerContainer);
     timeInput.focus();
 
     timeInput.value = "";
@@ -178,3 +178,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (seconds) secondsElement.textContent = `${seconds}s`;
   }
 });
+
+function fadeOutModal(modal) {
+  modal.style.animation = "fadeOut 0.3s forwards";
+  setTimeout(() => {
+    modal.style.animation = "";
+    modal.style.display = "none";
+  }, 300);
+}
+
+function fadeInModal(modal) {
+  modal.style.display = "flex";
+  modal.style.animation = "fadeIn 0.3s forwards";
+
+  setTimeout(() => {
+    modal.style.animation = "";
+  }, 300);
+}
