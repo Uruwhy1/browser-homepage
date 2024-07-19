@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   document.addEventListener("keydown", function (event) {
-
     if (timerModal.style.display == "flex") {
       return;
     }
@@ -37,7 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Prevent default actions and handle special keys
     const isSpecialKey =
-      event.key === "Enter" || event.key === "Backspace" || event.ctrlKey;
+      event.key === "Enter" ||
+      event.key === "+" ||
+      event.key === "Backspace" ||
+      event.ctrlKey;
     const isAlphanumeric = /^[a-zA-Z0-9]$/.test(event.key);
     if (!isSpecialKey && !isAlphanumeric) {
       return;

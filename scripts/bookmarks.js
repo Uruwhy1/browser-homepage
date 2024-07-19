@@ -97,8 +97,13 @@ const bookmarks = [
       {
         name: "The Odin Project",
         url: "https://www.theodinproject.com",
-        divide: true,
         keywords: ["top"],
+      },
+      {
+        name: "Codewars",
+        url: "https://www.codewars.com/dashboard",
+        keywords: ["code"],
+        divide: true,
       },
       {
         name: "Notion",
