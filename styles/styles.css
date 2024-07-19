@@ -180,9 +180,10 @@ body * {
 .bookmark-title {
   font-size: 1.4rem;
   font-weight: 600;
-  color: var(--fg);
+  color: var(--accent-container);
   margin: 0 0 0.35em;
   font-family: Roboto;
+
 }
 
 /* Bookmark Link */
@@ -191,6 +192,17 @@ body * {
   color: var(--bookmark-color);
   display: block;
   margin: 0.75em 0;
+
+  transition: opacity 0.5s;
+}
+.divider {
+  display: block;
+  width: 100%;
+  height: 2px;
+
+  color: inherit;
+
+  background-color: var(--accent-container);
 }
 
 .on {

@@ -21,6 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
     links.forEach((link) => {
       link.classList.remove("on");
       link.style.color = "";
+
+      link.style.position = "";
+      link.style.bottom = "";
+      link.style.opacity = "";
     });
   };
 
@@ -134,9 +138,15 @@ document.addEventListener("DOMContentLoaded", function () {
       links.forEach((link) => {
         if (link.textContent.toLowerCase().includes(searchInput.value)) {
           link.classList.add("on");
+
+          link.style.position = "";
+          link.style.bottom = "";
+          link.style.opacity = "";
+
           numberFind++;
         } else {
           link.classList.remove("on");
+          link.style.opacity = "0";
         }
 
         const keywords = link.getAttribute("data-keywords");
@@ -144,6 +154,8 @@ document.addEventListener("DOMContentLoaded", function () {
           keywords &&
           keywords.toLowerCase().split(" ").includes(searchInput.value)
         ) {
+          link.style.opacity = "";
+
           link.style.color = "var(--hover-color)";
           keywordFound = true;
         } else {

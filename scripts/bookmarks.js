@@ -9,7 +9,7 @@ const bookmarks = [
       },
       {
         name: "LAS account",
-        url: "https://www.op.gg/summoners/las/Fernando%20AIonso-ALO",
+        url: "https://www.op.gg/summoners/las/Chris%20Ramos-C%C3%81DIZ",
         keywords: ["las"],
         divide: true,
       },
@@ -69,7 +69,7 @@ const bookmarks = [
       {
         name: "LastFM Profile",
         url: "https://www.last.fm/user/Uruwhy",
-        keywords: ["fm"],
+        keywords: ["fm", "music"],
       },
       {
         name: "Goodreads",
@@ -117,7 +117,7 @@ const bookmarks = [
         keywords: ["gpt"],
       },
       { name: "Feather", url: "https://feathericons.com", keywords: ["svg"] },
-      { name: "Icons", url: "https://icon-icons.com/", keywords: ["icon"] },
+      { name: "Icons", url: "https://icon-icons.com/", keywords: [""] },
       {
         name: "Webfonts",
         url: "https://gwfh.mranftl.com/fonts/roboto?subsets=latin",
@@ -163,9 +163,6 @@ function setupBookmarks() {
     title.classList.add("bookmark-title");
     title.textContent = b.title;
 
-    if (b.color) {
-      title.style.color = b.color;
-    }
     if (b.hide) {
       html.style.display = "none";
     }
@@ -180,26 +177,22 @@ function setupBookmarks() {
       link.href = l.url;
       link.textContent = l.name;
 
-      if (l.divide) {
-        link.style.borderBottom = "2px solid var(--secondaryFg)";
-        if (b.color) {
-          link.style.borderColor = b.color;
-        }
-        link.style.paddingBottom = "0.7em";
-      }
       if (l.keywords) {
         link.setAttribute("data-keywords", l.keywords.join(" "));
       }
 
-      // Append each link to the innerBookmarks container
       innerBookmarks.appendChild(link);
+
+      if (l.divide) {
+        const divider = document.createElement("span");
+        divider.classList.add("divider");
+        innerBookmarks.appendChild(divider);
+      }
     });
 
-    // Append title and innerBookmarks to the main html container
     html.appendChild(title);
     html.appendChild(innerBookmarks);
 
-    // Append the main html container to the bookmark container
     bookmarkContainer.appendChild(html);
 
     if (b.color) {
