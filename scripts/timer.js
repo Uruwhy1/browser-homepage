@@ -1,5 +1,6 @@
 // Global timerInterval variable
 let timerInterval;
+let keyUsed = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   // Check if there's a timer in localStorage and start it
@@ -28,6 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keyup", (e) => {
     if (e.key === "Escape" && timerContainer.style.display === "flex") {
+
+
+      keyUsed = false;
       fadeOutModal(timerContainer);
     }
   });
@@ -35,6 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Event listeners
   timeInput.addEventListener("keyup", updateDisplay);
   timeInput.addEventListener("keydown", (e) => {
+    if (!keyUsed) {
+      keyUsed = true;
+      timeInput.value = "";
+    }
+
     if (
       timeInput.value.length == 6 &&
       e.key !== "Backspace" &&
@@ -46,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   timerForm.addEventListener("submit", (e) => {
     e.preventDefault();
+    keyUsed = false;
     const timeParts = timeInput.value.replace(/\D/g, "");
     let hours = "",
       minutes = "",
@@ -71,10 +81,14 @@ document.addEventListener("DOMContentLoaded", () => {
     fadeInModal(timerContainer);
     timeInput.focus();
 
-    timeInput.value = "";
-    hoursElement.textContent = "";
-    minutesElement.textContent = "";
-    secondsElement.textContent = "00s";
+    timeInput.value = "05m 00s";
+    hoursElement.textContent = "00";
+    minutesElement.textContent = "05";
+    secondsElement.textContent = "00";
+
+    minutesElement.classList.remove("inactive");
+    hoursElement.classList.add("inactive");
+
   });
 
   function startCountdown(hours, minutes, seconds) {
@@ -161,21 +175,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (length <= 2) {
       seconds = input.padStart(2, "0");
-      minutesElement.textContent = "";
-      hoursElement.textContent = "";
+      minutesElement.textContent = "00";
+      hoursElement.textContent = "00";
+
+      minutesElement.classList.add("inactive");
+      hoursElement.classList.add("inactive");
     } else if (length <= 4) {
       seconds = input.slice(-2).padStart(2, "0");
       minutes = input.slice(0, -2).padStart(2, "0");
-      hoursElement.textContent = "";
+      hoursElement.textContent = "00";
+
+      minutesElement.classList.remove("inactive");
+      hoursElement.classList.add("inactive");
     } else {
       seconds = input.slice(-2).padStart(2, "0");
       minutes = input.slice(-4, -2).padStart(2, "0");
       hours = input.slice(0, -4).padStart(2, "0");
+
+      minutesElement.classList.remove("inactive");
+      hoursElement.classList.remove("inactive");
     }
 
-    if (hours) hoursElement.textContent = `${hours}h`;
-    if (minutes) minutesElement.textContent = `${minutes}m`;
-    if (seconds) secondsElement.textContent = `${seconds}s`;
+    if (hours) hoursElement.textContent = `${hours} `;
+    if (minutes) minutesElement.textContent = `${minutes}`;
+    if (seconds) secondsElement.textContent = `${seconds}`;
   }
 });
 

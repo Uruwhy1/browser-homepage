@@ -35,37 +35,48 @@
   gap: 25px;
   align-items: center;
 
-  font-family: var(--normal-font);
+  font-family: var(--mono-font);
 
   width: 20%;
   padding: 2.5em 1em;
 }
 
 .input-container {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.input-container div {
+.input-container .display-container {
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  gap: 1.5rem;
+  justify-content: space-around;
   align-items: center;
-  width: 500px;
-  height: 50px;
 
-  max-width: 50%;
   text-align: center;
 
-  font-size: 2.5em;
   color: var(--fg);
 
   border-bottom: 1px solid;
 }
-.input-container div p {
+
+.display-container div {
+  display: flex;
+  align-items: flex-end;
+}
+.display-container p {
   padding: 0;
   margin: 0;
+
+  font-size: 3.5rem;
+}
+.display-container span {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+
+  color: rgb(190, 190, 190);
 }
 
 .timer-modal input {
@@ -97,4 +108,8 @@
 
 .timer-modal button:hover {
   transform: scale(1.1);
+}
+
+.inactive {
+  color: gray;
 }
