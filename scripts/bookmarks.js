@@ -40,6 +40,11 @@ const bookmarks = [
       },
       { name: "Youtube", url: "https://youtube.com", keywords: ["yt"] },
       {
+        name: "ASMR",
+        url: "https://www.youtube.com/results?search_query=asmr",
+        hide: true,
+      },
+      {
         name: "Twitch",
         url: "https://twitch.tv",
         keywords: ["tw"],
@@ -165,6 +170,10 @@ function setupBookmarks() {
 
     if (b.hide) {
       html.style.display = "none";
+      console.log("%cHIDDEN LINKS:", "color: red; font-size: x-large");
+      b.links.map((l) => {
+        console.log(l.name, l.keywords);
+      });
     }
 
     const innerBookmarks = document.createElement("div");
@@ -179,6 +188,11 @@ function setupBookmarks() {
 
       if (l.keywords) {
         link.setAttribute("data-keywords", l.keywords.join(" "));
+      }
+
+      if (l.hide) {
+        link.style.display = "none";
+        console.log(l.name, l.keywords);
       }
 
       innerBookmarks.appendChild(link);
