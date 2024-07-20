@@ -52,7 +52,7 @@ const bookmarks = [
       },
       {
         name: "Disney+",
-        url: "https://www.disneyplus.com/home",
+        url: "https://www.disneyplus.com/browse/espn",
         keywords: ["disney", "+"],
       },
     ],
