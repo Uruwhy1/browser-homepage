@@ -120,6 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
         clearInterval(timerInterval);
         localStorage.removeItem("timer");
         document.querySelector("#timer").remove();
+
+        const audio = new Audio('./assets/Lego Yoda Death Sound.mp3');
+        audio.play()
         return;
       }
 

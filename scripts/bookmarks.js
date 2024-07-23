@@ -31,7 +31,11 @@ const bookmarks = [
   {
     title: "Social & Media",
     links: [
-      { name: "Twitter", url: "https://twitter.com", keywords: ["x"] },
+      {
+        name: "Twitter",
+        url: "https://twitter.com",
+        keywords: ["x", "twt", "tw"],
+      },
       {
         name: "Reddit",
         url: "https://reddit.com",
@@ -47,13 +51,13 @@ const bookmarks = [
       {
         name: "Twitch",
         url: "https://twitch.tv",
-        keywords: ["tw"],
+        keywords: ["tv", "ttv", "tt"],
         divide: true,
       },
       {
         name: "Disney+",
         url: "https://www.disneyplus.com/browse/espn",
-        keywords: ["disney", "+"],
+        keywords: ["disney", "+", "star"],
       },
     ],
   },
@@ -146,7 +150,7 @@ const bookmarks = [
         keywords: ["temp"],
         divide: true,
       },
-      { name: "Whatsapp", url: "https://web.whatsapp.com", keywords: ["wp"] },
+      { name: "Whatsapp", url: "https://web.whatsapp.com", keywords: ["wp", "wpp"] },
       {
         name: "Discord",
         url: "https://discord.com/channels/@me",
