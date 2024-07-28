@@ -66,6 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      // if "flip" then do nothing (coin animation stuff has to be in the other js file as I can use imports)
+      if (searchInput.value.toLowerCase() == "flip") {
+        resetBookmarkStyles(links);
+        return;
+      }
+
       let found = false;
       links.forEach((link) => {
         if (
