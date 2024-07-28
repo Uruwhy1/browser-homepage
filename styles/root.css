@@ -18,3 +18,13 @@
 
   --coin-shadow: #fff;
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-image: url("../assets/night-background.jpg");
+  }
+}
+
+:root.dawn {
+  --bg-image: url('../assets/dawn-background.jpeg')
+}

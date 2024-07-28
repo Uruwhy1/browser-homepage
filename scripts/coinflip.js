@@ -28,10 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function toggleElem(elem, bool) {
     if (bool) {
       elem.style.display = "flex";
-      elem.style.backdropFilter = "brightness(20%)";
     } else {
       elem.style.display = "none";
-      console.log("xdddd")
     }
     elem.style.animation = "appear 0.2s linear";
   }

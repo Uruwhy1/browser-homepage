@@ -10,6 +10,9 @@
   display: none;
   justify-content: center;
   align-items: center;
+
+  backdrop-filter: brightness(20%);
+
 }
 
 .coin-flip .buttons {
@@ -61,22 +64,6 @@
   background-color: blue;
 }
 
-@keyframes appear {
-  from {
-    opacity: 0%;
-  }
-  to {
-    opacity: 100%;
-  }
-}
-@keyframes dissapear {
-  from {
-    opacity: 100%;
-  }
-  to {
-    opacity: 0%;
-  }
-}
 
 @keyframes flipFront {
   0% {

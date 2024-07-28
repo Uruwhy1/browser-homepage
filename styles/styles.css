@@ -1,41 +1,4 @@
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-image: url("../assets/night-background.jpg");
-  }
-}
-
-:root.dawn {
-  --bg-image: url('../assets/dawn-background.jpeg')
-}
-
-/* Animations */
-@keyframes wrong {
-  0% {
-    color: inherit;
-  }
-  30% {
-    transform: rotate(-2deg);
-  }
-  50% {
-    color: var(--red);
-  }
-  60% {
-    transform: rotate(2deg);
-  }
-  100% {
-    color: inherit;
-  }
-}
-
-@keyframes right {
-  0% {
-    color: inherit;
-  }
-  100% {
-    color: var(--green);
-  }
-}
 
 /* General Styles */
 body {
@@ -50,6 +13,12 @@ body * {
   border-radius: 3px;
   background-color: var(--containerBg);
   color: var(--fg);
+}
+
+.random-buttons {
+  position: absolute;
+  left: 3rem;
+  top: 2rem;
 }
 
 /* Container */

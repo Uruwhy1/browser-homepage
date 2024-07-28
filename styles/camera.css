@@ -1,0 +1,29 @@
+.camera-container {
+  width: 100vw;
+  height: 100vh;
+
+  position: absolute;
+  display: none;
+  place-content: center;
+
+  backdrop-filter: brightness(20%);
+}
+
+video {
+  box-shadow: 0 0 60px 6px #fff;
+}
+
+.camera-icon {
+  width: 2.5rem;
+  cursor: pointer;
+
+  transition: transform 0.3s;
+}
+.camera-icon:hover {
+  transform: scale(1.1);
+}
+.camera-icon:active {
+  transform: scale(0.9);
+}
+
+

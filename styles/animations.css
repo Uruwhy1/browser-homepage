@@ -15,3 +15,47 @@
     opacity: 0;
   }
 }
+
+@keyframes wrong {
+  0% {
+    color: inherit;
+  }
+  30% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    color: var(--red);
+  }
+  60% {
+    transform: rotate(2deg);
+  }
+  100% {
+    color: inherit;
+  }
+}
+
+@keyframes right {
+  0% {
+    color: inherit;
+  }
+  100% {
+    color: var(--green);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+@keyframes dissapear {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}
