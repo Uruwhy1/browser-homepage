@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const root = document.documentElement;
+
   const flipButton = document.querySelector(".coin-flip");
   const heads = document.querySelector(".side-b");
   const tails = document.querySelector(".side-a");
 
-  let lastWinner = "Heads";
-
-  flipButton.addEventListener("click", startCoinSequence);
+  heads.addEventListener("click", startCoinSequence);
+  tails.addEventListener("click", startCoinSequence);
 
   function startCoinSequence() {
     const result = flipCoin();
-    lastWinner = result;
 
     // Reset animation
     heads.style.animation = "none";
@@ -25,51 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return random < 0.5 ? "Heads" : "Tails";
   }
 
-  function tailsFlip(result) {
-    if (result == "Tails") {
-      heads.style.zIndex = "99";
-      tails.style.zIndex = "0";
-    } else {
-      tails.style.zIndex = "99";
-      heads.style.zIndex = "0";
-    }
-  }
-
-  function headsFlip(result) {
-    if (result == "Heads") {
-      heads.style.zIndex = "99";
-      tails.style.zIndex = "0";
-    } else {
-      tails.style.zIndex = "99";
-      heads.style.zIndex = "0";
-    }
-  }
-
-  function toggleCenterElem(elem, shouldCenter) {
-    if (shouldCenter) {
-      elem.style.width = "100vw";
-      elem.style.height = "100vh";
-      elem.style.right = "0";
-      elem.style.top = "0";
-
+  function toggleElem(elem, bool) {
+    if (bool) {
+      elem.style.display = "flex";
       elem.style.backdropFilter = "brightness(20%)";
-
-      heads.style.height = "300px";
-      heads.style.width = "300px";
-      tails.style.height = "300px";
-      tails.style.width = "300px";
     } else {
-      elem.style.width = "";
-      elem.style.height = "";
-      elem.style.right = "";
-      elem.style.top = "";
-
-      elem.style.backdropFilter = "";
-
-      heads.style.height = "";
-      heads.style.width = "";
-      tails.style.height = "";
-      tails.style.width = "";
+      elem.style.display = "none";
+      console.log("xdddd")
     }
     elem.style.animation = "appear 0.2s linear";
   }
@@ -79,36 +41,38 @@ document.addEventListener("DOMContentLoaded", () => {
       heads.style.animation = "";
       tails.style.animation = "";
 
-      toggleCenterElem(flipButton, true); // Center the flipButton
-      headsFlip(result);
+      toggleElem(flipButton, true); // Center the flipButton
 
-      heads.style.animation = "flip 0.7s 2 linear";
-      tails.style.animation = "flip 0.7s 2 linear";
+      if (result == "Heads") {
+        heads.style.zIndex = "1";
+        tails.style.zIndex = "0";
+
+        heads.style.animation = "flipFront 3s 1 ease-in";
+        tails.style.animation = "flipBack 3s 1 ease-in";
+      } else {
+        tails.style.zIndex = "1";
+        heads.style.zIndex = "0";
+
+        tails.style.animation = "flipFront 3s 1 ease-in";
+        heads.style.animation = "flipBack 3s 1 ease-in";
+      }
     }, 10); // start
 
     setTimeout(() => {
-      tailsFlip(result);
-    }, 360); // half/2 duration
-
-    setTimeout(() => {
-      headsFlip(result);
-    }, 710); // half duration
-
-    setTimeout(() => {
-      tailsFlip(result);
-    }, 1060); // half+(half/2) duration
-
-    setTimeout(() => {
-      headsFlip(result);
-    }, 1410); // end
+      result == "Heads"
+        ? root.style.setProperty("--coin-shadow", "var(--green)")
+        : root.style.setProperty("--coin-shadow", "var(--red)");
+      console.log("xDGJDSMGKJMLDSHGMKJL");
+    }, 3010); // end
 
     setTimeout(() => {
       flipButton.style.animation = "dissapear 0.2s linear forwards";
-    }, 2110); // 0.3 before end
+    }, 3510); // 0.5 after end
 
     setTimeout(() => {
-      toggleCenterElem(flipButton, false);
-    }, 2510); // end + 1 second
+      toggleElem(flipButton, false);
+      root.style.setProperty("--coin-shadow", "#fff");
+    }, 3710); // 0.7 after end
   }
 
   // have to repeat a bit of code here as I can't import statements due to firefox security limitations :(

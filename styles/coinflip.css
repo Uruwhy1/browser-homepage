@@ -1,24 +1,64 @@
 .coin-flip {
   position: absolute;
-  right: 3rem;
-  top: 3rem;
 
-  width: 100px;
-  height: 100px;
+  width: 100vw;
+  height: 100vh;
 
   z-index: 1000;
+  perspective: 1000px;
 
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
+}
+
+.coin-flip .buttons {
+  position: relative;
+  bottom: -120px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.buttons button {
+  background-color: var(--containerBg);
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+
+  font-size: 1rem;
+  font-family: var(--normal-font);
+
+  padding: 0.5rem 1rem;
+  text-wrap: nowrap;
+
+  cursor: pointer;
+  transition: transform 0.1s, color 0.2s;
+}
+.buttons button:active {
+  transform: scale(0.95);
 }
 
 .coin-flip img {
   position: absolute;
   border-radius: 1000px;
 
-  width: 100px;
-  height: 100px;
+  cursor: pointer;
+  object-fit: cover;
+
+  width: 300px;
+  height: 300px;
+
+  backface-visibility: hidden;
+
+  box-shadow: 0 0 60px 6px var(--coin-shadow);
+}
+.side-a {
+  background-color: red;
+
+}
+.side-b {
+  background-color: blue;
 }
 
 @keyframes appear {
@@ -38,15 +78,20 @@
   }
 }
 
-@keyframes flip {
+@keyframes flipFront {
   0% {
     transform: rotateY(0);
   }
-  50% {
-    transform: rotateY(180deg);
-  }
   100% {
-    transform: rotateY(0);
+    transform: rotateY(1440deg);
   }
 }
 
+@keyframes flipBack {
+  0% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(1620deg);
+  }
+}
