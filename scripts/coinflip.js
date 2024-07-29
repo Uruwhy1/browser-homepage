@@ -62,12 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
       flipButton.style.animation = "dissapear 0.2s linear forwards";
-    }, 3510); // 0.5 after end
+    }, 4510); // 1.5 after end
 
     setTimeout(() => {
       toggleElem(flipButton, false);
       root.style.setProperty("--coin-shadow", "#fff");
-    }, 3710); // 0.7 after end
+    }, 4710); // 1.7 after end
   }
 
   // have to repeat a bit of code here as I can't import statements due to firefox security limitations :(
