@@ -18,6 +18,11 @@ video {
   cursor: pointer;
 
   transition: transform 0.3s;
+
+  
+  background-color: #303030;
+  padding: 0.5rem;
+  border-radius: 5px;
 }
 .camera-icon:hover {
   transform: scale(1.1);
