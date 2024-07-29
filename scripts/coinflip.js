@@ -5,9 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const heads = document.querySelector(".side-b");
   const tails = document.querySelector(".side-a");
 
-  heads.addEventListener("click", startCoinSequence);
-  tails.addEventListener("click", startCoinSequence);
-
   function startCoinSequence() {
     const result = flipCoin();
 
