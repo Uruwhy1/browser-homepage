@@ -4,11 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let numberFind = 0;
   let keywordFound = false;
   const timerModal = document.querySelector(".timer-modal-container");
-  let dividers;
-
-  setTimeout(() => { // if I don't do this dividers is an empty node list :DD
-    dividers = document.querySelectorAll(".divider");
-  }, 0);
 
   searchInput.value = "";
 
@@ -150,9 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (searchInput.value.length > 0) {
       root.style.setProperty("--bookmark-color", "gray");
-      dividers.forEach((elem) => {
-        elem.style.backgroundColor = "transparent";
-      });
 
       links.forEach((link) => {
         if (link.textContent.toLowerCase().includes(searchInput.value)) {
@@ -165,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
           numberFind++;
         } else {
           link.classList.remove("on");
-          link.style.opacity = "0";
+          link.style.opacity = "0.5";
         }
 
         const keywords = link.getAttribute("data-keywords");
