@@ -150,11 +150,16 @@ const bookmarks = [
         keywords: ["temp"],
         divide: true,
       },
-      { name: "Whatsapp", url: "https://web.whatsapp.com", keywords: ["wp", "wpp"] },
+      {
+        name: "Whatsapp",
+        url: "https://web.whatsapp.com",
+        keywords: ["wp", "wpp"],
+      },
       {
         name: "Discord",
         url: "https://discord.com/channels/@me",
         keywords: ["ds"],
+        divide: true,
       },
     ],
     color: "#4dff47",
