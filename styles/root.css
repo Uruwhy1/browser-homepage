@@ -5,6 +5,8 @@
   --secondaryFg: #d4d4d4;
 
   --bookmark-color: #d4d4d4;
+  --bookmark-display: block;
+  --divider-display: block;
 
   --containerBg: #272727;
   --accent-container: #ffffff;
@@ -26,5 +28,5 @@
 }
 
 :root.dawn {
-  --bg-image: url('../assets/dawn-background.jpeg')
+  --bg-image: url("../assets/dawn-background.jpeg");
 }

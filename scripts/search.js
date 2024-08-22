@@ -18,13 +18,18 @@ document.addEventListener("DOMContentLoaded", function () {
     keywordFound = false;
 
     root.style.setProperty("--bookmark-color", "");
+    root.style.setProperty("--divider-display", "");
+
     links.forEach((link) => {
+      link.style.setProperty("--bookmark-display", "");
+
       link.classList.remove("on");
       link.style.color = "";
+      link.style.display = "";
 
       link.style.position = "";
       link.style.bottom = "";
-      link.style.opacity = "";
+      link.style.opacity = "1";
     });
   };
 
@@ -109,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.ctrlKey) {
       event.preventDefault();
     }
-    if (event.key === "a" && event.ctrlKey) {
+    if ((event.key === "a" || event.key === "A") && event.ctrlKey) {
       searchInput.value = "";
       keywordFound = false;
       if (numberFind === 1) {
@@ -123,6 +128,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Handle Backspace key
     if (event.key === "Backspace") {
       searchInput.value = searchInput.value.slice(0, -1);
+      document.querySelectorAll(".hidden").forEach((elem) => {
+        elem.style.display = "";
+      });
       numberFind = 0;
     } else if (!event.ctrlKey) {
       searchInput.value += event.key;
@@ -140,9 +148,15 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".on").forEach((elem) => (elem.style.color = ""));
 
     if (searchInput.value.length > 0) {
+      root.style.setProperty("--divider-display", "none");
       root.style.setProperty("--bookmark-color", "gray");
+
       links.forEach((link) => {
-        if (link.textContent.toLowerCase().includes(searchInput.value)) {
+        if (
+          link.textContent
+            .toLowerCase()
+            .includes(searchInput.value.toLowerCase())
+        ) {
           link.classList.add("on");
 
           link.style.position = "";
@@ -153,18 +167,27 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           link.classList.remove("on");
           link.style.opacity = "0";
+
+          link.style.setProperty("--bookmark-display", "none");
         }
 
         const keywords = link.getAttribute("data-keywords");
         if (
           keywords &&
-          keywords.toLowerCase().split(" ").includes(searchInput.value)
+          keywords
+            .toLowerCase()
+            .split(" ")
+            .includes(searchInput.value.toLowerCase())
         ) {
           link.style.opacity = "";
+          link.style.display = "block";
 
           link.style.color = "var(--hover-color)";
+          link.classList.add("on");
           keywordFound = true;
         } else {
+          link.style.display = "";
+
           link.style.color = "";
         }
       });
@@ -173,6 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!keywordFound && numberFind !== 1 && document.querySelector(".on")) {
       document.querySelector(".on").style.color = "";
     } else if (numberFind == 1 && !keywordFound) {
+      document.querySelector(".on").style.display = "block";
       document.querySelector(".on").style.color = "var(--hover-color)";
     }
   });

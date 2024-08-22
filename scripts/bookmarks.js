@@ -200,7 +200,8 @@ function setupBookmarks() {
       }
 
       if (l.hide) {
-        link.style.display = "none";
+        link.classList.add("hidden");
+
         console.log(l.name, l.keywords);
       }
 
