@@ -9,30 +9,35 @@
     <link rel="stylesheet" href="./styles/root.css" />
     <link rel="stylesheet" href="./styles/fonts.css" />
     <link rel="stylesheet" href="./styles/styles.css" />
-    <link rel="stylesheet" href="./styles/timer.css" />
     <link rel="stylesheet" href="./styles/animations.css" />
     <link rel="stylesheet" href="./styles/coinflip.css" />
     <link rel="stylesheet" href="./styles/camera.css" />
+
+    <link rel="stylesheet" href="./styles/timeStuffContainer.css" />
+    <link rel="stylesheet" href="./styles/timer.css" />
 
     <script src="./scripts/bookmarks.js" defer></script>
     <script src="./scripts/time.js" defer></script>
     <script src="./scripts/timer.js" defer></script>
     <script src="./scripts/search.js" defer></script>
     <script src="./scripts/coinflip.js" defer></script>
+    <script src="./scripts/stopwatch.js" defer></script>
     <script src="./scripts/camera.js" defer></script>
   </head>
-  
+
   <body>
     <div class="coin-flip">
       <img src="assets/night-background.jpg" class="side-a" />
       <img src="assets/day-background.jpg" class="side-b" />
     </div>
     <div class="random-buttons">
-      <img src="./assets/video.svg" class="camera-icon">
+      <img src="./assets/video.svg" class="camera-icon" />
     </div>
     <div class="camera-container">
       <video id="video" width="640" height="480" autoplay></video>
     </div>
+
+    <div class="time-stuff-container"></div>
 
     <div class="container">
       <div id="clock" class="container-card"></div>

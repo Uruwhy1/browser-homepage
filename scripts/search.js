@@ -26,10 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
       link.style.bottom = "";
       link.style.opacity = "";
     });
-
-    dividers.forEach((elem) => {
-      elem.style.backgroundColor = "";
-    });
   };
 
   document.addEventListener("keydown", function (event) {
@@ -70,8 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // if "flip" then do nothing (coin animation stuff has to be in the other js file as I can use imports)
-      if (searchInput.value.toLowerCase() == "flip") {
+      // if "flip" or "stopwatch" then do nothing (coin animation stuff has to be in the other js file as I can use imports)
+      if (searchInput.value.toLowerCase() == "flip" || searchInput.value.toLowerCase() == "stopwatch") {
         resetBookmarkStyles(links);
         return;
       }

@@ -29,8 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keyup", (e) => {
     if (e.key === "Escape" && timerContainer.style.display === "flex") {
-
-
       keyUsed = false;
       fadeOutModal(timerContainer);
     }
@@ -88,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     minutesElement.classList.remove("inactive");
     hoursElement.classList.add("inactive");
-
   });
 
   function startCountdown(hours, minutes, seconds) {
@@ -114,21 +111,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateTimer() {
       const now = new Date().getTime();
       const distance = countDownDate - now;
-
       // If the countdown is over, clear the interval and remove the timer from localStorage
-      if (distance < 0) {
-        clearInterval(timerInterval);
-        localStorage.removeItem("timer");
-        document.querySelector("#timer").remove();
-
-        const audio = new Audio('./assets/Lego Yoda Death Sound.mp3');
-        audio.play()
-        return;
+      if (distance < 1000) {
+        stopTimer();
       }
 
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
+      const hours = Math.floor(distance / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
@@ -139,13 +127,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const timerElement = document.querySelector("#timer p");
       if (!timerElement) {
+        const timeStuffContainer = document.querySelector(
+          ".time-stuff-container"
+        );
+
         const newTimerElement = document.createElement("div");
         newTimerElement.id = "timer";
         newTimerElement.classList.add("container-card");
 
         const timerText = document.createElement("p");
         newTimerElement.appendChild(timerText);
-        document.body.appendChild(newTimerElement);
+        timeStuffContainer.appendChild(newTimerElement);
+
+        newTimerElement.addEventListener("click", () => {
+          stopTimer();
+        });
       }
 
       document.querySelector("#timer p").innerHTML = displayText;
@@ -161,6 +157,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 10);
 
     timerInterval = setInterval(updateTimer, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+    localStorage.removeItem("timer");
+    setTimeout(() => {
+      document.querySelector("#timer").remove();
+    }, 0);
+
+    const audio = new Audio("./assets/Lego Yoda Death Sound.mp3");
+    audio.play();
+    return;
   }
 
   // Function to update the time display

@@ -1,0 +1,23 @@
+.time-stuff-container {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.time-stuff-container div {
+  width: fit-content;
+  height: fit-content;
+
+  font-family: var(--normal-font);
+  font-size: 2rem;
+
+  cursor: pointer;
+}
+.time-stuff-container div p {
+  margin: 0;
+  padding: 0.5em;
+}
