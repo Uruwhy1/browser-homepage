@@ -24,6 +24,11 @@ const bookmarks = [
         url: "https://www.haxball.com/play",
         keywords: ["hax"],
       },
+      {
+        name: "Caedrel",
+        url: "https://www.twitch.tv/caedrel",
+        keywords: ["worlds", "lec"],
+      },
     ],
     color: "#b847ff",
     hide: true,
@@ -127,7 +132,7 @@ const bookmarks = [
       },
       { name: "Feather", url: "https://feathericons.com", keywords: ["svg"] },
       { name: "Icons", url: "https://icon-icons.com/", keywords: [""] },
-      { name: "unDraw", url: "https://undraw.co/search", keywords: ["img"]},
+      { name: "unDraw", url: "https://undraw.co/search", keywords: ["img"] },
       {
         name: "Webfonts",
         url: "https://gwfh.mranftl.com/fonts/roboto?subsets=latin",
