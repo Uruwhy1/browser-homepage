@@ -62,12 +62,19 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
       if (event.shiftKey) {
-        redirectToUrl(`https://www.${encodeURIComponent(searchInput.value)}`);
+        redirectToUrl(
+          `https://www.youtube.com/results?search_query=${encodeURIComponent(
+            searchInput.value
+          )}`
+        );
         return;
       }
 
       // if "flip" or "stopwatch" then do nothing (coin animation stuff has to be in the other js file as I can use imports)
-      if (searchInput.value.toLowerCase() == "flip" || searchInput.value.toLowerCase() == "stopwatch") {
+      if (
+        searchInput.value.toLowerCase() == "flip" ||
+        searchInput.value.toLowerCase() == "stopwatch"
+      ) {
         resetBookmarkStyles(links);
         return;
       }
