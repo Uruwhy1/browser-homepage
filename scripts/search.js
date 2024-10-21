@@ -150,7 +150,11 @@ document.addEventListener("DOMContentLoaded", function () {
       root.style.setProperty("--bookmark-color", "gray");
 
       links.forEach((link) => {
-        if (link.textContent.toLowerCase().includes(searchInput.value)) {
+        if (
+          link.textContent
+            .toLowerCase()
+            .includes(searchInput.value.toLowerCase())
+        ) {
           link.classList.add("on");
 
           link.style.position = "";
@@ -166,7 +170,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const keywords = link.getAttribute("data-keywords");
         if (
           keywords &&
-          keywords.toLowerCase().split(" ").includes(searchInput.value)
+          keywords
+            .toLowerCase()
+            .split(" ")
+            .includes(searchInput.value.toLowerCase())
         ) {
           link.style.opacity = "";
 
