@@ -28,6 +28,30 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
 
+  const analyzeSearchInput = (searchValue) => {
+    if (!searchValue) {
+      return {
+        type: "default",
+        query: "",
+      };
+    }
+
+    const prefixMatch = searchValue.match(/^-(\w+):\s*(.+)$/);
+
+    if (prefixMatch) {
+      const [_, prefix, query] = prefixMatch;
+      return {
+        type: prefix.toLowerCase(),
+        query: query.trim(),
+      };
+    }
+
+    return {
+      type: "default",
+      query: searchValue.trim(),
+    };
+  };
+
   document.addEventListener("keydown", function (event) {
     if (timerModal.style.display == "flex") {
       return;
@@ -51,65 +75,106 @@ document.addEventListener("DOMContentLoaded", function () {
     keywordFound = false;
     event.preventDefault();
 
-    // Handle Enter key
+    // handle searching
     if (event.key === "Enter") {
-      if (event.ctrlKey) {
-        redirectToUrl(
-          `https://www.google.com/search?q=${encodeURIComponent(
-            searchInput.value
-          )}`
-        );
-        return;
-      }
-      if (event.shiftKey) {
-        redirectToUrl(
-          `https://www.youtube.com/results?search_query=${encodeURIComponent(
-            searchInput.value
-          )}`
-        );
-        return;
-      }
+      const searchAnalysis = analyzeSearchInput(searchInput.value);
 
-      // if "flip" or "stopwatch" then do nothing (coin animation stuff has to be in the other js file as I can use imports)
-      if (
-        searchInput.value.toLowerCase() == "flip" ||
-        searchInput.value.toLowerCase() == "stopwatch"
-      ) {
-        resetBookmarkStyles(links);
+      // if search has keyword
+      if (searchAnalysis.type !== "default") {
+        switch (searchAnalysis.type) {
+          case "yt":
+            redirectToUrl(
+              `https://www.youtube.com/results?search_query=${encodeURIComponent(
+                searchAnalysis.query
+              )}`
+            );
+            break;
+          case "gh":
+            redirectToUrl(
+              `https://github.com/search?q=${encodeURIComponent(
+                searchAnalysis.query
+              )}&type=repositories`
+            );
+            break;
+          case "img":
+            redirectToUrl(
+              `https://www.google.com/search?udm=2&q=${encodeURIComponent(
+                searchAnalysis.query
+              )}`
+            );
+            break;
+          case "in":
+            redirectToUrl(
+              `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(
+                searchAnalysis.query
+              )}`
+            );
+          case "ttv":
+            redirectToUrl(
+              `https://www.twitch.tv/search?term=${encodeURIComponent(
+                searchAnalysis.query
+              )}`
+            );
+          case "x":
+            redirectToUrl(
+              `https://x.com/search?q=${encodeURIComponent(
+                searchAnalysis.query
+              )}&src=typed_query`
+            );
+        }
         return;
-      }
-
-      let found = false;
-      links.forEach((link) => {
-        if (
-          link.textContent.toLowerCase() === searchInput.value ||
-          (link.classList.contains("on") && numberFind === 1)
-        ) {
-          found = true;
-          searchInput.style.animation = "right 0.1s 1 forwards";
-          redirectToUrl(link.href);
-
+      } else {
+        // if search does not have keyword
+        if (event.ctrlKey) {
+          redirectToUrl(
+            `https://www.google.com/search?q=${encodeURIComponent(
+              searchInput.value
+            )}`
+          );
           return;
         }
-        const keywords = link.getAttribute("data-keywords");
-        if (
-          keywords &&
-          keywords.toLowerCase().split(" ").includes(searchInput.value)
-        ) {
-          found = true;
-          searchInput.style.animation = "right 0.1s 1 forwards";
-          redirectToUrl(link.href);
 
+        // if "flip" or "stopwatch" then do nothing (coin animation stuff has to be in the other js file as I can use imports)
+        if (
+          searchInput.value.toLowerCase() == "flip" ||
+          searchInput.value.toLowerCase() == "stopwatch"
+        ) {
+          resetBookmarkStyles(links);
           return;
         }
-      });
 
-      // if bookmark not found, wrong animation
-      if (!found) {
-        searchInput.style.animation = "wrong 1s 1";
+        let found = false;
+        links.forEach((link) => {
+          if (
+            link.textContent.toLowerCase() === searchInput.value ||
+            (link.classList.contains("on") && numberFind === 1)
+          ) {
+            found = true;
+            searchInput.style.animation = "right 0.1s 1 forwards";
+            redirectToUrl(link.href);
+
+            return;
+          }
+          const keywords = link.getAttribute("data-keywords");
+          if (
+            keywords &&
+            keywords.toLowerCase().split(" ").includes(searchInput.value)
+          ) {
+            found = true;
+            searchInput.style.animation = "right 0.1s 1 forwards";
+            redirectToUrl(link.href);
+
+            return;
+          }
+        });
+
+        // if bookmark not found, wrong animation
+        if (!found) {
+          searchInput.style.animation = "wrong 1s 1";
+        }
+        setTimeout(() => (searchInput.style.animation = ""), 1000);
+        return;
       }
-      setTimeout(() => (searchInput.style.animation = ""), 1000);
-      return;
     }
 
     // Handle Ctrl + A (select all)
