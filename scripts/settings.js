@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
   openIcon.addEventListener("click", openSettingsTab);
   addButton.addEventListener("click", addBookmark);
 
+  document.addEventListener("keydown", (e) => {
+    if ((e.code = "ESC")) {
+      openSettingsTab();
+    }
+  });
+
   displayBookmarksInSettings();
 });
 
