@@ -28,6 +28,28 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
 }
 
+.settings button {
+  display: grid;
+  place-content: center;
+
+  border-radius: 4px;
+  padding: 6px 12px;
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #0000002d;
+
+  border: 1px solid #ffffff1e;
+  font-weight: 500;
+
+  &:hover {
+    border-color: var(--accent-container);
+    outline: 1px solid var(--accent-container);
+  }
+}
+
 .settings h3 {
   margin: 0;
 }
@@ -75,12 +97,13 @@
     font-size: 1.1rem;
   }
 }
-.toggle-hide {
+.settings .toggle-hide-set {
   color: inherit;
   background-color: transparent;
   border: none;
 
   cursor: pointer;
+  padding: 0 0.5rem;
 }
 
 .bookmark-link {
@@ -113,12 +136,6 @@
   gap: 0.5rem;
 
   font-size: 1rem;
-
-  > button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 }
 
 .bookmark-link span {
@@ -132,52 +149,18 @@
 
 .bookmark-actions button {
   flex: 1;
-  border-radius: 4px;
-  padding: 6px 12px;
-
-  font-family: var(--normal-font);
-  font-size: 0.9rem;
-
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
-
-.add-link,
-.remove-set {
-  color: #fff;
-  border: 1px solid #ffffff1e;
-
-  font-weight: 500;
-
-  &:hover {
-    translate: 0px 2.5px;
-  }
-}
-.remove-set {
+.bookmark-actions .remove-set {
   background-color: rgb(255, 84, 84);
 }
 .add-link {
   color: var(--accent-container);
-  background-color: #0000002d;
 }
 
 .bookmark-link button {
-  background-color: #0000002d;
-  border: 1px solid #ffffff20;
-
-  color: white;
   opacity: 0;
-  transition: opacity 0.2s ease;
-  padding: 6px 12px;
-
-  font-family: inherit;
-  font-weight: 500;
   font-size: 0.9rem;
-
-  border-radius: 4px;
-  cursor: pointer;
 }
-
 .bookmark-link:hover button {
   opacity: 1;
 }

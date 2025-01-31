@@ -35,7 +35,8 @@
   box-sizing: border-box;
 }
 
-input {
+input,
+button {
   font-size: inherit;
   font-family: inherit;
   color: inherit;
