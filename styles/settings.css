@@ -2,15 +2,16 @@
   translate: 0;
 }
 .settings {
-  --width: 400px;
+  --width: 450px;
   width: var(--width);
+  z-index: 99;
 
   font-family: var(--normal-font);
   position: absolute;
   left: 0;
   bottom: 0;
   translate: calc(var(--width) * -1) 0;
-  transition: translate 0.5s;
+  transition: translate 0.5s ease;
 
   display: flex;
   flex-direction: column;
@@ -73,12 +74,27 @@
 }
 
 .bookmark-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-areas:
+    "title button"
+    "keywords keywords";
+  grid-template-rows: 1fr 1fr;
+  gap: 0.25rem 0;
 
   padding: 8px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.keywords-container {
+  grid-area: keywords;
+
+  > span,
+  input {
+    padding: 0.25rem 0.5rem;
+    background-color: var(--containerBg);
+
+    border: none;
+  }
 }
 
 .bookmark-link > div {

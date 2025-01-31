@@ -115,6 +115,47 @@ function displayBookmarksInSettings() {
       );
       linkElement.appendChild(removeLinkButton);
 
+      // Keywords container
+      const keywordsContainer = document.createElement("div");
+      keywordsContainer.classList.add("keywords-container");
+
+      const keywordsDisplay = document.createElement("span");
+      keywordsDisplay.textContent = link.keywords
+        ? link.keywords.join(", ")
+        : "";
+      keywordsContainer.appendChild(keywordsDisplay);
+
+      // Edit keywords button
+      const editKeywordsButton = document.createElement("button");
+      editKeywordsButton.textContent = "Edit Keywords";
+      editKeywordsButton.classList.add("edit-keywords");
+      editKeywordsButton.addEventListener("click", () => {
+        const keywordsInput = document.createElement("input");
+        keywordsInput.type = "text";
+        keywordsInput.value = link.keywords ? link.keywords.join(", ") : "";
+        keywordsInput.classList.add("keywords-input");
+
+        const saveKeywordsButton = document.createElement("button");
+        saveKeywordsButton.textContent = "Save";
+        saveKeywordsButton.classList.add("save-keywords");
+        saveKeywordsButton.addEventListener("click", () => {
+          const newKeywords = keywordsInput.value
+            .split(",")
+            .map((k) => k.trim())
+            .filter((k) => k.length > 0);
+          bookmarks[index].links[linkIndex].keywords = newKeywords;
+          saveBookmarks();
+          displayBookmarksInSettings();
+        });
+
+        keywordsContainer.innerHTML = "";
+        keywordsContainer.appendChild(keywordsInput);
+        keywordsContainer.appendChild(saveKeywordsButton);
+      });
+
+      keywordsContainer.appendChild(editKeywordsButton);
+      linkElement.appendChild(keywordsContainer);
+
       linksContainer.appendChild(linkElement);
     });
 
@@ -146,10 +187,11 @@ function addLinkToBookmarkSet(bookmarkSetIndex) {
   if (name && url) {
     const hide = confirm("Do you want to hide this link?");
     const divide = confirm("Do you want to add a divider after this link?");
+    const keywords = prompt("Enter keywords (comma-separated):");
     const newLink = {
       name: name,
       url: url,
-      keywords: [],
+      keywords: keywords ? keywords.split(",").map((k) => k.trim()) : [],
       hide: hide,
       divide: divide,
     };
