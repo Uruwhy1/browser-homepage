@@ -44,6 +44,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  height: 110px;
+  overflow: hidden;
+
+  &.displayed {
+    height: auto;
+  }
 }
 
 .bookmark-set-settings:hover {
@@ -53,13 +60,16 @@
 .set-title-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 1rem;
 
   padding-bottom: 8px;
   border-bottom: 2px solid var(--accent-container);
   color: var(--accent-container);
 
   > h4 {
+    cursor: pointer;
+
+    width: 100%;
     margin: 0;
     font-family: var(--normal-font);
     font-size: 1.1rem;
