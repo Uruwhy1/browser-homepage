@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   addButton.addEventListener("click", addBookmark);
 
   document.addEventListener("keydown", (e) => {
-    if ((e.code = "ESC")) {
+    if (e.code == "Escape") {
       openSettingsTab();
     }
   });
@@ -115,7 +115,7 @@ function displayBookmarksInSettings() {
       linkElement.appendChild(titleLink);
 
       const removeLinkButton = document.createElement("button");
-      removeLinkButton.textContent = "Remove Link";
+      removeLinkButton.textContent = "Edit Link";
       removeLinkButton.addEventListener("click", () =>
         removeLink(index, linkIndex)
       );
@@ -209,11 +209,31 @@ function addLinkToBookmarkSet(bookmarkSetIndex) {
 }
 
 function removeLink(bookmarkSetIndex, linkIndex) {
-  if (confirm("Are you sure you want to remove this link?")) {
-    bookmarks[bookmarkSetIndex].links.splice(linkIndex, 1);
+  const link = bookmarks[bookmarkSetIndex].links[linkIndex];
+
+  const newName = prompt("Edit the name of the link:", link.name);
+  const newUrl = prompt(
+    "Edit the URL of the link (empty for delete):",
+    link.url
+  );
+
+  if (newName && newUrl) {
+    bookmarks[bookmarkSetIndex].links[linkIndex].name = newName;
+    bookmarks[bookmarkSetIndex].links[linkIndex].url = newUrl;
     saveBookmarks();
     displayBookmarksInSettings();
     setupBookmarks();
+  } else if (newName === "" || newUrl === "") {
+    if (
+      confirm("The link name or URL is empty. Do you want to delete this link?")
+    ) {
+      bookmarks[bookmarkSetIndex].links.splice(linkIndex, 1);
+      saveBookmarks();
+      displayBookmarksInSettings();
+      setupBookmarks();
+    }
+  } else {
+    console.log("Link editing canceled.");
   }
 }
 
