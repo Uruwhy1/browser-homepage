@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cameraContainer = document.querySelector(".camera-container");
 
-  const cameraButton = document.querySelector(".camera-icon");
+  const cameraButton = document.querySelector("#camera-icon");
   const video = document.getElementById("video");
 
   cameraButton.addEventListener("click", () => {

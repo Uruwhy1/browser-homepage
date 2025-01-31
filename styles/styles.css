@@ -15,12 +15,32 @@ body * {
 
 .random-buttons {
   position: absolute;
-  right: 3rem;
+  right: 2rem;
   top: 2rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
+}
+
+.icon {
+  box-sizing: content-box;
+
+  width: 2.5rem;
+  cursor: pointer;
+
+  transition: transform 0.15s;
+
+  background-color: #303030;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.icon:hover {
+  transform: scale(1.1);
+}
+.icon:active {
+  transform: scale(0.9);
 }
 
 /* Container */
@@ -219,6 +239,4 @@ body * {
     margin-top: 1rem;
     min-width: 85%;
   }
-
-
 }

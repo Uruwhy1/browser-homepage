@@ -1,0 +1,183 @@
+.settings.show {
+  translate: 0;
+}
+.settings {
+  --width: 400px;
+  width: var(--width);
+
+  font-family: var(--normal-font);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  translate: calc(var(--width) * -1) 0;
+  transition: translate 0.5s;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  padding: 1rem;
+
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: scroll;
+
+  background-color: var(--containerBg);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.settings h3 {
+  margin: 0;
+}
+
+.bookmark-set-settings {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  margin-bottom: 15px;
+  transition: all 0.2s ease;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bookmark-set-settings:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.set-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent-container);
+  color: var(--accent-container);
+
+  > h4 {
+    margin: 0;
+    font-family: var(--normal-font);
+    font-size: 1.1rem;
+  }
+}
+.toggle-hide {
+  color: inherit;
+  background-color: transparent;
+  border: none;
+
+  cursor: pointer;
+}
+
+.bookmark-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bookmark-link > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: 1rem;
+
+  > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.bookmark-link span {
+  color: var(--secondaryFg);
+}
+
+.bookmark-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.bookmark-actions button {
+  flex: 1;
+  border-radius: 4px;
+  padding: 6px 12px;
+
+  font-family: var(--normal-font);
+  font-size: 0.9rem;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-link,
+.remove-set {
+  color: #fff;
+  border: 1px solid #ffffff1e;
+
+  font-weight: 500;
+
+  &:hover {
+    translate: 0px 2.5px;
+  }
+}
+.remove-set {
+  background-color: rgb(255, 84, 84);
+}
+.add-link {
+  color: var(--accent-container);
+  background-color: #0000002d;
+}
+
+.bookmark-link button {
+  background-color: #0000002d;
+  border: 1px solid #ffffff20;
+
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  padding: 6px 12px;
+
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 0.9rem;
+
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bookmark-link:hover button {
+  opacity: 1;
+}
+
+.settings::-webkit-scrollbar {
+  width: 8px;
+}
+
+.settings::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarColor);
+  border-radius: 4px;
+}
+
+.settings-header {
+  padding: 20px 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-header h2 {
+  margin: 0;
+  color: var(--fg);
+  font-family: var(--normal-font);
+  font-size: 1.5rem;
+}

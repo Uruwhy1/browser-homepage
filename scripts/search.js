@@ -109,18 +109,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 searchAnalysis.query
               )}`
             );
+            break;
           case "ttv":
             redirectToUrl(
               `https://www.twitch.tv/search?term=${encodeURIComponent(
                 searchAnalysis.query
               )}`
             );
+            break;
           case "x":
             redirectToUrl(
               `https://x.com/search?q=${encodeURIComponent(
                 searchAnalysis.query
               )}&src=typed_query`
             );
+            break;
         }
         return;
       } else {

@@ -7,6 +7,8 @@
   --bookmark-color: #d4d4d4;
 
   --containerBg: #272727;
+  --settings-bg: rgb(0, 0, 0);
+
   --accent-container: #ffffff;
   --scrollbarColor: #3f3f3f;
   --green: rgb(115, 238, 131);
@@ -26,5 +28,9 @@
 }
 
 :root.dawn {
-  --bg-image: url('../assets/dawn-background.jpeg')
+  --bg-image: url("../assets/dawn-background.jpeg");
+}
+
+* {
+  box-sizing: border-box;
 }

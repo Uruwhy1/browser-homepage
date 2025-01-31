@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="./styles/timeStuffContainer.css" />
     <link rel="stylesheet" href="./styles/timer.css" />
+    <link rel="stylesheet" href="./styles/settings.css" />
 
     <script src="./scripts/bookmarks.js" defer></script>
     <script src="./scripts/time.js" defer></script>
@@ -23,15 +24,22 @@
     <script src="./scripts/coinflip.js" defer></script>
     <script src="./scripts/stopwatch.js" defer></script>
     <script src="./scripts/camera.js" defer></script>
+    <script src="./scripts/settings.js" defer></script>
   </head>
 
   <body>
+    <div class="settings container-card">
+      <h3>Bookmarks</h3>
+      <div id="bookmarks-container"></div>
+      <button id="add-bookmark">Add Bookmark Set</button>
+    </div>
     <div class="coin-flip">
       <img src="assets/night-background.jpg" class="side-a" />
       <img src="assets/day-background.jpg" class="side-b" />
     </div>
     <div class="random-buttons">
-      <img src="./assets/video.svg" class="camera-icon" />
+      <img src="./assets/video.svg" class="icon" id="camera-icon" />
+      <img src="./assets/settings.svg" class="icon" id="settings-icon" />
     </div>
     <div class="camera-container">
       <video id="video" width="640" height="480" autoplay></video>
