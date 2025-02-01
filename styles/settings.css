@@ -54,13 +54,18 @@
   margin: 0;
 }
 
+#bookmarks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .bookmark-set-settings {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
 
   background-color: rgba(255, 255, 255, 0.05);
   padding: 15px;
-  margin-bottom: 15px;
   transition: all 0.2s ease;
 
   display: flex;
@@ -70,6 +75,7 @@
   height: 110px;
   overflow: hidden;
 
+  position: relative;
   &.displayed {
     height: auto;
   }
@@ -95,6 +101,12 @@
     margin: 0;
     font-family: var(--normal-font);
     font-size: 1.1rem;
+
+    padding: 0.25rem;
+    &:hover {
+      background-color: var(--containerBg);
+      border-radius: 5px;
+    }
   }
 }
 .settings .toggle-hide-set {
@@ -165,19 +177,6 @@
   opacity: 1;
 }
 
-.settings::-webkit-scrollbar {
-  width: 8px;
-}
-
-.settings::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.settings::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbarColor);
-  border-radius: 4px;
-}
-
 .settings-header {
   padding: 20px 0;
   margin-bottom: 20px;
@@ -189,4 +188,55 @@
   color: var(--fg);
   font-family: var(--normal-font);
   font-size: 1.5rem;
+}
+
+/* dragging stuff */
+
+.bookmark-set-settings.dragging {
+  opacity: 0.5;
+  border: 2px dashed var(--accent-container);
+}
+
+#bookmarks-container.dragover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.drop-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #3498db;
+  transform: scaleX(0.98);
+  display: none;
+}
+
+.drop-indicator::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  background-color: #3498db;
+  border-radius: 50%;
+}
+
+.drop-indicator::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  background-color: #3498db;
+  border-radius: 50%;
+}
+
+.drop-indicator.top {
+  top: -1px;
+}
+
+.drop-indicator.bottom {
+  bottom: -1px;
 }

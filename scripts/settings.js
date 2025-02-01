@@ -29,6 +29,8 @@ function addBookmark() {
       links: [],
       hide: hide,
       color: color,
+      open: false,
+      number: bookmarks.length,
     };
     bookmarks.push(newBookmarkSet);
     saveBookmarks();
@@ -50,9 +52,21 @@ function displayBookmarksInSettings() {
   const bookmarksContainer = document.getElementById("bookmarks-container");
   bookmarksContainer.innerHTML = "";
 
+  bookmarks.sort((a, b) => a.number - b.number);
   bookmarks.forEach((bookmarkSet, index) => {
     const bookmarkSetElement = document.createElement("div");
     bookmarkSetElement.classList.add("bookmark-set-settings");
+    bookmarkSetElement.draggable = true;
+    bookmarkSetElement.dataset.index = index;
+    bookmarkSetElement.style.order = bookmarkSet.number;
+
+    const topIndicator = document.createElement("div");
+    topIndicator.classList.add("drop-indicator", "top");
+    const bottomIndicator = document.createElement("div");
+    bottomIndicator.classList.add("drop-indicator", "bottom");
+
+    bookmarkSetElement.appendChild(topIndicator);
+    bookmarkSetElement.appendChild(bottomIndicator);
 
     if (bookmarkSet.color) {
       bookmarkSetElement.style.setProperty(
@@ -65,11 +79,30 @@ function displayBookmarksInSettings() {
       bookmarkSetElement.classList.add("displayed");
     }
 
+    bookmarkSetElement.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("text/plain", index);
+      e.dataTransfer.effectAllowed = "move";
+      bookmarkSetElement.classList.add("dragging");
+
+      document.querySelectorAll(".drop-indicator").forEach((indicator) => {
+        indicator.style.display = "none";
+      });
+    });
+
+    bookmarkSetElement.addEventListener("dragend", () => {
+      bookmarkSetElement.classList.remove("dragging");
+
+      document.querySelectorAll(".drop-indicator").forEach((indicator) => {
+        indicator.style.display = "none";
+      });
+    });
+
     const titleDiv = document.createElement("div");
     titleDiv.classList.add("set-title-container");
 
     const titleElement = document.createElement("h4");
     titleElement.textContent = bookmarkSet.title;
+    titleElement.textContent += bookmarkSet.number;
 
     titleElement.addEventListener("click", () => {
       bookmarkSet.open = !bookmarkSet.open;
@@ -197,6 +230,88 @@ function displayBookmarksInSettings() {
     bookmarkSetElement.appendChild(linksContainer);
     bookmarksContainer.appendChild(bookmarkSetElement);
   });
+
+  let lastDragOver = 0;
+  bookmarksContainer.addEventListener("dragover", (e) => {
+    e.preventDefault();
+
+    const now = Date.now();
+    if (now - lastDragOver < 50) return;
+    lastDragOver = now;
+
+    const draggingElement = document.querySelector(".dragging");
+    if (!draggingElement) return;
+
+    document.querySelectorAll(".drop-indicator").forEach((indicator) => {
+      indicator.style.display = "none";
+    });
+
+    const afterElement = getDragAfterElement(bookmarksContainer, e.clientY);
+    if (afterElement == null) {
+      const lastElement = bookmarksContainer.lastElementChild;
+      if (lastElement && !lastElement.classList.contains("dragging")) {
+        lastElement.querySelector(".drop-indicator.bottom").style.display =
+          "block";
+      }
+    } else {
+      afterElement.querySelector(".drop-indicator.top").style.display = "block";
+    }
+
+    if (afterElement == null) {
+      bookmarksContainer.appendChild(draggingElement);
+    } else {
+      bookmarksContainer.insertBefore(draggingElement, afterElement);
+    }
+  });
+
+  bookmarksContainer.addEventListener("drop", (e) => {
+    e.preventDefault();
+
+    document.querySelectorAll(".drop-indicator").forEach((indicator) => {
+      indicator.style.display = "none";
+    });
+
+    const draggedIndex = parseInt(e.dataTransfer.getData("text/plain"));
+    if (isNaN(draggedIndex)) return;
+
+    const draggingElement = document.querySelector(".dragging");
+    if (!draggingElement) return;
+
+    const bookmarkElements = Array.from(
+      bookmarksContainer.querySelectorAll(".bookmark-set-settings")
+    );
+
+    bookmarkElements.forEach((element, newIndex) => {
+      const originalIndex = parseInt(element.dataset.index);
+      if (!isNaN(originalIndex)) {
+        bookmarks[originalIndex].number = newIndex;
+      }
+    });
+
+    saveBookmarks();
+    displayBookmarksInSettings();
+    setupBookmarks();
+  });
+}
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [
+    ...container.querySelectorAll(".bookmark-set-settings:not(.dragging)"),
+  ];
+
+  return draggableElements.reduce(
+    (closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - (box.top + box.height / 2);
+
+      if (offset < 0 && offset > closest.offset) {
+        return { offset, element: child };
+      } else {
+        return closest;
+      }
+    },
+    { offset: Number.NEGATIVE_INFINITY }
+  ).element;
 }
 
 function addLinkToBookmarkSet(bookmarkSetIndex) {

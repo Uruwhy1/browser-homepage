@@ -8,6 +8,7 @@ function setupBookmarks() {
   bookmarks.map((b) => {
     const html = document.createElement("div");
     html.classList.add("bookmark-set");
+    html.style.order = b.number;
 
     const title = document.createElement("div");
     title.classList.add("bookmark-title");
