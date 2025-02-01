@@ -2,7 +2,7 @@
   translate: 0;
 }
 .settings {
-  --width: 450px;
+  --width: min(450px, 100vw);
   width: var(--width);
   z-index: 99;
 
@@ -233,5 +233,5 @@
 }
 
 .bookmark-link.dragging {
-  opacity: 0.25;
+  opacity: 0.5;
 }
