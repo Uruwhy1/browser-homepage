@@ -205,38 +205,15 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 2px;
-  background-color: #3498db;
-  transform: scaleX(0.98);
+  height: 4px;
+  background-color: var(--accent-container);
   display: none;
 }
 
-.drop-indicator::before {
-  content: "";
-  position: absolute;
-  left: -5px;
-  top: -4px;
-  width: 10px;
-  height: 10px;
-  background-color: #3498db;
-  border-radius: 50%;
-}
-
-.drop-indicator::after {
-  content: "";
-  position: absolute;
-  right: -5px;
-  top: -4px;
-  width: 10px;
-  height: 10px;
-  background-color: #3498db;
-  border-radius: 50%;
-}
-
 .drop-indicator.top {
-  top: -1px;
+  top: 0px;
 }
 
 .drop-indicator.bottom {
-  bottom: -1px;
+  bottom: 0px;
 }

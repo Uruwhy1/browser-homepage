@@ -102,7 +102,6 @@ function displayBookmarksInSettings() {
 
     const titleElement = document.createElement("h4");
     titleElement.textContent = bookmarkSet.title;
-    titleElement.textContent += bookmarkSet.number;
 
     titleElement.addEventListener("click", () => {
       bookmarkSet.open = !bookmarkSet.open;
