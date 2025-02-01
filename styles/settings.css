@@ -142,7 +142,7 @@
   }
 }
 
-.bookmark-link > div {
+.bookmark-link > div:not(.link-drop-indicator) {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -210,10 +210,28 @@
   display: none;
 }
 
-.drop-indicator.top {
+.top {
   top: 0px;
 }
 
-.drop-indicator.bottom {
+.bottom {
   bottom: 0px;
+}
+
+.link-drop-indicator {
+  display: none;
+  height: 2px;
+  background-color: #0066cc;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.bookmark-link {
+  position: relative;
+  cursor: move;
+}
+
+.bookmark-link.dragging {
+  opacity: 0.25;
 }

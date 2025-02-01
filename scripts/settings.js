@@ -124,10 +124,48 @@ function displayBookmarksInSettings() {
 
     const linksContainer = document.createElement("div");
     linksContainer.classList.add("bookmark-links-container");
+    linksContainer.dataset.bookmarkSetIndex = index;
 
     bookmarkSet.links.forEach((link, linkIndex) => {
       const linkElement = document.createElement("div");
       linkElement.classList.add("bookmark-link");
+      linkElement.draggable = true;
+      linkElement.dataset.linkIndex = linkIndex;
+
+      const linkTopIndicator = document.createElement("div");
+      linkTopIndicator.classList.add("link-drop-indicator", "top");
+      const linkBottomIndicator = document.createElement("div");
+      linkBottomIndicator.classList.add("link-drop-indicator", "bottom");
+
+      linkElement.appendChild(linkTopIndicator);
+      linkElement.appendChild(linkBottomIndicator);
+
+      linkElement.addEventListener("dragstart", (e) => {
+        e.stopPropagation();
+        e.dataTransfer.setData(
+          "text/plain",
+          JSON.stringify({
+            bookmarkSetIndex: index,
+            linkIndex: linkIndex,
+          })
+        );
+        linkElement.classList.add("dragging");
+
+        document
+          .querySelectorAll(".link-drop-indicator")
+          .forEach((indicator) => {
+            indicator.style.display = "none";
+          });
+      });
+
+      linkElement.addEventListener("dragend", () => {
+        linkElement.classList.remove("dragging");
+        document
+          .querySelectorAll(".link-drop-indicator")
+          .forEach((indicator) => {
+            indicator.style.display = "none";
+          });
+      });
 
       const titleLink = document.createElement("div");
       titleLink.classList.add("link-title-container");
@@ -228,6 +266,78 @@ function displayBookmarksInSettings() {
 
     bookmarkSetElement.appendChild(linksContainer);
     bookmarksContainer.appendChild(bookmarkSetElement);
+
+    let lastLinkDragOver = 0;
+    linksContainer.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const now = Date.now();
+      if (now - lastLinkDragOver < 50) return;
+      lastLinkDragOver = now;
+
+      const draggingElement = document.querySelector(".bookmark-link.dragging");
+      if (!draggingElement) return;
+
+      document.querySelectorAll(".link-drop-indicator").forEach((indicator) => {
+        indicator.style.display = "none";
+      });
+
+      const afterElement = getDragAfterLink(linksContainer, e.clientY);
+      if (afterElement == null) {
+        const lastElement = linksContainer.lastElementChild;
+        if (lastElement && !lastElement.classList.contains("dragging")) {
+          lastElement.querySelector(
+            ".link-drop-indicator.bottom"
+          ).style.display = "block";
+        }
+      } else {
+        afterElement.querySelector(".link-drop-indicator.top").style.display =
+          "block";
+      }
+
+      if (afterElement == null) {
+        linksContainer.appendChild(draggingElement);
+      } else {
+        linksContainer.insertBefore(draggingElement, afterElement);
+      }
+    });
+
+    linksContainer.addEventListener("drop", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      document.querySelectorAll(".link-drop-indicator").forEach((indicator) => {
+        indicator.style.display = "none";
+      });
+
+      const dragData = JSON.parse(e.dataTransfer.getData("text/plain"));
+      const { bookmarkSetIndex: fromSetIndex, linkIndex: fromLinkIndex } =
+        dragData;
+      const toSetIndex = parseInt(linksContainer.dataset.bookmarkSetIndex);
+
+      if (isNaN(fromSetIndex) || isNaN(fromLinkIndex) || isNaN(toSetIndex))
+        return;
+
+      const linkElements = Array.from(
+        linksContainer.querySelectorAll(".bookmark-link")
+      );
+      const toIndex = linkElements.findIndex((el) =>
+        el.classList.contains("dragging")
+      );
+
+      if (toIndex === -1) return;
+
+      const movedLink = bookmarks[fromSetIndex].links.splice(
+        fromLinkIndex,
+        1
+      )[0];
+      bookmarks[toSetIndex].links.splice(toIndex, 0, movedLink);
+
+      saveBookmarks();
+      displayBookmarksInSettings();
+      setupBookmarks();
+    });
   });
 
   let lastDragOver = 0;
@@ -388,4 +498,24 @@ function toggleLinkDivide(bookmarkSetIndex, linkIndex) {
 
 function saveBookmarks() {
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+}
+
+function getDragAfterLink(container, y) {
+  const draggableElements = [
+    ...container.querySelectorAll(".bookmark-link:not(.dragging)"),
+  ];
+
+  return draggableElements.reduce(
+    (closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - (box.top + box.height / 2);
+
+      if (offset < 0 && offset > closest.offset) {
+        return { offset, element: child };
+      } else {
+        return closest;
+      }
+    },
+    { offset: Number.NEGATIVE_INFINITY }
+  ).element;
 }
