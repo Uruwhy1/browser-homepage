@@ -28,7 +28,7 @@ window.onload = () => {
 };
 
 function setBackground(hour, minutes) {
-  const isDawnTime = hour === 17 || (hour === 18 && minutes <= 20);
+  const isDawnTime = hour === 18 || hour === 19;
 
   if (isDawnTime) {
     document.documentElement.classList.add("dawn");
