@@ -1,3 +1,12 @@
+#search-prefixes-container {
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  > *:first-child {
+    width: 100%;
+  }
+}
+
 .prefix-display {
   display: flex;
   justify-content: space-between;
@@ -5,7 +14,7 @@
   gap: 0.5rem;
 
   background-color: rgba(255, 255, 255, 0.05);
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .prefix-text {
