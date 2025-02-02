@@ -55,19 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const getSearchPrefixes = () => {
-    const defaultPrefixes = {
-      yt: "https://www.youtube.com/results?search_query={query}",
-      gh: "https://github.com/search?q={query}&type=repositories",
-      img: "https://www.google.com/search?udm=2&q={query}",
-      in: "https://www.linkedin.com/jobs/search/?keywords={query}",
-      ttv: "https://www.twitch.tv/search?term={query}",
-      x: "https://x.com/search?q={query}&src=typed_query",
-    };
-
     const storedPrefixes = localStorage.getItem("searchPrefixes");
-    if (!storedPrefixes)
-      localStorage.setItem("searchPrefixes", JSON.stringify(defaultPrefixes));
-    return storedPrefixes ? JSON.parse(storedPrefixes) : defaultPrefixes;
+    return storedPrefixes ? JSON.parse(storedPrefixes) : "";
   };
 
   document.addEventListener("keydown", function (event) {

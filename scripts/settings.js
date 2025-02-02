@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const openIcon = document.getElementById("settings-icon");
-  const addButton = document.getElementById("add-bookmark");
 
   openIcon.addEventListener("click", openSettingsTab);
 

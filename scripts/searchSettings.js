@@ -8,19 +8,8 @@ function displaySearchPrefixes() {
   );
   prefixesContainer.innerHTML = "";
 
-  const defaultPrefixes = {
-    yt: "https://www.youtube.com/results?search_query={query}",
-    gh: "https://github.com/search?q={query}&type=repositories",
-    img: "https://www.google.com/search?udm=2&q={query}",
-    in: "https://www.linkedin.com/jobs/search/?keywords={query}",
-    ttv: "https://www.twitch.tv/search?term={query}",
-    x: "https://x.com/search?q={query}&src=typed_query",
-  };
-
   const storedPrefixes = localStorage.getItem("searchPrefixes");
-  const prefixes = storedPrefixes
-    ? JSON.parse(storedPrefixes)
-    : defaultPrefixes;
+  const prefixes = storedPrefixes ? JSON.parse(storedPrefixes) : "";
 
   const addButton = document.createElement("button");
   addButton.textContent = "Add Prefix";
