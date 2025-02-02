@@ -35,9 +35,11 @@
   box-sizing: border-box;
 }
 
-input,
-button {
+*,
+*::after,
+*::before {
   font-size: inherit;
   font-family: inherit;
   color: inherit;
+  margin: 0;
 }

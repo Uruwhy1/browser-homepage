@@ -37,7 +37,6 @@ function setupBookmarks() {
 
       if (l.hide) {
         link.style.display = "none";
-        console.log(l.name, l.keywords);
       }
 
       innerBookmarks.appendChild(link);
@@ -63,5 +62,3 @@ function setupBookmarks() {
 function saveBookmarks() {
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 }
-
-document.addEventListener("DOMContentLoaded", setupBookmarks);

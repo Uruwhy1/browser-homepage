@@ -1,3 +1,4 @@
+"use strict";
 document.addEventListener("DOMContentLoaded", () => {
   const openIcon = document.getElementById("settings-icon");
   const addButton = document.getElementById("add-bookmark");
@@ -20,15 +21,18 @@ function openSettingsTab() {
 }
 
 function addBookmark() {
-  const title = prompt("Enter the title of the new bookmark set:");
-  if (title) {
-    const color = prompt("Choose a color:", "#fff");
-    const hide = confirm("Do you want to hide this bookmark set?");
+  const fields = {
+    "Bookmark Set Title": "",
+    Color: ["#fff", "color"],
+    "Hide Bookmark Set": [false, "checkbox"],
+  };
+
+  createForm(fields, (formData) => {
     const newBookmarkSet = {
-      title: title,
+      title: formData["Bookmark Set Title"],
       links: [],
-      hide: hide,
-      color: color,
+      hide: formData["Hide Bookmark Set"],
+      color: formData["Color"],
       open: false,
       number: bookmarks.length,
     };
@@ -36,16 +40,46 @@ function addBookmark() {
     saveBookmarks();
     displayBookmarksInSettings();
     setupBookmarks();
-  }
+  });
 }
 
 function removeBookmark(index) {
-  if (confirm("Are you sure you want to remove this bookmark set?")) {
-    bookmarks.splice(index, 1);
-    saveBookmarks();
-    displayBookmarksInSettings();
-    setupBookmarks();
-  }
+  bookmarks.splice(index, 1);
+
+  saveBookmarks();
+  displayBookmarksInSettings();
+  setupBookmarks();
+}
+
+function editBookmarkSet(index) {
+  const bookmarkSet = bookmarks[index];
+
+  const fields = {
+    "Bookmark Set Title": bookmarkSet.title,
+    Color: [colours[bookmarkSet.color] || bookmarkSet.color, "color"],
+    "Hide Bookmark Set": [bookmarkSet.hide, "checkbox"],
+  };
+
+  createForm(
+    fields,
+    (formData) => {
+      bookmarks[index] = {
+        ...bookmarkSet,
+        title: formData["Bookmark Set Title"],
+        color: formData["Color"],
+        hide: formData["Hide Bookmark Set"],
+      };
+      saveBookmarks();
+      displayBookmarksInSettings();
+      setupBookmarks();
+    },
+    [
+      "Remove",
+      () => {
+        removeBookmark(index);
+      },
+    ]
+  );
 }
 
 function displayBookmarksInSettings() {
@@ -199,7 +233,7 @@ function displayBookmarksInSettings() {
       const removeLinkButton = document.createElement("button");
       removeLinkButton.textContent = "Edit Link";
       removeLinkButton.addEventListener("click", () =>
-        removeLink(index, linkIndex)
+        editLink(index, linkIndex)
       );
       linkElement.appendChild(removeLinkButton);
 
@@ -250,17 +284,17 @@ function displayBookmarksInSettings() {
     const actionButtons = document.createElement("div");
     actionButtons.classList.add("bookmark-actions");
 
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.classList.add("remove-set");
-    removeButton.addEventListener("click", () => removeBookmark(index));
+    const editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+    editButton.classList.add("edit-set");
+    editButton.addEventListener("click", () => editBookmarkSet(index));
 
     const addLinkButton = document.createElement("button");
     addLinkButton.textContent = "Add Link";
     addLinkButton.classList.add("add-link");
     addLinkButton.addEventListener("click", () => addLinkToBookmarkSet(index));
 
-    actionButtons.appendChild(removeButton);
+    actionButtons.appendChild(editButton);
     actionButtons.appendChild(addLinkButton);
     bookmarkSetElement.appendChild(actionButtons);
 
@@ -424,53 +458,78 @@ function getDragAfterElement(container, y) {
 }
 
 function addLinkToBookmarkSet(bookmarkSetIndex) {
-  const name = prompt("Enter the name of the new link:");
-  const url = prompt("Enter the URL of the new link:");
-  if (name && url) {
-    const hide = confirm("Do you want to hide this link?");
-    const divide = confirm("Do you want to add a divider after this link?");
-    const keywords = prompt("Enter keywords (comma-separated):");
+  const fields = {
+    "Link Name": "",
+    URL: ["", "url"],
+    "Hide Link": [false, "checkbox"],
+    "Add Divider": [false, "checkbox"],
+    Keywords: ["", "text"],
+  };
+
+  createForm(fields, (formData) => {
     const newLink = {
-      name: name,
-      url: url,
-      keywords: keywords ? keywords.split(",").map((k) => k.trim()) : [],
-      hide: hide,
-      divide: divide,
+      name: formData["Link Name"],
+      url: formData["URL"],
+      keywords: formData["Keywords"]
+        ? formData["Keywords"].split(",").map((k) => k.trim())
+        : [],
+      hide: formData["Hide Link"],
+      divide: formData["Add Divider"],
     };
     bookmarks[bookmarkSetIndex].links.push(newLink);
     saveBookmarks();
     displayBookmarksInSettings();
     setupBookmarks();
-  }
+  });
 }
 
-function removeLink(bookmarkSetIndex, linkIndex) {
+function editLink(bookmarkSetIndex, linkIndex) {
   const link = bookmarks[bookmarkSetIndex].links[linkIndex];
 
-  const newName = prompt("Edit the name of the link:", link.name);
-  const newUrl = prompt(
-    "Edit the URL of the link (empty for delete):",
-    link.url
-  );
+  const fields = {
+    "Link Name": link.name,
+    URL: [link.url, "url"],
+    "Hide Link": [link.hide || false, "checkbox"],
+    "Add Divider": [link.divide || false, "checkbox"],
+    Keywords: [link.keywords ? link.keywords.join(", ") : "", "text"],
+  };
 
-  if (newName && newUrl) {
-    bookmarks[bookmarkSetIndex].links[linkIndex].name = newName;
-    bookmarks[bookmarkSetIndex].links[linkIndex].url = newUrl;
-    saveBookmarks();
-    displayBookmarksInSettings();
-    setupBookmarks();
-  } else if (newName === "" || newUrl === "") {
-    if (
-      confirm("The link name or URL is empty. Do you want to delete this link?")
-    ) {
-      bookmarks[bookmarkSetIndex].links.splice(linkIndex, 1);
-      saveBookmarks();
-      displayBookmarksInSettings();
-      setupBookmarks();
-    }
-  } else {
-    console.log("Link editing canceled.");
-  }
+  createForm(
+    fields,
+    [
+      "Save Link",
+      (formData) => {
+        if (formData["Link Name"] && formData["URL"]) {
+          bookmarks[bookmarkSetIndex].links[linkIndex] = {
+            name: formData["Link Name"],
+            url: formData["URL"],
+            hide: formData["Hide Link"],
+            divide: formData["Add Divider"],
+            keywords: formData["Keywords"]
+              ? formData["Keywords"]
+                  .split(",")
+                  .map((k) => k.trim())
+                  .filter((k) => k)
+              : [],
+          };
+          saveBookmarks();
+          displayBookmarksInSettings();
+          setupBookmarks();
+        }
+      },
+    ],
+    [
+      "Delete Link",
+      () => {
+        if (confirm("Are you sure you want to delete this link?")) {
+          bookmarks[bookmarkSetIndex].links.splice(linkIndex, 1);
+          saveBookmarks();
+          displayBookmarksInSettings();
+          setupBookmarks();
+        }
+      },
+    ]
+  );
 }
 
 function toggleBookmarkSetVisibility(index) {

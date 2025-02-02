@@ -2,6 +2,8 @@
 body {
   background: var(--bg-image);
   margin: 0;
+
+  font-family: var(--normal-font);
 }
 body * {
   user-select: none;
