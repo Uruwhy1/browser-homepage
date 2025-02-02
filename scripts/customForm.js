@@ -2,6 +2,15 @@ function createForm(fields, onSubmit, onSecondary) {
   const form = document.createElement("form");
   form.classList.add("dynamic-form");
 
+  const backdrop = document.createElement("div");
+  backdrop.classList.add("form-backdrop");
+
+  const removeForm = () => {
+    form.remove();
+    backdrop.remove();
+  };
+  backdrop.addEventListener("click", removeForm);
+
   for (const [key, value] of Object.entries(fields)) {
     const container = document.createElement("div");
 
@@ -29,9 +38,7 @@ function createForm(fields, onSubmit, onSecondary) {
   cancelButton.classList.add("cancel-button");
   cancelButton.textContent = "Cancel";
   cancelButton.type = "button";
-  cancelButton.addEventListener("click", () => {
-    form.remove();
-  });
+  cancelButton.addEventListener("click", removeForm);
 
   const submitButton = document.createElement("button");
   submitButton.type = "submit";
@@ -48,13 +55,13 @@ function createForm(fields, onSubmit, onSecondary) {
       secondaryButton.textContent = onSecondary[0];
       secondaryButton.addEventListener("click", () => {
         onSecondary[1]();
-        form.remove();
+        removeForm();
       });
     } else {
       secondaryButton.textContent = "Secondary";
       secondaryButton.addEventListener("click", () => {
         onSecondary();
-        form.remove();
+        removeForm();
       });
     }
     buttonContainer.appendChild(secondaryButton);
@@ -75,23 +82,13 @@ function createForm(fields, onSubmit, onSecondary) {
         formData[key] = input.value;
       }
     }
-    form.remove();
-    onSubmit(formData);
-  });
 
-  const backdrop = document.createElement("div");
-  backdrop.classList.add("form-backdrop");
+    onSubmit(formData);
+    removeForm();
+  });
 
   document.body.appendChild(backdrop);
   document.body.appendChild(form);
-
-  const removeForm = () => {
-    form.remove();
-    backdrop.remove();
-  };
-
-  cancelButton.addEventListener("click", removeForm);
-  backdrop.addEventListener("click", removeForm);
 }
 
 var colours = {
