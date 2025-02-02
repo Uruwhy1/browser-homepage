@@ -1,0 +1,27 @@
+.prefix-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+}
+
+.prefix-text {
+  display: flex;
+  flex-direction: column;
+
+  > *:first-child {
+    display: inline;
+    width: fit-content;
+
+    padding: 0.25rem;
+    background-color: var(--containerBg);
+  }
+}
+
+.prefix-buttons {
+  display: flex;
+  gap: 0.25rem;
+}

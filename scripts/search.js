@@ -54,6 +54,22 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   };
 
+  const getSearchPrefixes = () => {
+    const defaultPrefixes = {
+      yt: "https://www.youtube.com/results?search_query={query}",
+      gh: "https://github.com/search?q={query}&type=repositories",
+      img: "https://www.google.com/search?udm=2&q={query}",
+      in: "https://www.linkedin.com/jobs/search/?keywords={query}",
+      ttv: "https://www.twitch.tv/search?term={query}",
+      x: "https://x.com/search?q={query}&src=typed_query",
+    };
+
+    const storedPrefixes = localStorage.getItem("searchPrefixes");
+    if (!storedPrefixes)
+      localStorage.setItem("searchPrefixes", JSON.stringify(defaultPrefixes));
+    return storedPrefixes ? JSON.parse(storedPrefixes) : defaultPrefixes;
+  };
+
   document.addEventListener("keydown", function (event) {
     if (
       timerModal.style.display == "flex" ||
@@ -83,52 +99,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // handle searching
     if (event.key === "Enter") {
       const searchAnalysis = analyzeSearchInput(searchInput.value);
+      const prefixes = getSearchPrefixes();
 
       // if search has keyword
       if (searchAnalysis.type !== "default") {
-        switch (searchAnalysis.type) {
-          case "yt":
-            redirectToUrl(
-              `https://www.youtube.com/results?search_query=${encodeURIComponent(
-                searchAnalysis.query
-              )}`
-            );
-            break;
-          case "gh":
-            redirectToUrl(
-              `https://github.com/search?q=${encodeURIComponent(
-                searchAnalysis.query
-              )}&type=repositories`
-            );
-            break;
-          case "img":
-            redirectToUrl(
-              `https://www.google.com/search?udm=2&q=${encodeURIComponent(
-                searchAnalysis.query
-              )}`
-            );
-            break;
-          case "in":
-            redirectToUrl(
-              `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(
-                searchAnalysis.query
-              )}`
-            );
-            break;
-          case "ttv":
-            redirectToUrl(
-              `https://www.twitch.tv/search?term=${encodeURIComponent(
-                searchAnalysis.query
-              )}`
-            );
-            break;
-          case "x":
-            redirectToUrl(
-              `https://x.com/search?q=${encodeURIComponent(
-                searchAnalysis.query
-              )}&src=typed_query`
-            );
-            break;
+        const prefixUrl = prefixes[searchAnalysis.type];
+        if (prefixUrl) {
+          const finalUrl = prefixUrl.replace(
+            "{query}",
+            encodeURIComponent(searchAnalysis.query)
+          );
+          redirectToUrl(finalUrl);
         }
         return;
       } else {

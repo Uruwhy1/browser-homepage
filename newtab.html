@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="./styles/timeStuffContainer.css" />
     <link rel="stylesheet" href="./styles/timer.css" />
     <link rel="stylesheet" href="./styles/settings.css" />
+    <link rel="stylesheet" href="./styles/bookmarkSettings.css" />
+    <link rel="stylesheet" href="./styles/searchSettings.css" />
     <link rel="stylesheet" href="./styles/customForm.css" />
 
     <script src="./scripts/bookmarks.js" defer></script>
@@ -26,14 +28,25 @@
     <script src="./scripts/stopwatch.js" defer></script>
     <script src="./scripts/camera.js" defer></script>
     <script src="./scripts/settings.js" defer></script>
+    <script src="./scripts/bookmarkSettings.js" defer></script>
+    <script src="./scripts/searchSettings.js" defer></script>
     <script src="./scripts/customForm.js" defer></script>
   </head>
 
   <body>
     <div class="settings container-card">
-      <h3>Bookmarks</h3>
-      <div id="bookmarks-container"></div>
-      <button id="add-bookmark">Add Bookmark Set</button>
+      <div>
+        <h3>Bookmarks</h3>
+        <button id="add-bookmark">Add Bookmark Set</button>
+        <div id="bookmarks-container" class="settings-category-container"></div>
+      </div>
+      <div>
+        <h3>Search Prefixes</h3>
+        <div
+          id="search-prefixes-container"
+          class="settings-category-container"
+        ></div>
+      </div>
     </div>
     <div class="coin-flip">
       <img src="assets/night-background.jpg" class="side-a" />

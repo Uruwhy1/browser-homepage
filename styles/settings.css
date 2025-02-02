@@ -15,7 +15,7 @@
 
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 
   padding: 1rem;
 
@@ -26,6 +26,12 @@
   background-color: var(--containerBg);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
 .settings button {
@@ -54,184 +60,20 @@
   margin: 0;
 }
 
-#bookmarks-container {
+.settings-category-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.bookmark-set-settings {
+.individual-setting {
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: 4px;
 
   background-color: rgba(255, 255, 255, 0.05);
-  padding: 15px;
+  padding: 1rem;
   transition: all 0.2s ease;
-
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  height: 110px;
-  overflow: hidden;
-
-  position: relative;
-  &.displayed {
-    height: auto;
-  }
 }
-
-.bookmark-set-settings:hover {
+.individual-setting:hover {
   background-color: rgba(255, 255, 255, 0.08);
-}
-
-.set-title-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--accent-container);
-  color: var(--accent-container);
-
-  > h4 {
-    cursor: pointer;
-
-    width: 100%;
-    margin: 0;
-    font-family: var(--normal-font);
-    font-size: 1.1rem;
-
-    padding: 0.25rem;
-    &:hover {
-      background-color: var(--containerBg);
-      border-radius: 5px;
-    }
-  }
-}
-.settings .toggle-hide-set {
-  color: inherit;
-  background-color: transparent;
-  border: none;
-
-  cursor: pointer;
-  padding: 0 0.5rem;
-}
-
-.bookmark-link {
-  display: grid;
-  grid-template-areas:
-    "title button"
-    "keywords keywords";
-  grid-template-rows: 1fr 1fr;
-  gap: 0.25rem 0;
-
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.keywords-container {
-  grid-area: keywords;
-
-  > span,
-  input {
-    padding: 0.25rem 0.5rem;
-    background-color: var(--containerBg);
-
-    border: none;
-  }
-}
-
-.bookmark-link > div:not(.link-drop-indicator) {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  font-size: 1rem;
-}
-
-.bookmark-link span {
-  color: var(--secondaryFg);
-}
-
-.bookmark-actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.bookmark-actions button {
-  flex: 1;
-}
-.bookmark-actions .remove-set {
-  background-color: rgb(255, 84, 84);
-}
-.add-link {
-  color: var(--accent-container);
-}
-
-.bookmark-link button {
-  opacity: 0;
-  font-size: 0.9rem;
-}
-.bookmark-link:hover button {
-  opacity: 1;
-}
-
-.settings-header {
-  padding: 20px 0;
-  margin-bottom: 20px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-}
-
-.settings-header h2 {
-  margin: 0;
-  color: var(--fg);
-  font-family: var(--normal-font);
-  font-size: 1.5rem;
-}
-
-/* dragging stuff */
-
-.bookmark-set-settings.dragging {
-  opacity: 0.5;
-  border: 2px dashed var(--accent-container);
-}
-
-#bookmarks-container.dragover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.drop-indicator {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background-color: var(--accent-container);
-  display: none;
-}
-
-.top {
-  top: 0px;
-}
-
-.bottom {
-  bottom: 0px;
-}
-
-.link-drop-indicator {
-  display: none;
-  height: 2px;
-  background-color: #0066cc;
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-
-.bookmark-link {
-  position: relative;
-  cursor: move;
-}
-
-.bookmark-link.dragging {
-  opacity: 0.5;
 }
