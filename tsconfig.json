@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "scripts",
+    "rootDir": "typescript",
+    "lib": ["DOM", "ESNext"]
+  },
+  "include": ["typescript"],
+  "exclude": ["node_modules"]
+}

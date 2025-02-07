@@ -10,8 +10,11 @@
     "terser": "^5.38.1"
   },
   "scripts": {
-    "minify-js": "terser scripts/*.js -o dist/bundle.min.js",
+    "minify-js": "npx tsc && terser scripts/*.js -o dist/bundle.min.js --compress --mangle",
     "minify-css": "node minify.js",
     "minify": "npm run minify-js && npm run minify-css"
+  },
+  "dependencies": {
+    "typescript": "^5.7.3"
   }
 }
