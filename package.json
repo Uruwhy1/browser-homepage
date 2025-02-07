@@ -5,9 +5,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "glob": "^11.0.1",
+    "lightningcss-cli": "^1.29.1",
     "terser": "^5.38.1"
   },
   "scripts": {
-    "minify": "terser scripts/*.js -o dist/bundle.min.js"
+    "minify-js": "terser scripts/*.js -o dist/bundle.min.js",
+    "minify-css": "node minify.js",
+    "minify": "npm run minify-js && npm run minify-css"
   }
 }

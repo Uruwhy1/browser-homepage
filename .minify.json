@@ -1,0 +1,16 @@
+{
+  "js": {
+    "type": "terser"
+  },
+  "css": {
+    "type": "clean-css"
+  },
+
+  "html": {
+    "removeComments": true,
+    "collapseWhitespace": true,
+    "removeAttributeQuotes": true,
+    "minifyJS": true,
+    "minifyCSS": true
+  }
+}
