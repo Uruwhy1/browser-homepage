@@ -3,5 +3,11 @@
   "version": "1.0.0",
   "description": "![ezgif-139037b51ebc7](https://github.com/user-attachments/assets/04541fb4-0d3e-4cac-88e9-ce2a319cf9eb)",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "terser": "^5.38.1"
+  },
+  "scripts": {
+    "minify": "terser scripts/*.js -o dist/bundle.min.js"
+  }
 }
