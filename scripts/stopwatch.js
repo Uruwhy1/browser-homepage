@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
       displayText += `${seconds}s`;
 
       timerText.innerHTML = displayText;
-      console.log(displayText);
     }, 100);
   }
 

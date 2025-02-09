@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let keywordFound = false;
 
   const settingsBar = document.querySelector(".settings");
-  const timerModal = document.querySelector(".timer-modal-container");
 
   searchInput.value = "";
 
@@ -60,10 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   document.addEventListener("keydown", function (event) {
-    if (
-      timerModal.style.display == "flex" ||
-      settingsBar.classList.contains("show")
-    ) {
+    if (settingsBar.classList.contains("show")) {
       return;
     }
 
