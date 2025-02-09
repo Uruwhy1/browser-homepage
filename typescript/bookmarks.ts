@@ -12,7 +12,7 @@ interface Link {
   url: string;
   hide: boolean;
   divide: boolean;
-  keywords: [];
+  keywords: string[];
 }
 
 let bookmarks: Bookmark[] = (() => {
@@ -85,6 +85,6 @@ function setupBookmarks(): void {
   });
 }
 
-function saveBookmarks() {
+function saveBookmarks(): void {
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 }

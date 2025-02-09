@@ -1,19 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.documentElement;
 
-  const flipButton = document.querySelector(".coin-flip");
-  const heads = document.querySelector(".side-b");
-  const tails = document.querySelector(".side-a");
+  const flipButton = document.querySelector(".coin-flip") as HTMLElement;
+  const heads = document.querySelector(".side-b") as HTMLElement;
+  const tails = document.querySelector(".side-a") as HTMLElement;
 
   function startCoinSequence() {
     const result = flipCoin();
 
-    // Reset animation
-    heads.style.animation = "none";
-    tails.style.animation = "none";
-    flipButton.style.animation = "none";
+    if (heads) heads.style.animation = "none";
+    if (tails) tails.style.animation = "none";
+    if (flipButton) flipButton.style.animation = "none";
 
-    // Call the animation function
     animation(result);
   }
 
@@ -22,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return random < 0.5 ? "Heads" : "Tails";
   }
 
-  function toggleElem(elem, bool) {
+  function toggleElem(elem: HTMLElement, bool: boolean) {
     if (bool) {
       elem.style.display = "flex";
     } else {
@@ -31,12 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
     elem.style.animation = "appear 0.2s linear";
   }
 
-  function animation(result) {
+  function animation(result: string) {
     setTimeout(() => {
       heads.style.animation = "";
       tails.style.animation = "";
 
-      toggleElem(flipButton, true); // Center the flipButton
+      toggleElem(flipButton, true);
 
       if (result == "Heads") {
         heads.style.zIndex = "1";
@@ -57,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
       result == "Heads"
         ? root.style.setProperty("--coin-shadow", "var(--green)")
         : root.style.setProperty("--coin-shadow", "var(--red)");
-      console.log("xDGJDSMGKJMLDSHGMKJL");
     }, 3010); // end
 
     setTimeout(() => {
@@ -71,13 +68,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // have to repeat a bit of code here as I can't import statements due to firefox security limitations :(
-  const searchInput = document.getElementById("searchInput");
+  const searchInput = document.getElementById(
+    "searchInput"
+  ) as HTMLInputElement;
+
   document.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      if (searchInput.value.toLowerCase() == "flip") {
+    if (event.key === "Enter" && searchInput) {
+      if (searchInput.value.toLowerCase() === "flip") {
         startCoinSequence();
         searchInput.value = "";
-        return;
       }
     }
   });

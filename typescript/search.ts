@@ -1,20 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const searchInput = document.getElementById("searchInput");
+  const searchInput = document.getElementById(
+    "searchInput"
+  ) as HTMLInputElement;
   const root = document.documentElement;
+
   let numberFind = 0;
   let keywordFound = false;
 
-  const settingsBar = document.querySelector(".settings");
+  const settingsBar = document.querySelector(".settings") as HTMLElement;
 
-  searchInput.value = "";
-
-  // Function to handle URL redirection
-  const redirectToUrl = (url) => {
+  const redirectToUrl = (url: string) => {
     window.location.href = url;
   };
 
-  // Function to reset bookmark styles
-  const resetBookmarkStyles = (links) => {
+  const resetBookmarkStyles = (links: NodeListOf<HTMLElement>) => {
     numberFind = 0;
     keywordFound = false;
 
@@ -29,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
 
-  const analyzeSearchInput = (searchValue) => {
+  const analyzeSearchInput = (searchValue: string) => {
     if (!searchValue) {
       return {
         type: "default",
@@ -63,21 +62,25 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const links = document.querySelectorAll(".bookmark");
+    const links = document.querySelectorAll(
+      ".bookmark"
+    ) as NodeListOf<HTMLAnchorElement>;
     if (event.altKey) {
       return;
     }
 
-    // Prevent default actions and handle special keys
+    //  handle special keys
     const isSpecialKey =
       event.key === "Enter" ||
       event.key === "+" ||
       event.key === "Backspace" ||
       event.ctrlKey;
+
     const isAlphanumeric = /^[a-zA-Z0-9]$/.test(event.key);
     if (!isSpecialKey && !isAlphanumeric) {
       return;
     }
+
     keywordFound = false;
     event.preventDefault();
 
@@ -108,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        // if "flip" or "stopwatch" then do nothing (coin animation stuff has to be in the other js file as I can use imports)
+        // if "flip" or "stopwatch" then do nothing
         if (
           searchInput.value.toLowerCase() == "flip" ||
           searchInput.value.toLowerCase() == "stopwatch"
@@ -119,25 +122,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let found = false;
         links.forEach((link) => {
+          const linkText = link.textContent?.toLowerCase();
           if (
-            link.textContent.toLowerCase() === searchInput.value ||
+            (linkText && linkText === searchInput.value.toLowerCase()) ||
             (link.classList.contains("on") && numberFind === 1)
           ) {
             found = true;
             searchInput.style.animation = "right 0.1s 1 forwards";
             redirectToUrl(link.href);
-
             return;
           }
+
           const keywords = link.getAttribute("data-keywords");
           if (
             keywords &&
-            keywords.toLowerCase().split(" ").includes(searchInput.value)
+            keywords
+              .toLowerCase()
+              .split(" ")
+              .includes(searchInput.value.toLowerCase())
           ) {
             found = true;
             searchInput.style.animation = "right 0.1s 1 forwards";
             redirectToUrl(link.href);
-
             return;
           }
         });
@@ -158,9 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.key === "a" && event.ctrlKey) {
       searchInput.value = "";
       keywordFound = false;
-      if (numberFind === 1) {
-        document.querySelector(".on").style.color = "var(--bookmark-color)";
-      }
+
       resetBookmarkStyles(links);
 
       return;
@@ -183,13 +187,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     numberFind = 0;
-    document.querySelectorAll(".on").forEach((elem) => (elem.style.color = ""));
+    (document.querySelectorAll(".on") as NodeListOf<HTMLElement>).forEach(
+      (elem) => (elem.style.color = "")
+    );
 
     if (searchInput.value.length > 0) {
       root.style.setProperty("--bookmark-color", "gray");
 
       links.forEach((link) => {
         if (
+          link.textContent &&
           link.textContent
             .toLowerCase()
             .includes(searchInput.value.toLowerCase())
@@ -225,9 +232,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (!keywordFound && numberFind !== 1 && document.querySelector(".on")) {
-      document.querySelector(".on").style.color = "";
+      let element = document.querySelector(".on") as HTMLElement;
+      element.style.color = "";
     } else if (numberFind == 1 && !keywordFound) {
-      document.querySelector(".on").style.color = "var(--hover-color)";
+      let element = document.querySelector(".on") as HTMLElement;
+      element.style.color = "var(--hover-color)";
     }
   });
 });

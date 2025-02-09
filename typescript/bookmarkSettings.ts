@@ -1,18 +1,18 @@
 function initializeBookmarksSettings() {
   const addButton = document.getElementById("add-bookmark");
-  addButton.addEventListener("click", addBookmark);
+  if (addButton) addButton.addEventListener("click", addBookmark);
   displayBookmarksInSettings();
 }
 
-function addBookmark() {
-  const fields = {
+function addBookmark(): void {
+  const fields: Field = {
     "Bookmark Set Title": "",
     Color: ["#fff", "color"],
     "Hide Bookmark Set": [false, "checkbox"],
   };
 
-  createForm(fields, (formData) => {
-    const newBookmarkSet = {
+  createForm(fields, (formData: { [key: string]: any }) => {
+    const newBookmarkSet: Bookmark = {
       title: formData["Bookmark Set Title"],
       links: [],
       hide: formData["Hide Bookmark Set"],
@@ -27,7 +27,7 @@ function addBookmark() {
   });
 }
 
-function removeBookmark(index) {
+function removeBookmark(index: number) {
   bookmarks.splice(index, 1);
 
   saveBookmarks();
@@ -35,18 +35,18 @@ function removeBookmark(index) {
   setupBookmarks();
 }
 
-function editBookmarkSet(index) {
+function editBookmarkSet(index: number) {
   const bookmarkSet = bookmarks[index];
 
-  const fields = {
+  const fields: Field = {
     "Bookmark Set Title": bookmarkSet.title,
-    Color: [colours[bookmarkSet.color] || bookmarkSet.color, "color"],
+    Color: [bookmarkSet.color, "color"],
     "Hide Bookmark Set": [bookmarkSet.hide, "checkbox"],
   };
 
   createForm(
     fields,
-    (formData) => {
+    (formData: { [key: string]: any }) => {
       bookmarks[index] = {
         ...bookmarkSet,
         title: formData["Bookmark Set Title"],
@@ -67,7 +67,9 @@ function editBookmarkSet(index) {
 }
 
 function displayBookmarksInSettings() {
-  const bookmarksContainer = document.getElementById("bookmarks-container");
+  const bookmarksContainer = document.getElementById(
+    "bookmarks-container"
+  ) as HTMLElement;
   bookmarksContainer.innerHTML = "";
 
   bookmarks.sort((a, b) => a.number - b.number);
@@ -76,8 +78,8 @@ function displayBookmarksInSettings() {
     bookmarkSetElement.classList.add("bookmark-set-settings");
     bookmarkSetElement.classList.add("individual-setting");
     bookmarkSetElement.draggable = true;
-    bookmarkSetElement.dataset.index = index;
-    bookmarkSetElement.style.order = bookmarkSet.number;
+    bookmarkSetElement.dataset.index = `${index}`;
+    bookmarkSetElement.style.order = `${bookmarkSet.number}`;
 
     const topIndicator = document.createElement("div");
     topIndicator.classList.add("drop-indicator", "top");
@@ -99,11 +101,16 @@ function displayBookmarksInSettings() {
     }
 
     bookmarkSetElement.addEventListener("dragstart", (e) => {
-      e.dataTransfer.setData("text/plain", index);
-      e.dataTransfer.effectAllowed = "move";
+      if (e.dataTransfer) {
+        e.dataTransfer.setData("text/plain", `${index}`);
+        e.dataTransfer.effectAllowed = "move";
+      }
       bookmarkSetElement.classList.add("dragging");
 
-      document.querySelectorAll(".drop-indicator").forEach((indicator) => {
+      const indicators = document.querySelectorAll(
+        ".drop-indicator"
+      ) as NodeListOf<HTMLElement>;
+      indicators.forEach((indicator) => {
         indicator.style.display = "none";
       });
     });
@@ -111,7 +118,10 @@ function displayBookmarksInSettings() {
     bookmarkSetElement.addEventListener("dragend", () => {
       bookmarkSetElement.classList.remove("dragging");
 
-      document.querySelectorAll(".drop-indicator").forEach((indicator) => {
+      const indicators = document.querySelectorAll(
+        ".drop-indicator"
+      ) as NodeListOf<HTMLElement>;
+      indicators.forEach((indicator) => {
         indicator.style.display = "none";
       });
     });
@@ -143,13 +153,13 @@ function displayBookmarksInSettings() {
 
     const linksContainer = document.createElement("div");
     linksContainer.classList.add("bookmark-links-container");
-    linksContainer.dataset.bookmarkSetIndex = index;
+    linksContainer.dataset.bookmarkSetIndex = index.toString();
 
     bookmarkSet.links.forEach((link, linkIndex) => {
       const linkElement = document.createElement("div");
       linkElement.classList.add("bookmark-link");
       linkElement.draggable = true;
-      linkElement.dataset.linkIndex = linkIndex;
+      linkElement.dataset.linkIndex = linkIndex.toString();
 
       const linkTopIndicator = document.createElement("div");
       linkTopIndicator.classList.add("link-drop-indicator", "top");
@@ -161,7 +171,7 @@ function displayBookmarksInSettings() {
 
       linkElement.addEventListener("dragstart", (e) => {
         e.stopPropagation();
-        e.dataTransfer.setData(
+        e.dataTransfer?.setData(
           "text/plain",
           JSON.stringify({
             bookmarkSetIndex: index,
@@ -170,20 +180,23 @@ function displayBookmarksInSettings() {
         );
         linkElement.classList.add("dragging");
 
-        document
-          .querySelectorAll(".link-drop-indicator")
-          .forEach((indicator) => {
-            indicator.style.display = "none";
-          });
+        const indicators = document.querySelectorAll(
+          ".link-drop-indicator"
+        ) as NodeListOf<HTMLElement>;
+        indicators.forEach((indicator) => {
+          indicator.style.display = "none";
+        });
       });
 
       linkElement.addEventListener("dragend", () => {
         linkElement.classList.remove("dragging");
-        document
-          .querySelectorAll(".link-drop-indicator")
-          .forEach((indicator) => {
-            indicator.style.display = "none";
-          });
+
+        const indicators = document.querySelectorAll(
+          ".link-drop-indicator"
+        ) as NodeListOf<HTMLElement>;
+        indicators.forEach((indicator) => {
+          indicator.style.display = "none";
+        });
       });
 
       const titleLink = document.createElement("div");
@@ -298,7 +311,11 @@ function displayBookmarksInSettings() {
       const draggingElement = document.querySelector(".bookmark-link.dragging");
       if (!draggingElement) return;
 
-      document.querySelectorAll(".link-drop-indicator").forEach((indicator) => {
+      (
+        document.querySelectorAll(
+          ".link-drop-indicator"
+        ) as NodeListOf<HTMLElement>
+      ).forEach((indicator) => {
         indicator.style.display = "none";
       });
 
@@ -306,13 +323,16 @@ function displayBookmarksInSettings() {
       if (afterElement == null) {
         const lastElement = linksContainer.lastElementChild;
         if (lastElement && !lastElement.classList.contains("dragging")) {
-          lastElement.querySelector(
-            ".link-drop-indicator.bottom"
+          (
+            lastElement.querySelector(
+              ".link-drop-indicator.bottom"
+            ) as HTMLElement
           ).style.display = "block";
         }
       } else {
-        afterElement.querySelector(".link-drop-indicator.top").style.display =
-          "block";
+        (
+          afterElement.querySelector(".link-drop-indicator.top") as HTMLElement
+        ).style.display = "block";
       }
 
       if (afterElement == null) {
@@ -326,14 +346,23 @@ function displayBookmarksInSettings() {
       e.preventDefault();
       e.stopPropagation();
 
-      document.querySelectorAll(".link-drop-indicator").forEach((indicator) => {
+      (
+        document.querySelectorAll(
+          ".link-drop-indicator"
+        ) as NodeListOf<HTMLElement>
+      ).forEach((indicator) => {
         indicator.style.display = "none";
       });
 
-      const dragData = JSON.parse(e.dataTransfer.getData("text/plain"));
+      const dragData = JSON.parse(
+        (e.dataTransfer as DataTransfer).getData("text/plain")
+      );
       const { bookmarkSetIndex: fromSetIndex, linkIndex: fromLinkIndex } =
         dragData;
-      const toSetIndex = parseInt(linksContainer.dataset.bookmarkSetIndex);
+
+      const toSetIndex = parseInt(
+        linksContainer.dataset.bookmarkSetIndex as string
+      );
 
       if (isNaN(fromSetIndex) || isNaN(fromLinkIndex) || isNaN(toSetIndex))
         return;
@@ -370,7 +399,9 @@ function displayBookmarksInSettings() {
     const draggingElement = document.querySelector(".dragging");
     if (!draggingElement) return;
 
-    document.querySelectorAll(".drop-indicator").forEach((indicator) => {
+    (
+      document.querySelectorAll(".drop-indicator") as NodeListOf<HTMLElement>
+    ).forEach((indicator) => {
       indicator.style.display = "none";
     });
 
@@ -378,11 +409,14 @@ function displayBookmarksInSettings() {
     if (afterElement == null) {
       const lastElement = bookmarksContainer.lastElementChild;
       if (lastElement && !lastElement.classList.contains("dragging")) {
-        lastElement.querySelector(".drop-indicator.bottom").style.display =
-          "block";
+        (
+          lastElement.querySelector(".drop-indicator.bottom") as HTMLElement
+        ).style.display = "block";
       }
     } else {
-      afterElement.querySelector(".drop-indicator.top").style.display = "block";
+      (
+        afterElement.querySelector(".drop-indicator.top") as HTMLElement
+      ).style.display = "block";
     }
 
     if (afterElement == null) {
@@ -395,22 +429,24 @@ function displayBookmarksInSettings() {
   bookmarksContainer.addEventListener("drop", (e) => {
     e.preventDefault();
 
-    document.querySelectorAll(".drop-indicator").forEach((indicator) => {
+    (
+      document.querySelectorAll(".drop-indicator") as NodeListOf<HTMLElement>
+    ).forEach((indicator) => {
       indicator.style.display = "none";
     });
 
-    const draggedIndex = parseInt(e.dataTransfer.getData("text/plain"));
+    const draggedIndex = parseInt(e.dataTransfer?.getData("text/plain") || "");
     if (isNaN(draggedIndex)) return;
 
     const draggingElement = document.querySelector(".dragging");
     if (!draggingElement) return;
 
-    const bookmarkElements = Array.from(
+    const bookmarkElements: HTMLElement[] = Array.from(
       bookmarksContainer.querySelectorAll(".bookmark-set-settings")
     );
 
     bookmarkElements.forEach((element, newIndex) => {
-      const originalIndex = parseInt(element.dataset.index);
+      const originalIndex = parseInt(element.dataset.index as string);
       if (!isNaN(originalIndex)) {
         bookmarks[originalIndex].number = newIndex;
       }
@@ -422,12 +458,15 @@ function displayBookmarksInSettings() {
   });
 }
 
-function getDragAfterElement(container, y) {
-  const draggableElements = [
-    ...container.querySelectorAll(".bookmark-set-settings:not(.dragging)"),
-  ];
+function getDragAfterElement(
+  container: HTMLElement,
+  y: number
+): HTMLElement | null {
+  const draggableElements: HTMLElement[] = Array.from(
+    container.querySelectorAll(".bookmark-set-settings:not(.dragging)")
+  ) as HTMLElement[];
 
-  return draggableElements.reduce(
+  const result = draggableElements.reduce(
     (closest, child) => {
       const box = child.getBoundingClientRect();
       const offset = y - (box.top + box.height / 2);
@@ -438,12 +477,14 @@ function getDragAfterElement(container, y) {
         return closest;
       }
     },
-    { offset: Number.NEGATIVE_INFINITY }
-  ).element;
+    { offset: Number.NEGATIVE_INFINITY, element: null as HTMLElement | null }
+  );
+
+  return result.element;
 }
 
-function addLinkToBookmarkSet(bookmarkSetIndex) {
-  const fields = {
+function addLinkToBookmarkSet(bookmarkSetIndex: number): void {
+  const fields: Field = {
     "Link Name": "",
     URL: ["", "url"],
     "Hide Link": [false, "checkbox"],
@@ -451,12 +492,14 @@ function addLinkToBookmarkSet(bookmarkSetIndex) {
     Keywords: ["", "text"],
   };
 
-  createForm(fields, (formData) => {
-    const newLink = {
+  createForm(fields, (formData: { [key: string]: any }) => {
+    const newLink: Link = {
       name: formData["Link Name"],
       url: formData["URL"],
       keywords: formData["Keywords"]
-        ? formData["Keywords"].split(",").map((k) => k.trim())
+        ? (formData["Keywords"] as string)
+            .split(",")
+            .map((k: string) => k.trim())
         : [],
       hide: formData["Hide Link"],
       divide: formData["Add Divider"],
@@ -468,10 +511,10 @@ function addLinkToBookmarkSet(bookmarkSetIndex) {
   });
 }
 
-function editLink(bookmarkSetIndex, linkIndex) {
-  const link = bookmarks[bookmarkSetIndex].links[linkIndex];
+function editLink(bookmarkSetIndex: number, linkIndex: number): void {
+  const link: Link = bookmarks[bookmarkSetIndex].links[linkIndex];
 
-  const fields = {
+  const fields: Field = {
     "Link Name": link.name,
     URL: [link.url, "url"],
     "Hide Link": [link.hide || false, "checkbox"],
@@ -483,20 +526,21 @@ function editLink(bookmarkSetIndex, linkIndex) {
     fields,
     [
       "Save Link",
-      (formData) => {
+      (formData: { [key: string]: any }) => {
         if (formData["Link Name"] && formData["URL"]) {
-          bookmarks[bookmarkSetIndex].links[linkIndex] = {
+          const updatedLink: Link = {
             name: formData["Link Name"],
             url: formData["URL"],
             hide: formData["Hide Link"],
             divide: formData["Add Divider"],
             keywords: formData["Keywords"]
-              ? formData["Keywords"]
+              ? (formData["Keywords"] as string)
                   .split(",")
-                  .map((k) => k.trim())
-                  .filter((k) => k)
+                  .map((k: string) => k.trim())
+                  .filter((k: string) => k.length > 0)
               : [],
           };
+          bookmarks[bookmarkSetIndex].links[linkIndex] = updatedLink;
           saveBookmarks();
           displayBookmarksInSettings();
           setupBookmarks();
@@ -517,14 +561,14 @@ function editLink(bookmarkSetIndex, linkIndex) {
   );
 }
 
-function toggleBookmarkSetVisibility(index) {
+function toggleBookmarkSetVisibility(index: number) {
   bookmarks[index].hide = !bookmarks[index].hide;
   saveBookmarks();
   displayBookmarksInSettings();
   setupBookmarks();
 }
 
-function toggleLinkVisibility(bookmarkSetIndex, linkIndex) {
+function toggleLinkVisibility(bookmarkSetIndex: number, linkIndex: number) {
   bookmarks[bookmarkSetIndex].links[linkIndex].hide =
     !bookmarks[bookmarkSetIndex].links[linkIndex].hide;
   saveBookmarks();
@@ -532,7 +576,7 @@ function toggleLinkVisibility(bookmarkSetIndex, linkIndex) {
   setupBookmarks();
 }
 
-function toggleLinkDivide(bookmarkSetIndex, linkIndex) {
+function toggleLinkDivide(bookmarkSetIndex: number, linkIndex: number) {
   bookmarks[bookmarkSetIndex].links[linkIndex].divide =
     !bookmarks[bookmarkSetIndex].links[linkIndex].divide;
   saveBookmarks();
@@ -540,16 +584,12 @@ function toggleLinkDivide(bookmarkSetIndex, linkIndex) {
   setupBookmarks();
 }
 
-function saveBookmarks() {
-  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-}
+function getDragAfterLink(container: HTMLElement, y: number) {
+  const draggableElements: HTMLElement[] = Array.from(
+    container.querySelectorAll(".bookmark-link:not(.dragging)")
+  ) as HTMLElement[];
 
-function getDragAfterLink(container, y) {
-  const draggableElements = [
-    ...container.querySelectorAll(".bookmark-link:not(.dragging)"),
-  ];
-
-  return draggableElements.reduce(
+  let result = draggableElements.reduce(
     (closest, child) => {
       const box = child.getBoundingClientRect();
       const offset = y - (box.top + box.height / 2);
@@ -560,6 +600,8 @@ function getDragAfterLink(container, y) {
         return closest;
       }
     },
-    { offset: Number.NEGATIVE_INFINITY }
-  ).element;
+    { offset: Number.NEGATIVE_INFINITY, element: null as HTMLElement | null }
+  );
+
+  return result.element;
 }

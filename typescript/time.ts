@@ -39,5 +39,3 @@ function setBackground(hour: number, minutes: number) {
     document.documentElement.classList.remove("dawn");
   }
 }
-
-declare function setupBookmarks(): void;

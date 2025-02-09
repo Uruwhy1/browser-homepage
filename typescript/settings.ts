@@ -22,6 +22,3 @@ function openSettingsTab() {
     settings.classList.toggle("show");
   }
 }
-
-declare function initializeBookmarksSettings(): void;
-declare function initializeSearchSettings(): void;

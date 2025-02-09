@@ -5,11 +5,13 @@ function initializeSearchSettings() {
 function displaySearchPrefixes() {
   const prefixesContainer = document.getElementById(
     "search-prefixes-container"
-  );
+  ) as HTMLElement;
   prefixesContainer.innerHTML = "";
 
   const storedPrefixes = localStorage.getItem("searchPrefixes");
-  const prefixes = storedPrefixes ? JSON.parse(storedPrefixes) : "";
+  const prefixes: { [key: string]: string } = storedPrefixes
+    ? JSON.parse(storedPrefixes)
+    : {};
 
   const addButton = document.createElement("button");
   addButton.textContent = "Add Prefix";
@@ -50,17 +52,18 @@ function displaySearchPrefixes() {
 }
 
 function addSearchPrefix() {
-  const fields = {
+  const fields: Field = {
     Prefix: "",
     "URL Template {query}": ["", "url"],
   };
 
-  createForm(fields, (formData) => {
-    const prefix = formData["Prefix"].toLowerCase().trim();
-    const url = formData["URL Template {query}"].trim();
+  createForm(fields, (formData: { [key: string]: string | boolean }) => {
+    // Correct type here
+    const prefix = (formData["Prefix"] as string).toLowerCase().trim();
+    const url = (formData["URL Template {query}"] as string).trim();
 
     if (prefix && url) {
-      const prefixes = JSON.parse(
+      const prefixes: { [key: string]: string } = JSON.parse(
         localStorage.getItem("searchPrefixes") || "{}"
       );
       prefixes[prefix] = url;
@@ -70,18 +73,18 @@ function addSearchPrefix() {
   });
 }
 
-function editSearchPrefix(prefix, currentUrl) {
-  const fields = {
+function editSearchPrefix(prefix: string, currentUrl: string) {
+  const fields: Field = {
     Prefix: prefix,
     "URL Template {query}": [currentUrl, "url"],
   };
 
-  createForm(fields, (formData) => {
-    const newPrefix = formData["Prefix"].toLowerCase().trim();
-    const newUrl = formData["URL Template {query}"].trim();
+  createForm(fields, (formData: { [key: string]: string | boolean }) => {
+    const newPrefix = (formData["Prefix"] as string).toLowerCase().trim();
+    const newUrl = (formData["URL Template {query}"] as string).trim();
 
     if (newPrefix && newUrl) {
-      const prefixes = JSON.parse(
+      const prefixes: { [key: string]: string } = JSON.parse(
         localStorage.getItem("searchPrefixes") || "{}"
       );
       if (newPrefix !== prefix) {
@@ -94,8 +97,10 @@ function editSearchPrefix(prefix, currentUrl) {
   });
 }
 
-function deleteSearchPrefix(prefix) {
-  const prefixes = JSON.parse(localStorage.getItem("searchPrefixes") || "{}");
+function deleteSearchPrefix(prefix: string) {
+  const prefixes: { [key: string]: string } = JSON.parse(
+    localStorage.getItem("searchPrefixes") || "{}"
+  );
   delete prefixes[prefix];
   localStorage.setItem("searchPrefixes", JSON.stringify(prefixes));
   displaySearchPrefixes();
