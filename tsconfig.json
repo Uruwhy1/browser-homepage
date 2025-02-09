@@ -10,6 +10,6 @@
     "rootDir": "typescript",
     "lib": ["DOM", "ESNext"]
   },
-  "include": ["typescript", "scripts/stopwatch.js"],
+  "include": ["typescript", "typescript/stopwatch.ts"],
   "exclude": ["node_modules"]
 }
