@@ -1,6 +1,7 @@
 /* General Styles */
 body {
   background: var(--bg-image);
+  backdrop-filter: blur(5px);
   margin: 0;
 
   font-family: var(--normal-font);
