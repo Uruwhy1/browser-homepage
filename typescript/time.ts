@@ -4,8 +4,6 @@ function getTime() {
   const sec: number = date.getSeconds();
   const hour: number = date.getHours();
 
-  setBackground(hour, min);
-
   return (
     "" +
     (hour < 10 ? "0" + hour : hour) +
@@ -29,13 +27,3 @@ window.onload = () => {
     }, 100);
   }
 };
-
-function setBackground(hour: number, minutes: number) {
-  const isDawnTime = hour === 18 || hour === 19;
-
-  if (isDawnTime) {
-    document.documentElement.classList.add("dawn");
-  } else {
-    document.documentElement.classList.remove("dawn");
-  }
-}
