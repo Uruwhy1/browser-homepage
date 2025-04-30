@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     root.style.setProperty("--bookmark-color", "");
     links.forEach((link) => {
       link.classList.remove("on");
+      link.classList.remove("found");
       link.style.color = "";
 
       link.style.position = "";
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return storedPrefixes ? JSON.parse(storedPrefixes) : "";
   };
 
-  document.addEventListener("keydown", function (event) {
+  document.addEventListener("keydown", async function (event) {
     if (settingsBar.classList.contains("show")) {
       return;
     }
@@ -81,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    keywordFound = false;
     event.preventDefault();
 
     // handle searching
@@ -121,18 +121,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         let found = false;
-        links.forEach((link) => {
-          const linkText = link.textContent?.toLowerCase();
-          if (
-            (linkText && linkText === searchInput.value.toLowerCase()) ||
-            (link.classList.contains("on") && numberFind === 1)
-          ) {
+
+        if (keywordFound) {
+          let link = document.querySelector(".found") as HTMLAnchorElement;
+
+          if (link) {
             found = true;
+
             searchInput.style.animation = "right 0.1s 1 forwards";
             redirectToUrl(link.href);
             return;
           }
+        }
 
+        links.forEach((link) => {
           const keywords = link.getAttribute("data-keywords");
           if (
             keywords &&
@@ -140,6 +142,18 @@ document.addEventListener("DOMContentLoaded", function () {
               .toLowerCase()
               .split(" ")
               .includes(searchInput.value.toLowerCase())
+          ) {
+            found = true;
+            searchInput.style.animation = "right 0.1s 1 forwards";
+            redirectToUrl(link.href);
+
+            return;
+          }
+
+          const linkText = link.textContent?.toLowerCase();
+          if (
+            (linkText && linkText === searchInput.value.toLowerCase()) ||
+            (link.classList.contains("on") && numberFind === 1)
           ) {
             found = true;
             searchInput.style.animation = "right 0.1s 1 forwards";
@@ -156,6 +170,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
     }
+
+    keywordFound = false;
 
     // Handle Ctrl + A (select all)
     if (event.ctrlKey) {
@@ -225,8 +241,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
           link.style.color = "var(--hover-color)";
           keywordFound = true;
+          link.classList.add("found");
         } else {
           link.style.color = "";
+          link.classList.remove("found");
         }
       });
     }
