@@ -64,6 +64,9 @@
   --teal: #209fb5;
 
   --hover-color: var(--teal);
+  --active-color: #000 !important;
+
+  --background-shadow-settings: rgba(85, 85, 85, 0.05);
 }
 
 .palette-nord {
@@ -108,6 +111,9 @@
   --purple: #657b83;
 
   --hover-color: var(--blue);
+  --active-color: #000 !important;
+
+  --background-shadow-settings: rgba(85, 85, 85, 0.05);
 }
 
 .palette-solarized-dark {

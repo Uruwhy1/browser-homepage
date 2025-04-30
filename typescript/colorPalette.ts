@@ -123,6 +123,7 @@ function displayPalettesInSettings() {
   palettes.forEach((palette, index) => {
     const wrapper = document.createElement("div");
     wrapper.classList.add("preview-option-item");
+    wrapper.classList.add("individual-setting");
 
     const preview = document.createElement("div");
     preview.classList.add("preview-display");

@@ -172,7 +172,7 @@ body * {
 }
 
 .on {
-  color: #fff;
+  color: var(--active-color);
 }
 
 .bookmark:hover {
