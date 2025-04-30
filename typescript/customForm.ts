@@ -26,24 +26,52 @@ function createForm(
 
   backdrop.addEventListener("click", removeForm);
 
+  const getCSSVariable = (name: string) => {
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue(name)
+      .trim();
+  };
+
   for (const [key, value] of Object.entries(fields)) {
     const container = document.createElement("div");
 
     const label = document.createElement("label");
     label.textContent = key;
 
-    const input = document.createElement("input");
-    if (Array.isArray(value)) {
-      input.type = value[1];
-      input.value = value[0].toString();
+    if (Array.isArray(value) && value[1] === "color") {
+      const colorVars = [
+        { value: "--red", text: "Red", color: getCSSVariable("--red") },
+        { value: "--blue", text: "Blue", color: getCSSVariable("--blue") },
+        { value: "--yellow", text: "Yellow", color: getCSSVariable("--yellow") },
+        { value: "--salmon", text: "Salmon", color: getCSSVariable("--salmon") },
+        { value: "--green", text: "Green", color: getCSSVariable("--green") },
+        { value: "--purple", text: "Purple", color: getCSSVariable("--purple") },
+        { value: "--orange", text: "Orange", color: getCSSVariable("--orange") },
+        { value: "--pink", text: "Pink", color: getCSSVariable("--pink") },
+        { value: "--cyan", text: "Cyan", color: getCSSVariable("--cyan") },
+        { value: "--teal", text: "Teal", color: getCSSVariable("--teal") },
+      ];
+
+      const defaultValue = value[0];
+
+      const colorSelect = createCustomSelect(key, colorVars, defaultValue, key);
+      container.appendChild(colorSelect);
     } else {
-      input.type = "text";
-      input.value = value as string;
+      const input = document.createElement("input");
+
+      if (Array.isArray(value)) {
+        input.type = value[1];
+        input.value = value[0].toString();
+      } else {
+        input.type = "text";
+        input.value = value as string;
+      }
+
+      input.name = key;
+      container.appendChild(label);
+      container.appendChild(input);
     }
 
-    input.name = key;
-    container.appendChild(label);
-    container.appendChild(input);
     form.appendChild(container);
   }
 
@@ -69,16 +97,17 @@ function createForm(
     if (Array.isArray(onSecondary)) {
       secondaryButton.textContent = onSecondary[0];
       secondaryButton.addEventListener("click", () => {
-        (onSecondary[1] as () => void)();
+        onSecondary[1]();
         removeForm();
       });
     } else {
       secondaryButton.textContent = "Secondary";
       secondaryButton.addEventListener("click", () => {
-        (onSecondary as () => void)();
+        onSecondary();
         removeForm();
       });
     }
+
     buttonContainer.appendChild(secondaryButton);
   }
 
@@ -89,14 +118,22 @@ function createForm(
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData: { [key: string]: string | boolean } = {};
-    for (const [key] of Object.entries(fields)) {
-      const input = form.querySelector(
-        `input[name="${key}"]`
-      ) as HTMLInputElement;
-      if (input && input.type === "checkbox") {
-        formData[key] = input.checked;
+
+    for (const [key, value] of Object.entries(fields)) {
+      if (Array.isArray(value) && value[1] === "color") {
+        const hiddenInput = form.querySelector(
+          `input[name="${key}"]`
+        ) as HTMLInputElement;
+        formData[key] = `var(${hiddenInput.value})`;
       } else {
-        formData[key] = input.value;
+        const input = form.querySelector(
+          `input[name="${key}"]`
+        ) as HTMLInputElement;
+        if (input && input.type === "checkbox") {
+          formData[key] = input.checked;
+        } else {
+          formData[key] = input.value;
+        }
       }
     }
 
@@ -105,9 +142,95 @@ function createForm(
     } else {
       onSubmit(formData);
     }
+
     removeForm();
   });
 
   document.body.appendChild(backdrop);
   document.body.appendChild(form);
+}
+
+function createCustomSelect(
+  name: string,
+  options: { value: string; color?: string; text?: string }[],
+  defaultValue: string,
+  labelText: string
+): HTMLDivElement {
+  const container = document.createElement("div");
+  container.classList.add("custom-select-container");
+
+  const label = document.createElement("label");
+  label.textContent = labelText;
+  container.appendChild(label);
+
+  const selectWrapper = document.createElement("div");
+  selectWrapper.classList.add("custom-select-wrapper");
+
+  const selectTrigger = document.createElement("div");
+  selectTrigger.classList.add("custom-select-trigger");
+  selectTrigger.tabIndex = 0;
+
+  const defaultOption =
+    options.find((opt) => opt.value === defaultValue) || options[0];
+  if (defaultOption.color) {
+    selectTrigger.style.backgroundColor = defaultOption.color;
+  }
+
+  const optionsList = document.createElement("div");
+  optionsList.classList.add("custom-options");
+
+  options.forEach((option) => {
+    const optionElement = document.createElement("div");
+    optionElement.classList.add("custom-option");
+    optionElement.dataset.value = option.value;
+    optionElement.title = option.text ?? option.value;
+
+    if (option.color) {
+      optionElement.style.backgroundColor = option.color;
+    }
+
+    optionElement.addEventListener("click", () => {
+      if (option.color) {
+        selectTrigger.style.backgroundColor = option.color;
+      } else {
+        selectTrigger.style.backgroundColor = "";
+      }
+      optionsList.classList.remove("open");
+
+      const hiddenInput = container.querySelector("input") as HTMLInputElement;
+      hiddenInput.value = option.value;
+    });
+
+    optionsList.appendChild(optionElement);
+  });
+
+  selectTrigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    optionsList.classList.toggle("open");
+  });
+
+  document.addEventListener("click", () => {
+    optionsList.classList.remove("open");
+  });
+
+  selectTrigger.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      optionsList.classList.toggle("open");
+    } else if (e.key === "Escape") {
+      optionsList.classList.remove("open");
+    }
+  });
+
+  const hiddenInput = document.createElement("input");
+  hiddenInput.type = "hidden";
+  hiddenInput.name = name;
+  hiddenInput.value = defaultValue;
+
+  selectWrapper.appendChild(selectTrigger);
+  selectWrapper.appendChild(optionsList);
+  container.appendChild(selectWrapper);
+  container.appendChild(hiddenInput);
+
+  return container;
 }

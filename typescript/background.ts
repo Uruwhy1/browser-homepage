@@ -99,10 +99,10 @@ function displayWallpapersInSettings() {
 
   wallpapers.forEach((wp, index) => {
     const wrapper = document.createElement("div");
-    wrapper.classList.add("wallpaper-item", "individual-setting");
+    wrapper.classList.add("preview-option-item");
 
     const preview = document.createElement("div");
-    preview.classList.add("wallpaper-preview");
+    preview.classList.add("preview-display");
 
     const img = document.createElement("img");
     img.src = wp.path;
@@ -111,30 +111,38 @@ function displayWallpapersInSettings() {
     preview.appendChild(img);
 
     const details = document.createElement("div");
-    details.classList.add("wallpaper-details");
+    details.classList.add("option-details");
 
     const nameEl = document.createElement("h4");
     nameEl.textContent = wp.name;
 
-    details.append(nameEl);
+    const description = document.createElement("div");
+    description.classList.add("option-description");
+    description.textContent =
+      isWallpaperActiveForMode(wp, "light") ||
+      isWallpaperActiveForMode(wp, "dark")
+        ? `Active for ${wp.mode} mode`
+        : "Not active";
+
+    details.append(nameEl, description);
 
     const actions = document.createElement("div");
-    actions.classList.add("wallpaper-actions");
+    actions.classList.add("option-actions");
 
     const lightBtn = document.createElement("button");
-    lightBtn.textContent = isWallpaperActiveForMode(wp, "light")
-      ? "Light ✅"
-      : "Light";
-    lightBtn.classList.add("light-btn");
+    const isLightActive = isWallpaperActiveForMode(wp, "light");
+    lightBtn.textContent = isLightActive ? "Light ✓" : "Light";
+   
+    if (isLightActive) lightBtn.classList.add("selected");
     lightBtn.addEventListener("click", () =>
       setWallpaperForMode(index, "light")
     );
 
     const darkBtn = document.createElement("button");
-    darkBtn.textContent = isWallpaperActiveForMode(wp, "dark")
-      ? "Dark ✅"
-      : "Dark";
-    darkBtn.classList.add("dark-btn");
+    const isDarkActive = isWallpaperActiveForMode(wp, "dark");
+    darkBtn.textContent = isDarkActive ? "Dark ✓" : "Dark";
+ 
+    if (isDarkActive) darkBtn.classList.add("selected");
     darkBtn.addEventListener("click", () => setWallpaperForMode(index, "dark"));
 
     actions.append(lightBtn, darkBtn);
@@ -142,6 +150,7 @@ function displayWallpapersInSettings() {
     container.appendChild(wrapper);
   });
 }
+
 function isWallpaperActiveForMode(wp: Wallpaper, mode: "light" | "dark") {
   return wp.isActive && (wp.mode === mode || wp.mode === "both");
 }
@@ -164,7 +173,7 @@ function setWallpaperForMode(index: number, mode: "light" | "dark") {
 
   selected.isActive = true;
 
-  // Adjust mode based on existing mode
+
   if (selected.mode === "none") {
     selected.mode = mode;
   } else if (selected.mode !== mode) {

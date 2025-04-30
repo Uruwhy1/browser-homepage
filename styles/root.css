@@ -2,23 +2,9 @@
   --bg-image-light: url("./assets/wallpapers/room-day.jpg");
   --bg-image-dark: url("./assets/wallpapers/room-night.jpg");
   --bg-image: var(--bg-image-light);
-  --fg: #ffffff;
-  --secondaryFg: #d4d4d4;
-
-  --bookmark-color: #d4d4d4;
-
-  --containerBg: #272727;
-
-  --accent-container: #ffffff;
-  --scrollbarColor: #3f3f3f;
-  --green: rgb(115, 238, 131);
-  --red: rgb(238, 115, 115);
-  --hover-color: rgb(25, 228, 255);
 
   --normal-font: "Roboto";
   --mono-font: "Roboto Mono";
-
-  --coin-shadow: #fff;
 }
 
 @media (prefers-color-scheme: dark) {

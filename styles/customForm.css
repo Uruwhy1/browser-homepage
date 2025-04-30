@@ -1,4 +1,6 @@
 .dynamic-form {
+  --settings-bg: var(--containerBg);
+
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -46,7 +48,8 @@
   font-family: var(--mono-font);
 }
 
-.dynamic-form input {
+.dynamic-form input,
+.dynamic-form .custom-select-trigger {
   background: var(--settings-bg);
   padding: 0.8rem;
   height: 3rem;
@@ -65,7 +68,6 @@
     box-shadow: 0 0 0 2px rgba(25, 228, 255, 0.2);
   }
 }
-
 .dynamic-form input[type="checkbox"] {
   padding: 1.4rem 0;
 
@@ -142,4 +144,46 @@ input[type="color"] {
   justify-content: flex-end;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+/* ------------ select color thingy --------*/
+
+.custom-select-container {
+  position: relative;
+}
+
+.custom-select-wrapper {
+  position: relative;
+}
+
+.custom-select-trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.dynamic-form .custom-options {
+  display: none;
+  background: var(--settings-bg);
+
+  border: 1px solid var(--secondaryFg);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  overflow-y: auto;
+
+  z-index: 10;
+}
+
+.dynamic-form .custom-options.open {
+  display: block;
+}
+
+.dynamic-form .custom-option {
+  padding: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
