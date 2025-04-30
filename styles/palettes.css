@@ -182,6 +182,31 @@
   --hover-color: var(--cyan);
 }
 
+.palette-gruvbox-light {
+  --fg: #3c3836;
+  --secondaryFg: #504945;
+  --bookmark-color: #504945;
+  --containerBg: #fbf1c7;
+  --accent-container: #83a598;
+  --scrollbarColor: #d5c4a1;
+
+  --green: #98971a;
+  --red: #cc241d;
+  --blue: #458588;
+  --yellow: #d79921;
+  --salmon: #fe8019;
+  --purple: #b16286;
+  --orange: #d65d0e;
+  --pink: #d3869b;
+  --cyan: #689d6a;
+  --teal: #8ec07c;
+
+  --hover-color: var(--cyan);
+  --active-color: #000 !important;
+
+  --background-shadow-settings: rgba(85, 85, 85, 0.05);
+}
+
 .palette-gruvbox-dark {
   --fg: #ebdbb2;
   --secondaryFg: #bdae93;

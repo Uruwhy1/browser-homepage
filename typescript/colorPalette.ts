@@ -65,6 +65,14 @@ const definedPalettes: ColorPalette[] = [
     previewColors: ["#f8f8f2", "#bfbfbf", "#282a36", "#8be9fd"],
   },
   {
+    name: "Gruvbox Light",
+    cssClass: "palette-gruvbox-light",
+    isActive: false,
+    mode: "none",
+    previewColors: ["#282828", "#d65d0e", "#fb4934", "#458588"],
+  },
+
+  {
     name: "Gruvbox Dark",
     cssClass: "palette-gruvbox-dark",
     isActive: false,
