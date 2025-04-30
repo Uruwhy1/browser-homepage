@@ -1,10 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const openIcon = document.getElementById("settings-icon");
-
-  if (!openIcon) return;
-
-  openIcon.addEventListener("click", openSettingsTab);
-
   document.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.code === "Escape") {
       openSettingsTab();
