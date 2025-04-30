@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initializeBookmarksSettings();
   initializeSearchSettings();
+  initializeWallpaperSettings();
 });
 
 function openSettingsTab() {

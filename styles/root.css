@@ -1,6 +1,7 @@
-/* Root Variables */
 :root {
-  --bg-image: url("./assets/day-background.jpg");
+  --bg-image-light: url("./assets/wallpapers/room-day.jpg");
+  --bg-image-dark: url("./assets/wallpapers/room-night.jpg");
+  --bg-image: var(--bg-image-light);
   --fg: #ffffff;
   --secondaryFg: #d4d4d4;
 
@@ -22,12 +23,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-image: url("./assets/night-background.jpg");
+    --bg-image: var(--bg-image-dark);
   }
-}
-
-:root.dawn {
-  --bg-image: url("./assets/dawn-background.jpeg");
 }
 
 * {

@@ -1,0 +1,63 @@
+.wallpaper-item {
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.wallpaper-preview {
+  width: 120px;
+  height: 80px;
+
+  overflow: hidden;
+  border-radius: 4px;
+
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.wallpaper-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wallpaper-details {
+  margin-right: auto;
+}
+
+.wallpaper-details h4 {
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.wallpaper-path,
+.wallpaper-mode {
+  font-size: 12px;
+  color: var(--secondaryFg);
+  margin-bottom: 4px;
+}
+
+.wallpaper-actions {
+  width: 30%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wallpaper-actions button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+
+  width: 100%;
+
+  background-color: rgba(255, 255, 255, 0.15);
+
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
