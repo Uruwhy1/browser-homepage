@@ -1,6 +1,6 @@
 :root {
-  --bg-image-light: url("./assets/wallpapers/room-day.jpg");
-  --bg-image-dark: url("./assets/wallpapers/room-night.jpg");
+  --bg-image-light: ;
+  --bg-image-dark: ;
   --bg-image: var(--bg-image-light);
 
   --normal-font: "Roboto";
@@ -8,6 +8,8 @@
 
   --active-color: #fff;
   --background-shadow-settings: rgba(255, 255, 255, 0.05);
+
+  background-color: var(--containerBg);
 }
 
 @media (prefers-color-scheme: dark) {

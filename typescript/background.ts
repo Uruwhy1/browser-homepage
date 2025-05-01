@@ -39,13 +39,13 @@ const definedWallpapers: Wallpaper[] = [
   {
     name: "Room Day",
     path: "./assets/wallpapers/room-day.jpg",
-    isActive: true,
+    isActive: false,
     mode: "light",
   },
   {
     name: "Room Night",
     path: "./assets/wallpapers/room-night.jpg",
-    isActive: true,
+    isActive: false,
     mode: "none",
   },
   {
@@ -141,9 +141,58 @@ function saveWallpapers(wallpapers: Wallpaper[]): void {
   localStorage.setItem("wallpapers", JSON.stringify(settingsToSave));
 }
 
-function initializeWallpaperSettings() {
-  applyActiveWallpapers();
-  displayWallpapersInSettings();
+function loadAndApplyActiveWallpapers() {
+  let activeLight = wallpapers.find(
+    (wp) => wp.isActive && (wp.mode === "light" || wp.mode === "both")
+  );
+  let activeDark = wallpapers.find(
+    (wp) => wp.isActive && (wp.mode === "dark" || wp.mode === "both")
+  );
+
+  // Set defaults if no active wallpapers
+  if (!activeLight && !activeDark) {
+    activeLight = wallpapers[0];
+    activeDark = wallpapers[1] || wallpapers[0];
+
+    if (activeLight) {
+      activeLight.isActive = true;
+      activeLight.mode = "light";
+    }
+    if (activeDark) {
+      activeDark.isActive = true;
+      activeDark.mode = "dark";
+    }
+    saveWallpapers(wallpapers);
+  }
+
+  const preloadImage = (path: string | undefined) => {
+    if (path) {
+      const img = new Image();
+      img.src = path;
+    }
+  };
+
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    preloadImage(activeDark?.path);
+  } else {
+    preloadImage(activeLight?.path);
+  }
+
+  if (activeLight) {
+    document.documentElement.style.setProperty(
+      "--bg-image-light",
+      `url("${activeLight.path}")`
+    );
+  }
+  if (activeDark) {
+    document.documentElement.style.setProperty(
+      "--bg-image-dark",
+      `url("${activeDark.path}")`
+    );
+  }
 }
 
 function displayWallpapersInSettings() {
@@ -160,8 +209,14 @@ function displayWallpapersInSettings() {
     preview.classList.add("preview-display");
 
     const img = document.createElement("img");
-    img.src = wp.path;
     img.alt = wp.name;
+
+    const isActive =
+      isWallpaperActiveForMode(wp, "light") ||
+      isWallpaperActiveForMode(wp, "dark");
+    img.loading = isActive ? "eager" : "lazy";
+    img.src = wp.path;
+
     img.onerror = () => (img.alt = "Image not found");
     preview.appendChild(img);
 
@@ -235,30 +290,18 @@ function setWallpaperForMode(index: number, mode: "light" | "dark") {
   }
 
   saveWallpapers(wallpapers);
+  loadAndApplyActiveWallpapers();
   displayWallpapersInSettings();
-  applyActiveWallpapers();
 }
 
-function applyActiveWallpapers() {
-  const activeLight = wallpapers.find(
-    (wp) => wp.isActive && (wp.mode === "light" || wp.mode === "both")
-  );
-  const activeDark = wallpapers.find(
-    (wp) => wp.isActive && (wp.mode === "dark" || wp.mode === "both")
-  );
+function initializeWallpaperSettings() {
+  // first active wallpaper for faster loadng
+  loadAndApplyActiveWallpapers();
 
-  if (activeLight) {
-    document.documentElement.style.setProperty(
-      "--bg-image-light",
-      `url("${activeLight.path}")`
-    );
-  }
-  if (activeDark) {
-    document.documentElement.style.setProperty(
-      "--bg-image-dark",
-      `url("${activeDark.path}")`
-    );
-  }
+  // the other stuff
+  setTimeout(() => {
+    displayWallpapersInSettings();
+  }, 100);
 }
 
 document.addEventListener("DOMContentLoaded", initializeWallpaperSettings);

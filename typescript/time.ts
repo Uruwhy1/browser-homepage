@@ -14,7 +14,7 @@ function getTime() {
   );
 }
 
-window.onload = () => {
+document.addEventListener("DOMContentLoaded", function () {
   setupBookmarks();
 
   let clockElement = document.getElementById("clock");
@@ -26,4 +26,4 @@ window.onload = () => {
       clockElement.innerHTML = getTime();
     }, 100);
   }
-};
+});

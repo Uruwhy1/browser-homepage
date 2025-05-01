@@ -1,5 +1,6 @@
 /* General Styles */
 body {
+  background-color: #303030;
   background: var(--bg-image);
   background-size: cover;
   background-position: center;
