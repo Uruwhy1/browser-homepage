@@ -14,13 +14,74 @@ function getTime() {
   );
 }
 
+function getDayName(): string {
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const date = new Date();
+  const dayName = days[date.getDay()];
+  const monthName = months[date.getMonth()];
+  const dayNumber = date.getDate();
+  return `${dayName}, ${monthName} ${getOrdinalSuffix(dayNumber)}`;
+}
+
+function getOrdinalSuffix(n: number): string {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function updateClockDisplay(clockElement: HTMLElement) {
+  if (config.showDate) {
+    clockElement.setAttribute("data-day", getDayName());
+  } else {
+    clockElement.setAttribute("data-day", "");
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   setupBookmarks();
+  loadConfig();
 
   let clockElement = document.getElementById("clock");
+  const checkbox = document.getElementById(
+    "toggle-date-checkbox"
+  ) as HTMLInputElement;
+
+  checkbox.checked = config.showDate;
+
+  checkbox.addEventListener("change", () => {
+    config.showDate = checkbox.checked;
+    saveConfig();
+    if (clockElement) {
+      updateClockDisplay(clockElement);
+    }
+  });
 
   if (clockElement) {
     clockElement.innerHTML = getTime();
+    updateClockDisplay(clockElement);
 
     setInterval(() => {
       clockElement.innerHTML = getTime();

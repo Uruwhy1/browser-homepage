@@ -171,13 +171,13 @@ function displayPalettesInSettings() {
 
     const lightBtn = document.createElement("button");
     const isLightActive = isPaletteActiveForMode(palette, "light");
-    lightBtn.textContent = isLightActive ? "Light ✓" : "Light";
+    lightBtn.textContent = "Light";
     if (isLightActive) lightBtn.classList.add("selected");
     lightBtn.addEventListener("click", () => setPaletteForMode(index, "light"));
 
     const darkBtn = document.createElement("button");
     const isDarkActive = isPaletteActiveForMode(palette, "dark");
-    darkBtn.textContent = isDarkActive ? "Dark ✓" : "Dark";
+    darkBtn.textContent = "Dark";
     if (isDarkActive) darkBtn.classList.add("selected");
     darkBtn.addEventListener("click", () => setPaletteForMode(index, "dark"));
 

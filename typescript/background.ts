@@ -241,7 +241,7 @@ function displayWallpapersInSettings() {
 
     const lightBtn = document.createElement("button");
     const isLightActive = isWallpaperActiveForMode(wp, "light");
-    lightBtn.textContent = isLightActive ? "Light ✓" : "Light";
+    lightBtn.textContent = "Light";
 
     if (isLightActive) lightBtn.classList.add("selected");
     lightBtn.addEventListener("click", () =>
@@ -250,7 +250,7 @@ function displayWallpapersInSettings() {
 
     const darkBtn = document.createElement("button");
     const isDarkActive = isWallpaperActiveForMode(wp, "dark");
-    darkBtn.textContent = isDarkActive ? "Dark ✓" : "Dark";
+    darkBtn.textContent = "Dark";
 
     if (isDarkActive) darkBtn.classList.add("selected");
     darkBtn.addEventListener("click", () => setWallpaperForMode(index, "dark"));
