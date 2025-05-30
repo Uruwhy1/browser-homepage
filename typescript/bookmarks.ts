@@ -42,10 +42,6 @@ function setupBookmarks(): void {
 
     if (b.hide) {
       html.style.display = "none";
-      console.log("%cHIDDEN LINKS:", "color: red; font-size: x-large");
-      b.links.map((l) => {
-        console.log(l.name, l.keywords);
-      });
     }
 
     const innerBookmarks = document.createElement("div");

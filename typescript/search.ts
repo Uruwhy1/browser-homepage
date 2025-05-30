@@ -111,15 +111,20 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        // if "flip" or "stopwatch" then do nothing
-        if (
-          searchInput.value.toLowerCase() == "flip" ||
-          searchInput.value.toLowerCase() == "stopwatch"
-        ) {
+        // if "flip" or "stopwatch" then start respective functions (global scoped)
+        if (searchInput.value.toLowerCase() == "flip") {
+          searchInput.value = "";
           resetBookmarkStyles(links);
+          startCoinSequence();
           return;
         }
 
+        if (searchInput.value.toLowerCase() == "stopwatch") {
+          searchInput.value = "";
+          resetBookmarkStyles(links);
+          startStopwatch();
+          return;
+        }
         let found = false;
 
         if (keywordFound) {
