@@ -71,6 +71,58 @@
   --transparent: rgba(0, 0, 0, 0.05);
   --background-shadow-settings: rgba(85, 85, 85, 0.05);
 }
+.palette-transparent-light {
+  --fg: #444;
+  --secondaryFg: #666;
+  --bookmark-color: #666;
+  --containerBg: rgba(255, 255, 255, var(--transparency));
+  --accent-container: var(--cyan);
+  --scrollbarColor: rgba(0, 0, 0, calc(var(--transparency) * 0.2));
+
+  --green: #4caf50;
+  --red: #f44336;
+  --blue: #2196f3;
+  --yellow: #ffeb3b;
+  --salmon: #ff8a65;
+  --purple: #9c27b0;
+  --orange: #ff9800;
+  --pink: #e91e63;
+  --cyan: #00bcd4;
+  --teal: #009688;
+
+  --hover-color: var(--cyan);
+  --transparent: rgba(0, 0, 0, calc(var(--transparency) * 0.1));
+  --background-shadow-settings: rgba(0, 0, 0, calc(var(--transparency) * 0.3));
+}
+
+.palette-transparent-dark {
+  --fg: #ddd;
+  --secondaryFg: #aaa;
+  --bookmark-color: #aaa;
+  --containerBg: rgba(0, 0, 0, var(--transparency));
+  --accent-container: var(--cyan);
+  --scrollbarColor: rgba(255, 255, 255, calc(var(--transparency) * 0.2));
+
+  --green: #81c784;
+  --red: #e57373;
+  --blue: #64b5f6;
+  --yellow: #fff176;
+  --salmon: #ff8a65;
+  --purple: #ba68c8;
+  --orange: #ffb74d;
+  --pink: #f06292;
+  --cyan: #4dd0e1;
+  --teal: #4db6ac;
+
+  --hover-color: var(--cyan);
+  --transparent: rgba(255, 255, 255, calc(var(--transparency) * 0.15));
+  --background-shadow-settings: rgba(
+    255,
+    255,
+    255,
+    calc(var(--transparency) * 0.5)
+  );
+}
 
 .palette-nord {
   --fg: #eceff4;

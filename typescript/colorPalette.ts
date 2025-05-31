@@ -21,7 +21,6 @@ const definedPalettes: ColorPalette[] = [
     mode: "none",
     previewColors: ["#4c4f69", "#9ca0b0", "#eff1f5", "#dc8a78"],
   },
-
   {
     name: "Catppuccin Mocha",
     cssClass: "palette-mocha",
@@ -29,6 +28,31 @@ const definedPalettes: ColorPalette[] = [
     mode: "none",
     previewColors: ["#cdd6f4", "#a6adc8", "#1e1e2e", "#89dceb"],
   },
+  {
+    name: "Transparent Light",
+    cssClass: "palette-transparent-light",
+    isActive: false,
+    mode: "none",
+    previewColors: [
+      "rgba(255, 255, 255, 0.6)",
+      "#333333",
+      "#555555",
+      "rgba(0, 200, 200, 0.3)",
+    ],
+  },
+  {
+    name: "Transparent Dark",
+    cssClass: "palette-transparent-dark",
+    isActive: false,
+    mode: "none",
+    previewColors: [
+      "rgba(0, 0, 0, 0.6)",
+      "#dddddd",
+      "#aaaaaa",
+      "rgba(102, 204, 204, 0.3)",
+    ],
+  },
+
   {
     name: "Nord",
     cssClass: "palette-nord",
@@ -182,6 +206,70 @@ function displayPalettesInSettings() {
     darkBtn.addEventListener("click", () => setPaletteForMode(index, "dark"));
 
     actions.append(lightBtn, darkBtn);
+
+    if (
+      palette.cssClass === "palette-transparent-light" ||
+      palette.cssClass === "palette-transparent-dark"
+    ) {
+      const isDark = palette.cssClass === "palette-transparent-dark";
+
+      const blurSlider = document.createElement("input");
+      blurSlider.type = "range";
+      blurSlider.min = "0";
+      blurSlider.max = "30";
+
+      const currentValue = isDark
+        ? config.blurAmount.dark
+        : config.blurAmount.light;
+
+      blurSlider.value = String(currentValue);
+      blurSlider.title = "Background Blur";
+
+      blurSlider.addEventListener("input", (e) => {
+        const value = parseInt((e.target as HTMLInputElement).value, 10);
+
+        if (isDark) {
+          config.blurAmount.dark = value;
+        } else {
+          config.blurAmount.light = value;
+        }
+
+        saveConfig();
+        applyActivePalettes();
+      });
+
+      actions.appendChild(blurSlider);
+
+      const transparencySlider = document.createElement("input");
+      transparencySlider.type = "range";
+      transparencySlider.min = "0";
+      transparencySlider.max = "1";
+      transparencySlider.step = "0.01";
+
+      const currentTransparency = isDark
+        ? config.transparencyAmount.dark
+        : config.transparencyAmount.light;
+
+      transparencySlider.value = String(currentTransparency);
+      transparencySlider.title =
+        "Transparency (0 = fully transparent, 1 = fully cisparent)";
+
+      transparencySlider.addEventListener("input", (e) => {
+        const value = parseFloat((e.target as HTMLInputElement).value);
+
+        if (isDark) {
+          config.transparencyAmount.dark = value;
+        } else {
+          config.transparencyAmount.light = value;
+        }
+
+        saveConfig();
+        applyActivePalettes();
+      });
+
+      actions.appendChild(transparencySlider);
+    }
+
     wrapper.append(preview, details, actions);
     container.appendChild(wrapper);
   });
@@ -242,6 +330,28 @@ function applyActivePalettes() {
 
   if (activePalette) {
     htmlElement.classList.add(activePalette.cssClass);
+
+    if (activePalette.cssClass === "palette-transparent-light") {
+      loadConfig();
+      htmlElement.style.setProperty("--blur", `${config.blurAmount.light}px`);
+      htmlElement.style.setProperty(
+        "--transparency",
+        `${config.transparencyAmount.light}`
+      );
+    } else if (activePalette.cssClass === "palette-transparent-dark") {
+      loadConfig();
+      htmlElement.style.setProperty("--blur", `${config.blurAmount.dark}px`);
+      htmlElement.style.setProperty(
+        "--transparency",
+        `${config.transparencyAmount.dark}`
+      );
+    } else {
+      htmlElement.style.removeProperty("--blur");
+      htmlElement.style.removeProperty("--transparency");
+    }
+  } else {
+    htmlElement.style.removeProperty("--blur");
+    htmlElement.style.removeProperty("--transparency");
   }
 }
 

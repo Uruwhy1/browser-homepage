@@ -70,6 +70,7 @@ body * {
   cursor: pointer;
 
   position: relative;
+  backdrop-filter: blur(var(--blur));
 }
 #clock::after {
   content: attr(data-day);
@@ -85,6 +86,8 @@ body * {
 
 /* Message Container */
 .message-container {
+  backdrop-filter: blur(var(--blur));
+
   width: 35%;
   min-width: 350px;
   background-color: var(--containerBg);
@@ -146,6 +149,8 @@ body * {
   height: 19em;
   max-width: 260px;
   box-sizing: border-box;
+
+  backdrop-filter: blur(var(--blur));
 }
 
 /* Bookmark Inner Container */
