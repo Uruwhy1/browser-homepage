@@ -108,10 +108,14 @@
   height: 1rem;
 
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
 
   display: flex;
   align-items: center;
   cursor: pointer;
   gap: 0.5rem;
+
+  &:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
 }

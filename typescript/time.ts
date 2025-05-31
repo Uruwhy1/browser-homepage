@@ -59,32 +59,3 @@ function updateClockDisplay(clockElement: HTMLElement) {
     clockElement.setAttribute("data-day", "");
   }
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  setupBookmarks();
-  loadConfig();
-
-  let clockElement = document.getElementById("clock");
-  const checkbox = document.getElementById(
-    "toggle-date-checkbox"
-  ) as HTMLInputElement;
-
-  checkbox.checked = config.showDate;
-
-  checkbox.addEventListener("change", () => {
-    config.showDate = checkbox.checked;
-    saveConfig();
-    if (clockElement) {
-      updateClockDisplay(clockElement);
-    }
-  });
-
-  if (clockElement) {
-    clockElement.innerHTML = getTime();
-    updateClockDisplay(clockElement);
-
-    setInterval(() => {
-      clockElement.innerHTML = getTime();
-    }, 100);
-  }
-});

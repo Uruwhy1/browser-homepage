@@ -57,6 +57,8 @@ body * {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  min-width: 70vw;
 }
 
 /* Clock */
