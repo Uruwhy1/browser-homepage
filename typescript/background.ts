@@ -200,6 +200,9 @@ function displayWallpapersInSettings() {
   if (!container) return;
   container.innerHTML = "";
 
+  console.log(config.hideWallpapers);
+  if (config.hideWallpapers) return;
+
   wallpapers.forEach((wp, index) => {
     const wrapper = document.createElement("div");
     wrapper.classList.add("preview-option-item");
@@ -298,10 +301,17 @@ function initializeWallpaperSettings() {
   // first active wallpaper for faster loadng
   loadAndApplyActiveWallpapers();
 
+  const wallpaperTitle = document.querySelector("#wallpaper-title");
+  wallpaperTitle?.addEventListener("mouseup", () => {
+    config.hideWallpapers = !config.hideWallpapers;
+    wallpaperTitle.classList.toggle("hidden", config.hideWallpapers);
+
+    saveConfig();
+    displayWallpapersInSettings();
+  });
+
   // the other stuff
   setTimeout(() => {
     displayWallpapersInSettings();
   }, 100);
 }
-
-document.addEventListener("DOMContentLoaded", initializeWallpaperSettings);

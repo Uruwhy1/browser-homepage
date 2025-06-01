@@ -1,6 +1,7 @@
 const config = {
   showDate: true,
   showSearch: true,
+  hideWallpapers: false,
 };
 
 function loadConfig() {
@@ -10,6 +11,9 @@ function loadConfig() {
       const parsedConfig = JSON.parse(savedConfig);
       if (parsedConfig.showSearch === undefined) {
         parsedConfig.showSearch = true;
+      }
+      if (parsedConfig.hideWallpapers === undefined) {
+        parsedConfig.hideWallpapers = false;
       }
 
       Object.assign(config, parsedConfig);

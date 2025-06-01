@@ -119,3 +119,15 @@
     margin-bottom: 0.75rem;
   }
 }
+
+#wallpaper-title:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#wallpaper-title.hidden::after {
+  content: " (hidden)";
+  opacity: 0.6;
+  font-style: italic;
+  font-size: 0.9rem;
+}
