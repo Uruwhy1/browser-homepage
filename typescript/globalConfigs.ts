@@ -1,13 +1,5 @@
 const config = {
   showDate: true,
-  blurAmount: {
-    light: 8,
-    dark: 8,
-  },
-  transparencyAmount: {
-    light: 0.6,
-    dark: 0.6,
-  },
   showSearch: true,
 };
 

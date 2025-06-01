@@ -4,6 +4,8 @@ interface ColorPalette {
   isActive: boolean;
   mode: "light" | "dark" | "both" | "none";
   previewColors: string[];
+  transparency: number;
+  blur: number;
 }
 
 const definedPalettes: ColorPalette[] = [
@@ -13,6 +15,8 @@ const definedPalettes: ColorPalette[] = [
     isActive: true,
     mode: "both",
     previewColors: ["#ffffff", "#d4d4d4", "#272727", "rgb(25, 228, 255)"],
+    transparency: 1,
+    blur: 0,
   },
   {
     name: "Catppuccin Latte",
@@ -20,6 +24,8 @@ const definedPalettes: ColorPalette[] = [
     isActive: false,
     mode: "none",
     previewColors: ["#4c4f69", "#9ca0b0", "#eff1f5", "#dc8a78"],
+    transparency: 1,
+    blur: 0,
   },
   {
     name: "Catppuccin Mocha",
@@ -27,38 +33,17 @@ const definedPalettes: ColorPalette[] = [
     isActive: false,
     mode: "none",
     previewColors: ["#cdd6f4", "#a6adc8", "#1e1e2e", "#89dceb"],
+    transparency: 1,
+    blur: 0,
   },
-  {
-    name: "Transparent Light",
-    cssClass: "palette-transparent-light",
-    isActive: false,
-    mode: "none",
-    previewColors: [
-      "rgba(255, 255, 255, 0.6)",
-      "#333333",
-      "#555555",
-      "rgba(0, 200, 200, 0.3)",
-    ],
-  },
-  {
-    name: "Transparent Dark",
-    cssClass: "palette-transparent-dark",
-    isActive: false,
-    mode: "none",
-    previewColors: [
-      "rgba(0, 0, 0, 0.6)",
-      "#dddddd",
-      "#aaaaaa",
-      "rgba(102, 204, 204, 0.3)",
-    ],
-  },
-
   {
     name: "Nord",
     cssClass: "palette-nord",
     isActive: false,
     mode: "none",
     previewColors: ["#eceff4", "#d8dee9", "#2e3440", "#81a1c1"],
+    transparency: 1,
+    blur: 0,
   },
   {
     name: "Solarized Light",
@@ -66,6 +51,8 @@ const definedPalettes: ColorPalette[] = [
     isActive: false,
     mode: "none",
     previewColors: ["#586e75", "#657b83", "#fdf6e3", "#2aa198"],
+    transparency: 1,
+    blur: 0,
   },
   {
     name: "Solarized Dark",
@@ -73,6 +60,8 @@ const definedPalettes: ColorPalette[] = [
     isActive: false,
     mode: "none",
     previewColors: ["#93a1a1", "#839496", "#002b36", "#268bd2"],
+    transparency: 1,
+    blur: 0,
   },
   {
     name: "Tokyo Night",
@@ -80,6 +69,8 @@ const definedPalettes: ColorPalette[] = [
     isActive: false,
     mode: "none",
     previewColors: ["#a9b1d6", "#787c99", "#1a1b26", "#2ac3de"],
+    transparency: 1,
+    blur: 0,
   },
   {
     name: "Dracula",
@@ -87,6 +78,8 @@ const definedPalettes: ColorPalette[] = [
     isActive: false,
     mode: "none",
     previewColors: ["#f8f8f2", "#bfbfbf", "#282a36", "#8be9fd"],
+    transparency: 1,
+    blur: 0,
   },
   {
     name: "Gruvbox Light",
@@ -94,6 +87,8 @@ const definedPalettes: ColorPalette[] = [
     isActive: false,
     mode: "none",
     previewColors: ["#282828", "#d65d0e", "#fb4934", "#458588"],
+    transparency: 1,
+    blur: 0,
   },
 
   {
@@ -102,8 +97,25 @@ const definedPalettes: ColorPalette[] = [
     isActive: false,
     mode: "none",
     previewColors: ["#ebdbb2", "#bdae93", "#282828", "#8ec07c"],
+    transparency: 1,
+    blur: 0,
   },
 ];
+
+let palettes: ColorPalette[] = loadPaletteSettings();
+
+function savePalettes(palettes: ColorPalette[]): void {
+  const settingsToSave = palettes.map(
+    ({ name, isActive, mode, transparency, blur }) => ({
+      name,
+      isActive,
+      mode,
+      transparency,
+      blur,
+    })
+  );
+  localStorage.setItem("palettes", JSON.stringify(settingsToSave));
+}
 
 function loadPaletteSettings(): ColorPalette[] {
   const stored = localStorage.getItem("palettes");
@@ -122,6 +134,8 @@ function loadPaletteSettings(): ColorPalette[] {
           ...palette,
           isActive: storedPalette.isActive ?? palette.isActive,
           mode: storedPalette.mode ?? palette.mode,
+          transparency: storedPalette.transparency ?? palette.transparency,
+          blur: storedPalette.blur ?? palette.blur,
         };
       }
       return palette;
@@ -129,17 +143,6 @@ function loadPaletteSettings(): ColorPalette[] {
   } catch {
     return definedPalettes;
   }
-}
-
-let palettes: ColorPalette[] = loadPaletteSettings();
-
-function savePalettes(palettes: ColorPalette[]): void {
-  const settingsToSave = palettes.map(({ name, isActive, mode }) => ({
-    name,
-    isActive,
-    mode,
-  }));
-  localStorage.setItem("palettes", JSON.stringify(settingsToSave));
 }
 
 function initializePaletteSettings(): void {
@@ -207,34 +210,23 @@ function displayPalettesInSettings() {
 
     actions.append(lightBtn, darkBtn);
 
-    if (
-      palette.cssClass === "palette-transparent-light" ||
-      palette.cssClass === "palette-transparent-dark"
-    ) {
-      const isDark = palette.cssClass === "palette-transparent-dark";
+    // Only show sliders if the palette is active for either light or dark mode
+    const isPaletteSelected =
+      isPaletteActiveForMode(palette, "light") ||
+      isPaletteActiveForMode(palette, "dark");
 
+    if (isPaletteSelected) {
       const blurSlider = document.createElement("input");
       blurSlider.type = "range";
       blurSlider.min = "0";
       blurSlider.max = "30";
-
-      const currentValue = isDark
-        ? config.blurAmount.dark
-        : config.blurAmount.light;
-
-      blurSlider.value = String(currentValue);
+      blurSlider.value = String(palette.blur);
       blurSlider.title = "Background Blur";
 
       blurSlider.addEventListener("input", (e) => {
         const value = parseInt((e.target as HTMLInputElement).value, 10);
-
-        if (isDark) {
-          config.blurAmount.dark = value;
-        } else {
-          config.blurAmount.light = value;
-        }
-
-        saveConfig();
+        palette.blur = value;
+        savePalettes(palettes);
         applyActivePalettes();
       });
 
@@ -245,25 +237,13 @@ function displayPalettesInSettings() {
       transparencySlider.min = "0";
       transparencySlider.max = "1";
       transparencySlider.step = "0.01";
-
-      const currentTransparency = isDark
-        ? config.transparencyAmount.dark
-        : config.transparencyAmount.light;
-
-      transparencySlider.value = String(currentTransparency);
-      transparencySlider.title =
-        "Transparency (0 = fully transparent, 1 = fully cisparent)";
+      transparencySlider.value = String(palette.transparency);
+      transparencySlider.title = "Transparency";
 
       transparencySlider.addEventListener("input", (e) => {
         const value = parseFloat((e.target as HTMLInputElement).value);
-
-        if (isDark) {
-          config.transparencyAmount.dark = value;
-        } else {
-          config.transparencyAmount.light = value;
-        }
-
-        saveConfig();
+        palette.transparency = value;
+        savePalettes(palettes);
         applyActivePalettes();
       });
 
@@ -313,13 +293,11 @@ function setPaletteForMode(index: number, mode: "light" | "dark") {
 }
 
 function applyActivePalettes() {
-  // Remove all palette classes first
   const htmlElement = document.documentElement;
   palettes.forEach((palette) => {
     htmlElement.classList.remove(palette.cssClass);
   });
 
-  // Apply appropriate palette based on system preference and settings
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const mode = prefersDark ? "dark" : "light";
 
@@ -330,25 +308,11 @@ function applyActivePalettes() {
 
   if (activePalette) {
     htmlElement.classList.add(activePalette.cssClass);
-
-    if (activePalette.cssClass === "palette-transparent-light") {
-      loadConfig();
-      htmlElement.style.setProperty("--blur", `${config.blurAmount.light}px`);
-      htmlElement.style.setProperty(
-        "--transparency",
-        `${config.transparencyAmount.light}`
-      );
-    } else if (activePalette.cssClass === "palette-transparent-dark") {
-      loadConfig();
-      htmlElement.style.setProperty("--blur", `${config.blurAmount.dark}px`);
-      htmlElement.style.setProperty(
-        "--transparency",
-        `${config.transparencyAmount.dark}`
-      );
-    } else {
-      htmlElement.style.removeProperty("--blur");
-      htmlElement.style.removeProperty("--transparency");
-    }
+    htmlElement.style.setProperty("--blur", `${activePalette.blur}px`);
+    htmlElement.style.setProperty(
+      "--transparency",
+      `${activePalette.transparency}`
+    );
   } else {
     htmlElement.style.removeProperty("--blur");
     htmlElement.style.removeProperty("--transparency");

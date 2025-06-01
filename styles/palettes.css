@@ -2,9 +2,9 @@
   --fg: #ffffff;
   --secondaryFg: #d4d4d4;
   --bookmark-color: #d4d4d4;
-  --containerBg: #272727;
+  --containerBg: rgba(39, 39, 39, var(--transparency, 1));
   --accent-container: #fee0e0;
-  --scrollbarColor: #3f3f3f;
+  --scrollbarColor: rgba(63, 63, 63, calc(var(--transparency, 1) * 0.8));
 
   --green: rgb(115, 238, 131);
   --red: #ee7373;
@@ -18,16 +18,22 @@
   --teal: #4fd2c2;
 
   --hover-color: var(--cyan);
-  --transparent: rgba(255, 255, 255, 0.15);
+  --transparent: rgba(255, 255, 255, calc(var(--transparency, 1) * 0.15));
+  --background-shadow-settings: rgba(
+    255,
+    255,
+    255,
+    calc(var(--transparency, 1) * 0.3)
+  );
 }
 
 .palette-mocha {
   --fg: #cdd6f4;
   --secondaryFg: #a6adc8;
   --bookmark-color: #a6adc8;
-  --containerBg: #1e1e2e;
+  --containerBg: rgba(30, 30, 46, var(--transparency, 1));
   --accent-container: #b4befe;
-  --scrollbarColor: #45475a;
+  --scrollbarColor: rgba(69, 71, 90, calc(var(--transparency, 1) * 0.8));
   --coin-shadow: #cdd6f4;
 
   --green: #a6e3a1;
@@ -42,16 +48,22 @@
   --teal: #74c7ec;
 
   --hover-color: var(--teal);
-  --transparent: rgba(255, 255, 255, 0.15);
+  --transparent: rgba(255, 255, 255, calc(var(--transparency, 1) * 0.15));
+  --background-shadow-settings: rgba(
+    255,
+    255,
+    255,
+    calc(var(--transparency, 1) * 0.3)
+  );
 }
 
 .palette-catppuccin-latte {
   --fg: #4c4f69;
   --secondaryFg: #9ca0b0;
   --bookmark-color: #9ca0b0;
-  --containerBg: #eff1f5;
+  --containerBg: rgba(239, 241, 245, var(--transparency, 1));
   --accent-container: #209fb5;
-  --scrollbarColor: #ccd0da;
+  --scrollbarColor: rgba(204, 208, 218, calc(var(--transparency, 1) * 0.8));
   --coin-shadow: #dce0e8;
 
   --green: #40a02b;
@@ -68,59 +80,12 @@
   --hover-color: var(--teal);
   --active-color: #000 !important;
 
-  --transparent: rgba(0, 0, 0, 0.05);
-  --background-shadow-settings: rgba(85, 85, 85, 0.05);
-}
-.palette-transparent-light {
-  --fg: #444;
-  --secondaryFg: #666;
-  --bookmark-color: #666;
-  --containerBg: rgba(255, 255, 255, var(--transparency));
-  --accent-container: var(--cyan);
-  --scrollbarColor: rgba(0, 0, 0, calc(var(--transparency) * 0.2));
-
-  --green: #4caf50;
-  --red: #f44336;
-  --blue: #2196f3;
-  --yellow: #ffeb3b;
-  --salmon: #ff8a65;
-  --purple: #9c27b0;
-  --orange: #ff9800;
-  --pink: #e91e63;
-  --cyan: #00bcd4;
-  --teal: #009688;
-
-  --hover-color: var(--cyan);
-  --transparent: rgba(0, 0, 0, calc(var(--transparency) * 0.1));
-  --background-shadow-settings: rgba(0, 0, 0, calc(var(--transparency) * 0.3));
-}
-
-.palette-transparent-dark {
-  --fg: #ddd;
-  --secondaryFg: #aaa;
-  --bookmark-color: #aaa;
-  --containerBg: rgba(0, 0, 0, var(--transparency));
-  --accent-container: var(--cyan);
-  --scrollbarColor: rgba(255, 255, 255, calc(var(--transparency) * 0.2));
-
-  --green: #81c784;
-  --red: #e57373;
-  --blue: #64b5f6;
-  --yellow: #fff176;
-  --salmon: #ff8a65;
-  --purple: #ba68c8;
-  --orange: #ffb74d;
-  --pink: #f06292;
-  --cyan: #4dd0e1;
-  --teal: #4db6ac;
-
-  --hover-color: var(--cyan);
-  --transparent: rgba(255, 255, 255, calc(var(--transparency) * 0.15));
+  --transparent: rgba(0, 0, 0, calc(var(--transparency, 1) * 0.05));
   --background-shadow-settings: rgba(
-    255,
-    255,
-    255,
-    calc(var(--transparency) * 0.5)
+    85,
+    85,
+    85,
+    calc(var(--transparency, 1) * 0.05)
   );
 }
 
@@ -128,9 +93,9 @@
   --fg: #eceff4;
   --secondaryFg: #d8dee9;
   --bookmark-color: #e5e9f0;
-  --containerBg: #2e3440;
+  --containerBg: rgba(46, 52, 64, var(--transparency, 1));
   --accent-container: #88c0d0;
-  --scrollbarColor: #4c566a;
+  --scrollbarColor: rgba(76, 86, 106, calc(var(--transparency, 1) * 0.8));
 
   --green: #a3be8c;
   --red: #bf616a;
@@ -144,16 +109,22 @@
   --teal: #88c0d0;
 
   --hover-color: var(--teal);
-  --transparent: rgba(255, 255, 255, 0.05);
+  --transparent: rgba(255, 255, 255, calc(var(--transparency, 1) * 0.05));
+  --background-shadow-settings: rgba(
+    255,
+    255,
+    255,
+    calc(var(--transparency, 1) * 0.2)
+  );
 }
 
 .palette-solarized-light {
   --fg: #586e75;
   --secondaryFg: #657b83;
   --bookmark-color: #839496;
-  --containerBg: #fdf6e3;
+  --containerBg: rgba(253, 246, 227, var(--transparency, 1));
   --accent-container: #268bd2;
-  --scrollbarColor: #eee8d5;
+  --scrollbarColor: rgba(238, 232, 213, calc(var(--transparency, 1) * 0.8));
 
   --green: #859900;
   --red: #dc322f;
@@ -169,17 +140,22 @@
   --hover-color: var(--blue);
   --active-color: #000 !important;
 
-  --transparent: rgba(0, 0, 0, 0.05);
-  --background-shadow-settings: rgba(85, 85, 85, 0.05);
+  --transparent: rgba(0, 0, 0, calc(var(--transparency, 1) * 0.05));
+  --background-shadow-settings: rgba(
+    85,
+    85,
+    85,
+    calc(var(--transparency, 1) * 0.05)
+  );
 }
 
 .palette-solarized-dark {
   --fg: #93a1a1;
   --secondaryFg: #839496;
   --bookmark-color: #586e75;
-  --containerBg: #002b36;
+  --containerBg: rgba(0, 43, 54, var(--transparency, 1));
   --accent-container: #268bd2;
-  --scrollbarColor: #073642;
+  --scrollbarColor: rgba(7, 54, 66, calc(var(--transparency, 1) * 0.8));
 
   --green: #859900;
   --red: #dc322f;
@@ -193,16 +169,22 @@
   --purple: #657b83;
 
   --hover-color: var(--blue);
-  --transparent: rgba(255, 255, 255, 0.15);
+  --transparent: rgba(255, 255, 255, calc(var(--transparency, 1) * 0.15));
+  --background-shadow-settings: rgba(
+    255,
+    255,
+    255,
+    calc(var(--transparency, 1) * 0.3)
+  );
 }
 
 .palette-tokyo-night {
   --fg: #a9b1d6;
   --secondaryFg: #787c99;
   --bookmark-color: #787c99;
-  --containerBg: #1a1b26;
+  --containerBg: rgba(26, 27, 38, var(--transparency, 1));
   --accent-container: #7aa2f7;
-  --scrollbarColor: #24283b;
+  --scrollbarColor: rgba(36, 40, 59, calc(var(--transparency, 1) * 0.8));
 
   --green: #9ece6a;
   --red: #f7768e;
@@ -216,16 +198,22 @@
   --teal: #1abc9c;
 
   --hover-color: var(--cyan);
-  --transparent: rgba(255, 255, 255, 0.15);
+  --transparent: rgba(255, 255, 255, calc(var(--transparency, 1) * 0.15));
+  --background-shadow-settings: rgba(
+    255,
+    255,
+    255,
+    calc(var(--transparency, 1) * 0.3)
+  );
 }
 
 .palette-dracula {
   --fg: #f8f8f2;
   --secondaryFg: #bfbfbf;
   --bookmark-color: #bfbfbf;
-  --containerBg: #282a36;
+  --containerBg: rgba(40, 42, 54, var(--transparency, 1));
   --accent-container: #bd93f9;
-  --scrollbarColor: #44475a;
+  --scrollbarColor: rgba(68, 71, 90, calc(var(--transparency, 1) * 0.8));
 
   --green: #50fa7b;
   --red: #ff5555;
@@ -239,16 +227,22 @@
   --teal: #5af78e;
 
   --hover-color: var(--cyan);
-  --transparent: rgba(255, 255, 255, 0.15);
+  --transparent: rgba(255, 255, 255, calc(var(--transparency, 1) * 0.15));
+  --background-shadow-settings: rgba(
+    255,
+    255,
+    255,
+    calc(var(--transparency, 1) * 0.3)
+  );
 }
 
 .palette-gruvbox-light {
   --fg: #3c3836;
   --secondaryFg: #504945;
   --bookmark-color: #504945;
-  --containerBg: #fbf1c7;
+  --containerBg: rgba(251, 241, 199, var(--transparency, 1));
   --accent-container: #83a598;
-  --scrollbarColor: #d5c4a1;
+  --scrollbarColor: rgba(213, 196, 161, calc(var(--transparency, 1) * 0.8));
 
   --green: #98971a;
   --red: #cc241d;
@@ -264,17 +258,22 @@
   --hover-color: var(--cyan);
   --active-color: #000 !important;
 
-  --background-shadow-settings: rgba(85, 85, 85, 0.05);
-  --transparent: rgba(0, 0, 0, 0.05);
+  --background-shadow-settings: rgba(
+    85,
+    85,
+    85,
+    calc(var(--transparency, 1) * 0.05)
+  );
+  --transparent: rgba(0, 0, 0, calc(var(--transparency, 1) * 0.05));
 }
 
 .palette-gruvbox-dark {
   --fg: #ebdbb2;
   --secondaryFg: #bdae93;
   --bookmark-color: #bdae93;
-  --containerBg: #282828;
+  --containerBg: rgba(40, 40, 40, var(--transparency, 1));
   --accent-container: #83a598;
-  --scrollbarColor: #3c3836;
+  --scrollbarColor: rgba(60, 56, 54, calc(var(--transparency, 1) * 0.8));
 
   --green: #b8bb26;
   --red: #fb4934;
@@ -288,5 +287,11 @@
   --teal: #689d6a;
 
   --hover-color: var(--cyan);
-  --transparent: rgba(255, 255, 255, 0.05);
+  --transparent: rgba(255, 255, 255, calc(var(--transparency, 1) * 0.05));
+  --background-shadow-settings: rgba(
+    255,
+    255,
+    255,
+    calc(var(--transparency, 1) * 0.2)
+  );
 }

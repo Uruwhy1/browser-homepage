@@ -78,3 +78,91 @@
   background-color: var(--accent-container);
   color: var(--containerBg);
 }
+
+.option-actions input {
+  appearance: none;
+  background-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.option-actions input[type="range"] {
+  color: var(--accent-container);
+  --thumb-height: 15px;
+  --track-height: 5px;
+  --track-color: #ddd;
+  --thumb-width: 15px;
+  --clip-edges: 5.5px;
+}
+
+/* === WebKit specific styles (Chrome, Safari, modern Edge) === */
+.option-actions input[type="range"],
+.option-actions input[type="range"]::-webkit-slider-runnable-track,
+.option-actions input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  transition: all ease 100ms;
+  height: var(--thumb-height);
+}
+
+.option-actions input[type="range"]::-webkit-slider-runnable-track,
+.option-actions input[type="range"]::-webkit-slider-thumb {
+  position: relative;
+}
+
+.option-actions input[type="range"]::-webkit-slider-thumb {
+  --thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
+  --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
+  --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
+  --clip-further: calc(100% + 1px);
+  --box-fill: calc(-100vmax - var(--thumb-width)) 0 0 100vmax currentColor;
+
+  width: var(--thumb-width);
+  background: linear-gradient(currentColor 0 0) scroll no-repeat left center /
+    50% calc(var(--track-height) + 1px);
+  background-color: currentColor;
+  box-shadow: var(--box-fill);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+
+  clip-path: polygon(
+    100% -1px,
+    var(--clip-edges) -1px,
+    0 var(--clip-top),
+    -100vmax var(--clip-top),
+    -100vmax var(--clip-bottom),
+    0 var(--clip-bottom),
+    var(--clip-edges) 100%,
+    var(--clip-further) var(--clip-further)
+  );
+}
+
+.option-actions input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center /
+    100% calc(var(--track-height) + 1px);
+}
+
+/* === Firefox specific styles === */
+.option-actions input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: var(--track-height);
+  background: var(--track-color);
+  border-radius: calc(var(--track-height) / 2);
+  border: none;
+}
+
+.option-actions input[type="range"]::-moz-range-progress {
+  height: var(--track-height);
+  background: var(--accent-container);
+  border-radius: calc(var(--track-height) / 2);
+  border: none;
+}
+
+.option-actions input[type="range"]::-moz-range-thumb {
+  width: var(--thumb-width);
+  height: var(--thumb-height);
+  background: var(--accent-container);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
